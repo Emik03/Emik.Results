@@ -7,7 +7,7 @@ using static CollectionAccessType;
 
 /// <summary>
 /// <see cref="Result{TOk, TErr}"/> is the type used for returning and propagating errors.
-/// It is either <see cref="Ok"/>, representing success and containing a value, and <see cref="Err"/>,
+/// It is either <see cref="Ok"/>, representing success and containing a value, or <see cref="Err"/>,
 /// representing error and containing an error value.
 /// </summary>
 /// <remarks><para>
