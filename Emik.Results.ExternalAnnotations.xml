@@ -1,159 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly name="Emik.Results">
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``1(System.Func{``0,System.Threading.Tasks.Task},``0)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+  <member name="M:Emik.Results.Extensions.ResultFactory.Flatten``2(System.Collections.Generic.IEnumerable{Emik.Results.Result{``0,``1}})">
+    <parameter name="enumerable">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
     </parameter>
   </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``1(System.Func{``0,System.Threading.Tasks.ValueTask},``0)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+  <member name="M:Emik.Results.Extensions.ResultFactory.FlattenErr``2(System.Collections.Generic.IEnumerable{Emik.Results.Result{``0,``1}})">
+    <parameter name="enumerable">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
     </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``2(System.Func{``0,``1,System.Threading.Tasks.Task},``0,``1)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``2(System.Func{``0,``1,System.Threading.Tasks.ValueTask},``0,``1)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``2(System.Func{``0,System.Threading.Tasks.Task{``1}},``0)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``2(System.Func{``0,System.Threading.Tasks.ValueTask{``1}},``0)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``3(System.Func{``0,``1,``2,System.Threading.Tasks.Task},``0,``1,``2)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``3(System.Func{``0,``1,``2,System.Threading.Tasks.ValueTask},``0,``1,``2)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``3(System.Func{``0,``1,System.Threading.Tasks.Task{``2}},``0,``1)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``3(System.Func{``0,``1,System.Threading.Tasks.ValueTask{``2}},``0,``1)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``4(System.Func{``0,``1,``2,``3,System.Threading.Tasks.Task},``0,``1,``2,``3)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``4(System.Func{``0,``1,``2,``3,System.Threading.Tasks.ValueTask},``0,``1,``2,``3)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``4(System.Func{``0,``1,``2,System.Threading.Tasks.Task{``3}},``0,``1,``2)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``4(System.Func{``0,``1,``2,System.Threading.Tasks.ValueTask{``3}},``0,``1,``2)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``5(System.Func{``0,``1,``2,``3,System.Threading.Tasks.Task{``4}},``0,``1,``2,``3)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``5(System.Func{``0,``1,``2,``3,System.Threading.Tasks.ValueTask{``4}},``0,``1,``2,``3)">
-    <parameter name="func">
-      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
-    </parameter>
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryAwaiter(System.Threading.Tasks.Task)">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryAwaiter(System.Threading.Tasks.ValueTask)">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryAwaiter``1(System.Threading.Tasks.Task{``0})">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryAwaiter``1(System.Threading.Tasks.ValueTask{``0})">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult(System.Runtime.CompilerServices.TaskAwaiter)">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult(System.Runtime.CompilerServices.ValueTaskAwaiter)">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult(System.Threading.Tasks.Task)">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult(System.Threading.Tasks.ValueTask)">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult``1(System.Runtime.CompilerServices.TaskAwaiter{``0})">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult``1(System.Runtime.CompilerServices.ValueTaskAwaiter{``0})">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult``1(System.Threading.Tasks.Task{``0})">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
-  </member>
-  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult``1(System.Threading.Tasks.ValueTask{``0})">
-    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
   </member>
   <member name="M:Emik.Results.Extensions.ResultFactory.Then``2(System.Boolean,System.Func{``0},System.Func{``1})">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="onTrue">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+    <parameter name="onFalse">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try(System.Action)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``1(System.Action{``0},``0)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``1(System.Func{``0})">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``1(System.Predicate{``0},``0)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="predicate">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``2(System.Action{``0,``1},``0,``1)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``2(System.Func{``0,``1},``0)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``3(System.Action{``0,``1,``2},``0,``1,``2)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``3(System.Func{``0,``1,``2},``0,``1)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``4(System.Action{``0,``1,``2,``3},``0,``1,``2,``3)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``4(System.Func{``0,``1,``2,``3},``0,``1,``2)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.Try``5(System.Func{``0,``1,``2,``3,``4},``0,``1,``2,``3)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Please.TryMap``2(System.Converter{``0,``1},``0)">
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.#ctor(`0)">
     <parameter name="ok">
@@ -165,12 +101,18 @@
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.AndThenErr``1(System.Converter{`1,Emik.Results.Result{`0,``0}})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.Clone">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
@@ -236,6 +178,9 @@
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.Expect(System.String)">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
@@ -269,12 +214,18 @@
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.InspectErr(System.Action{`1})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>0</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="P:Emik.Results.Result`2.IsErr">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)" />
@@ -298,45 +249,75 @@
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.IsProperSupersetOf(System.Collections.Generic.IEnumerable{`0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.IsSubsetOf(System.Collections.Generic.IEnumerable{`0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.IsSupersetOf(System.Collections.Generic.IEnumerable{`0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.Map``1(System.Converter{`0,``0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.MapErr``1(System.Converter{`1,``0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.Match(System.Action{`0},System.Action{`1})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="onOk">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+    <parameter name="onErr">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.Match``1(System.Converter{`0,``0},System.Converter{`1,``0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="onOk">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+    <parameter name="onErr">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="P:Emik.Results.Result`2.Ok">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)" />
@@ -352,6 +333,9 @@
       <argument>1</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.op_Equality(Emik.Results.Result{`0,`1},Emik.Results.Result{`0,`1})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
@@ -415,11 +399,17 @@
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.SetEquals(System.Collections.Generic.IEnumerable{`0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
+    <parameter name="other">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.Swap">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
@@ -441,36 +431,60 @@
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.Try``1(System.Converter{`0,``0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.TryErr(System.Action{`1})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="action">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.TryErr``1(System.Converter{`1,``0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="converter">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.TryMatch(System.Action{`0},System.Action{`1})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="onOk">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+    <parameter name="onErr">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="M:Emik.Results.Result`2.TryMatch``1(System.Converter{`0,``0},System.Converter{`1,``0})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>3</argument>
     </attribute>
     <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+    <parameter name="onOk">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+    <parameter name="onErr">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
   </member>
   <member name="P:Emik.Results.Result`2.Value">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)" />
