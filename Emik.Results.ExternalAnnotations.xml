@@ -1,5 +1,177 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <assembly name="Emik.Results">
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try(System.Func{System.Threading.Tasks.Task})">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try(System.Func{System.Threading.Tasks.ValueTask})">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try(System.Threading.Tasks.Task)">
+    <parameter name="task">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try(System.Threading.Tasks.ValueTask)">
+    <parameter name="task">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``1(System.Func{``0,System.Threading.Tasks.Task},``0)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``1(System.Func{``0,System.Threading.Tasks.ValueTask},``0)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``1(System.Func{System.Threading.Tasks.Task{``0}})">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``1(System.Func{System.Threading.Tasks.ValueTask{``0}})">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``1(System.Threading.Tasks.Task{``0})">
+    <parameter name="task">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``1(System.Threading.Tasks.ValueTask{``0})">
+    <parameter name="task">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``2(System.Func{``0,``1,System.Threading.Tasks.Task},``0,``1)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``2(System.Func{``0,``1,System.Threading.Tasks.ValueTask},``0,``1)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``2(System.Func{``0,System.Threading.Tasks.Task{``1}},``0)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``2(System.Func{``0,System.Threading.Tasks.ValueTask{``1}},``0)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``3(System.Func{``0,``1,``2,System.Threading.Tasks.Task},``0,``1,``2)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``3(System.Func{``0,``1,``2,System.Threading.Tasks.ValueTask},``0,``1,``2)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``3(System.Func{``0,``1,System.Threading.Tasks.Task{``2}},``0,``1)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``3(System.Func{``0,``1,System.Threading.Tasks.ValueTask{``2}},``0,``1)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``4(System.Func{``0,``1,``2,``3,System.Threading.Tasks.Task},``0,``1,``2,``3)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``4(System.Func{``0,``1,``2,``3,System.Threading.Tasks.ValueTask},``0,``1,``2,``3)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``4(System.Func{``0,``1,``2,System.Threading.Tasks.Task{``3}},``0,``1,``2)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``4(System.Func{``0,``1,``2,System.Threading.Tasks.ValueTask{``3}},``0,``1,``2)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``5(System.Func{``0,``1,``2,``3,System.Threading.Tasks.Task{``4}},``0,``1,``2,``3)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.Try``5(System.Func{``0,``1,``2,``3,System.Threading.Tasks.ValueTask{``4}},``0,``1,``2,``3)">
+    <parameter name="func">
+      <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
+      <attribute ctor="M:JetBrains.Annotations.RequireStaticDelegateAttribute.#ctor" />
+    </parameter>
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryAwaiter(System.Threading.Tasks.Task)">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryAwaiter(System.Threading.Tasks.ValueTask)">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryAwaiter``1(System.Threading.Tasks.Task{``0})">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryAwaiter``1(System.Threading.Tasks.ValueTask{``0})">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult(System.Runtime.CompilerServices.TaskAwaiter)">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult(System.Runtime.CompilerServices.ValueTaskAwaiter)">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult(System.Threading.Tasks.Task)">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult(System.Threading.Tasks.ValueTask)">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult``1(System.Runtime.CompilerServices.TaskAwaiter{``0})">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult``1(System.Runtime.CompilerServices.ValueTaskAwaiter{``0})">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult``1(System.Threading.Tasks.Task{``0})">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
+  <member name="M:Emik.Results.Extensions.PleaseAsync.TryResult``1(System.Threading.Tasks.ValueTask{``0})">
+    <attribute ctor="M:JetBrains.Annotations.MustUseReturnValueAttribute.#ctor" />
+  </member>
   <member name="M:Emik.Results.Extensions.ResultFactory.Flatten``2(System.Collections.Generic.IEnumerable{Emik.Results.Result{``0,``1}})">
     <parameter name="enumerable">
       <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
