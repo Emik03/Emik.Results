@@ -509,6 +509,16 @@
       <attribute ctor="M:JetBrains.Annotations.InstantHandleAttribute.#ctor" />
     </parameter>
   </member>
+  <member name="M:Emik.Results.Result`2.op_BitwiseOr(Emik.Results.Result{`0,`1},`0)">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>1</argument>
+    </attribute>
+  </member>
+  <member name="M:Emik.Results.Result`2.op_BitwiseOr(Emik.Results.Result{`0,`1},`1)">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>1</argument>
+    </attribute>
+  </member>
   <member name="M:Emik.Results.Result`2.op_Equality(Emik.Results.Result{`0,`1},Emik.Results.Result{`0,`1})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
@@ -534,6 +544,11 @@
       <argument>0</argument>
     </attribute>
   </member>
+  <member name="M:Emik.Results.Result`2.op_False(Emik.Results.Result{`0,`1})">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>0</argument>
+    </attribute>
+  </member>
   <member name="M:Emik.Results.Result`2.op_Implicit(`0)~Emik.Results.Result{`0,`1}">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>0</argument>
@@ -547,9 +562,39 @@
       <argument>0</argument>
     </attribute>
   </member>
+  <member name="M:Emik.Results.Result`2.op_Implicit(Emik.Results.Result{`0,Emik.Results.Result{`0,`1}})~Emik.Results.Result{`0,`1}">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>1</argument>
+    </attribute>
+  </member>
+  <member name="M:Emik.Results.Result`2.op_Implicit(Emik.Results.Result{Emik.Results.Result{`0,`1},`1})~Emik.Results.Result{`0,`1}">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>1</argument>
+    </attribute>
+  </member>
+  <member name="M:Emik.Results.Result`2.op_Implicit(Emik.Results.Result{Emik.Results.Result{`0,`1},Emik.Results.Result{`0,`1}})~Emik.Results.Result{`0,`1}">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>1</argument>
+    </attribute>
+  </member>
   <member name="M:Emik.Results.Result`2.op_Inequality(Emik.Results.Result{`0,`1},Emik.Results.Result{`0,`1})">
     <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
       <argument>1</argument>
+    </attribute>
+  </member>
+  <member name="M:Emik.Results.Result`2.op_True(Emik.Results.Result{`0,`1})">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>0</argument>
+    </attribute>
+  </member>
+  <member name="M:Emik.Results.Result`2.op_UnaryNegation(Emik.Results.Result{`0,`1})">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>1</argument>
+    </attribute>
+  </member>
+  <member name="M:Emik.Results.Result`2.op_UnaryPlus(Emik.Results.Result{`0,`1})">
+    <attribute ctor="M:JetBrains.Annotations.CollectionAccessAttribute.#ctor(JetBrains.Annotations.CollectionAccessType)">
+      <argument>0</argument>
     </attribute>
   </member>
   <member name="M:Emik.Results.Result`2.Out(`0@,`1@)">
