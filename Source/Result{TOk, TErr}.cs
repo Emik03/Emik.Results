@@ -686,17 +686,32 @@ public readonly struct Result<TOk, TErr> :
     [StructLayout(LayoutKind.Auto)]
     public struct Enumerator : IEnumerator<TOk>
     {
-        readonly bool _isOk;
-
-        bool _called;
-
         /// <summary>Initializes a new instance of the <see cref="Enumerator"/> struct.</summary>
         /// <param name="ok">The value to <see langword="yield"/> once.</param>
         public Enumerator([ProvidesContext] TOk ok)
         {
             Current = ok;
-            _isOk = true;
+            IsOk = true;
         }
+
+        /// <summary>
+        /// Gets a value indicating whether <see cref="MoveNext"/> will
+        /// return <see langword="true"/> or <see langword="false"/>.
+        /// </summary>
+        [Pure]
+        public readonly bool CanMoveNext => IsOk && !IsEnd;
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="Enumerator"/> has been used.
+        /// </summary>
+        [Pure]
+        public bool IsEnd { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="Enumerator"/> has an <see cref="Ok"/> value.
+        /// </summary>
+        [Pure]
+        public bool IsOk { get; }
 
         /// <inheritdoc />
         [ProvidesContext, Pure]
@@ -710,10 +725,10 @@ public readonly struct Result<TOk, TErr> :
         readonly void IDisposable.Dispose() { }
 
         /// <inheritdoc />
-        public void Reset() => _called = false;
+        public void Reset() => IsEnd = false;
 
         /// <inheritdoc />
         [MustUseReturnValue]
-        public bool MoveNext() => _isOk && !_called && (_called = true);
+        public bool MoveNext() => CanMoveNext && (IsEnd = true);
     }
 }
