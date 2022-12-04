@@ -123,6 +123,19 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(None), Pure]
     public static implicit operator Result<TOk, TErr>([ProvidesContext] TOk ok) => new(ok);
 
+    /// <inheritdoc cref="ResultFactory.Flatten{TOk, TErr}(Result{Result{TOk, TErr}, TErr})"/>
+    [CollectionAccess(Read), Pure]
+    public static implicit operator Result<TOk, TErr>(Result<Result<TOk, TErr>, TErr> result) => result.Flatten();
+
+    /// <inheritdoc cref="ResultFactory.Flatten{TOk, TErr}(Result{TOk, Result{TOk, TErr}})"/>
+    [CollectionAccess(Read), Pure]
+    public static implicit operator Result<TOk, TErr>(Result<TOk, Result<TOk, TErr>> result) => result.Flatten();
+
+    /// <inheritdoc cref="ResultFactory.Flatten{TOk, TErr}(Result{Result{TOk, TErr}, Result{TOk, TErr}})"/>
+    [CollectionAccess(Read), Pure]
+    public static implicit operator Result<TOk, TErr>(Result<Result<TOk, TErr>, Result<TOk, TErr>> result) =>
+        result.Flatten();
+
     /// <summary>Implicitly converts <see cref="Result{TOk, TErr}"/> into <typeparamref name="TErr"/>.</summary>
     /// <param name="result">The result to pass in.</param>
     /// <returns>The property <see cref="Err"/>.</returns>
@@ -146,6 +159,14 @@ public readonly struct Result<TOk, TErr> :
     /// <returns>The property <see cref="Ok"/>, coalesced.</returns>
     [CollectionAccess(None), Pure]
     public static explicit operator TOk?(Result<TOk, TErr>? result) => result.HasValue ? result.Value.Ok : default;
+
+    /// <inheritdoc cref="IsOk"/>
+    [CollectionAccess(None), Pure]
+    public static bool operator true(Result<TOk, TErr> result) => result.IsOk;
+
+    /// <inheritdoc cref="IsErr"/>
+    [CollectionAccess(None), Pure]
+    public static bool operator false(Result<TOk, TErr> result) => result.IsErr;
 
     /// <summary>
     /// Determines if both results have the same value.
@@ -172,6 +193,24 @@ public readonly struct Result<TOk, TErr> :
     /// </returns>
     [CollectionAccess(Read), Pure]
     public static bool operator !=(Result<TOk, TErr> lh, Result<TOk, TErr> rh) => !(lh == rh);
+
+    /// <inheritdoc cref="OkOr(TOk)"/>
+    [CollectionAccess(Read), Pure]
+    public static TOk operator |(Result<TOk, TErr> result, TOk def) => result.OkOr(def);
+
+    /// <inheritdoc cref="ErrOr(TErr)"/>
+    [CollectionAccess(Read), Pure]
+    public static TErr operator |(Result<TOk, TErr> result, TErr def) => result.ErrOr(def);
+
+    /// <inheritdoc cref="Swap"/>
+    [CollectionAccess(Read), Pure]
+    public static Result<TErr, TOk> operator -(Result<TOk, TErr> result) => result.Swap();
+
+    /// <summary>Returns itself.</summary>
+    /// <param name="result">The parameter to return.</param>
+    /// <returns>The parameter <paramref name="result"/>.</returns>
+    [CollectionAccess(None), Pure]
+    public static Result<TOk, TErr> operator +(Result<TOk, TErr> result) => result;
 
     /// <inheritdoc />
     [CollectionAccess(Read)]
