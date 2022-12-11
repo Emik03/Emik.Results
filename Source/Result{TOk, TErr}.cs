@@ -325,7 +325,7 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc cref="ISet{T}.IsProperSubsetOf" />
     [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
     public bool IsProperSubsetOf([InstantHandle] IEnumerable<TOk> other) =>
-        other.ToCollectionLazily() is var c && c.Count > 1 && Overlaps(c);
+        other.ToCollectionLazily() is { Count: > 1 } c && Overlaps(c);
 
     /// <inheritdoc cref="ISet{T}.IsProperSupersetOf" />
     [CollectionAccess(Read), Pure]
@@ -338,7 +338,7 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc cref="ISet{T}.IsSupersetOf" />
     [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
     public bool IsSupersetOf([InstantHandle] IEnumerable<TOk> other) =>
-        other.ToCollectionLazily() is var c && c.Count <= 1 && Overlaps(c);
+        other.ToCollectionLazily() is { Count: <= 1 } c && Overlaps(c);
 
     /// <summary>
     /// Destructures the <see cref="Result{TOk, TErr}"/> into 2 optional values, <see cref="Ok"/> and <see cref="Err"/>.
