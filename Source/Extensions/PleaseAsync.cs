@@ -6,7 +6,7 @@
 
 #endregion
 
-#if !NET40_OR_GREATER
+#if !NETFRAMEWORK
 #pragma warning disable ASYNC0001
 namespace Emik.Results.Extensions;
 
