@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
+        <FileVersion>1.0.1</FileVersion>
         <RepositoryUrl>https://github.com/Emik03/Emik.Results</RepositoryUrl>
         <TargetFrameworks>net7.0;netstandard2.1;netstandard2.0;net48;net452;net35</TargetFrameworks>
-        <PackageTags>Catch Either Err Exception Extension Functional Fluent Linq Monad Monadic Monoid Ok Struct Try</PackageTags>
         <Description>Contains the Result type; A type representing either a success value or failure value.</Description>
+        <PackageTags>Catch Either Err Exception Extension Functional Fluent Linq Monad Monadic Monoid Ok Struct Try</PackageTags>
     </PropertyGroup>
 </Project>
