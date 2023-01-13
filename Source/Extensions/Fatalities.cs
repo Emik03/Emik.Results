@@ -41,7 +41,7 @@ public static class Fatalities
     /// <item><description><see cref="StackOverflowException"/></description></item>
     /// <item><description><see cref="ThreadAbortException"/></description></item>
     /// <item><description><see cref="TypeInitializationException"/></description></item>
-    /// <item><description><see cref="UnreachableException"/></description></item>
+    /// <item><description><c>UnreachableException</c> (including polyfills)</description></item>
     /// </list>
     /// </remarks>
     /// <param name="ex">The exception to determine whether it can be handled.</param>
