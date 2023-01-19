@@ -22,6 +22,7 @@ using static CollectionAccessType;
 #pragma warning disable MA0048, CA1710
 public readonly struct Result<TOk, TErr> :
 #pragma warning restore MA0048, CA1710
+    ICollection,
     ICloneable,
     IEquatable<Result<TOk, TErr>>,
     IEqualityComparer<Result<TOk, TErr>>,
@@ -63,17 +64,29 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(None), MemberNotNullWhen(false, nameof(Err)), MemberNotNullWhen(true, nameof(Ok)), Pure]
     public bool IsOk { get; }
 
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
+    bool ICollection.IsSynchronized => true;
+
     /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
     [CollectionAccess(None), Pure]
     bool ICollection<TOk>.IsReadOnly => true;
 
-    /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
-    [CollectionAccess(None), Pure]
-    int IReadOnlyCollection<TOk>.Count => 1;
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure, ValueRange(1)]
+    int ICollection.Count => 1;
 
     /// <inheritdoc cref="ICollection{T}.Count"/>
-    [CollectionAccess(None), Pure]
+    [CollectionAccess(None), Pure, ValueRange(1)]
     int ICollection<TOk>.Count => 1;
+
+    /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
+    [CollectionAccess(None), Pure, ValueRange(1)]
+    int IReadOnlyCollection<TOk>.Count => 1;
+
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
+    object ICollection.SyncRoot => new();
 
     /// <summary>
     /// Gets <see cref="Ok"/> if this <see cref="Result{TOk, TErr}"/>
@@ -209,6 +222,14 @@ public readonly struct Result<TOk, TErr> :
     /// <returns>The parameter <paramref name="result"/>.</returns>
     [CollectionAccess(None), Pure]
     public static Result<TOk, TErr> operator +(Result<TOk, TErr> result) => result;
+
+    /// <inheritdoc />
+    [CollectionAccess(Read)]
+    public void CopyTo(Array array, int index)
+    {
+        if (IsOk)
+            array.SetValue(Ok, index);
+    }
 
     /// <inheritdoc />
     [CollectionAccess(Read)]
