@@ -16,9 +16,6 @@ public static class Fatalities
     /// <item><description><see cref="ArgumentNullException"/></description></item>
     /// <item><description><see cref="ArgumentOutOfRangeException"/></description></item>
     /// <item><description><see cref="ArrayTypeMismatchException"/></description></item>
-    /// <item><description><see cref="AppDomainUnloadedException"/></description></item>
-    /// <item><description><see cref="BadImageFormatException"/></description></item>
-    /// <item><description><c>CultureNotFoundException</c> (excluding .NET Framework 3.5)</description></item>
     /// <item><description><see cref="ExecutionEngineException"/></description></item>
     /// <item><description><see cref="ExternalException"/></description></item>
     /// <item><description><see cref="IFatal"/></description></item>
@@ -28,7 +25,6 @@ public static class Fatalities
     /// <item><description><see cref="KeyNotFoundException"/></description></item>
     /// <item><description><see cref="NotImplementedException"/></description></item>
     /// <item><description><see cref="NullReferenceException"/></description></item>
-    /// <item><description><see cref="ObjectDisposedException"/></description></item>
     /// <item><description><see cref="OutOfMemoryException"/></description></item>
     /// <item><description><see cref="OverflowException"/></description></item>
     /// <item><description><see cref="RankException"/></description></item>
@@ -51,11 +47,6 @@ public static class Fatalities
             ArgumentNullException or
             ArgumentOutOfRangeException or
             ArrayTypeMismatchException or
-            AppDomainUnloadedException or
-            BadImageFormatException or
-#if !NET35
-            CultureNotFoundException or
-#endif
 #pragma warning disable CS0618
             ExecutionEngineException or
 #pragma warning restore CS0618
@@ -69,7 +60,6 @@ public static class Fatalities
             KeyNotFoundException or
             NotImplementedException or
             NullReferenceException or
-            ObjectDisposedException or
             OutOfMemoryException or
             OverflowException or
             RankException or
