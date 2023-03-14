@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 #if !NETFRAMEWORK
-#pragma warning disable ASYNC0001
+#pragma warning disable ASYNC0001, VSTHRD002, VSTHRD003, VSTHRD200
 namespace Emik.Results.Extensions;
 
 /// <summary>Methods to wrap try-catch into a <see cref="Result{TOk, TErr}"/>.</summary>
