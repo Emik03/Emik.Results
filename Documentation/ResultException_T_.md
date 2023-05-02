@@ -28,8 +28,8 @@ disallowed to catch this type, as it strongly indicates an unsalvageable program
 
 | Properties | |
 | :--- | :--- |
-| [Value](ResultException_T_.Value.md 'Emik.Results.ResultException<T>.Value') | Gets the value. |
+| [Value](ResultException_T_.Value().md 'Emik.Results.ResultException<T>.Value') | Gets the value. |
 
 | Explicit Interface Implementations | |
 | :--- | :--- |
-| [Emik.Results.IFatal.Value](ResultException_T_.Emik.Results.IFatal.Value.md 'Emik.Results.ResultException<T>.Emik.Results.IFatal.Value') | Gets the value. |
+| [Emik.Results.IFatal.Value](ResultException_T_.Emik.Results.IFatal.Value().md 'Emik.Results.ResultException<T>.Emik.Results.IFatal.Value') | Gets the value. |

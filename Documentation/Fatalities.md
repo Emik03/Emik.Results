@@ -13,5 +13,5 @@ Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.O
 
 | Methods | |
 | :--- | :--- |
-| [IsBenign(this Exception)](Fatalities.IsBenign.r3GEbHdkWAzFtiWrsM4nIA.md 'Emik.Results.Extensions.Fatalities.IsBenign(this System.Exception)') | Determines whether an [System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception') can be handled by [Please](Please.md 'Emik.Results.Please'). |
-| [IsFatal(this Exception)](Fatalities.IsFatal.3P0PkBdmnJpaVnoT5RIz+Q.md 'Emik.Results.Extensions.Fatalities.IsFatal(this System.Exception)') | Determines whether an [System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception') can be handled by [Please](Please.md 'Emik.Results.Please'). |
+| [IsBenign(this Exception)](Fatalities.IsBenign(Exception).md 'Emik.Results.Extensions.Fatalities.IsBenign(this System.Exception)') | Determines whether an [System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception') can be handled by [Please](Please.md 'Emik.Results.Please'). |
+| [IsFatal(this Exception)](Fatalities.IsFatal(Exception).md 'Emik.Results.Extensions.Fatalities.IsFatal(this System.Exception)') | Determines whether an [System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception') can be handled by [Please](Please.md 'Emik.Results.Please'). |
