@@ -23,7 +23,9 @@ public sealed class ResultException<T> : Exception, IFatal
     ResultException()
         : this(null, null) { }
 
+#pragma warning disable IDE0051
     ResultException(string? message) // ReSharper disable once IntroduceOptionalParameters.Local
+#pragma warning restore IDE0051
         : this(message, null) { }
 
     ResultException(string? message, Exception? innerException)
