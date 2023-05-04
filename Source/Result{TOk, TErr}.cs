@@ -22,6 +22,22 @@ using static CollectionAccessType;
 #pragma warning disable MA0048, CA1710
 public readonly struct Result<TOk, TErr> :
 #pragma warning restore MA0048, CA1710
+#if NET7_0_OR_GREATER
+    IComparisonOperators<Result<TOk, TErr>, Result<TOk, TErr>, bool>,
+    IUnaryNegationOperators<Result<TOk, TErr>, Result<TErr, TOk>>,
+    IUnaryPlusOperators<Result<TOk, TErr>, Result<TOk, TErr>>,
+#endif
+#if NET471_OR_GREATER || NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+    ITuple,
+#endif
+#if NET40 || NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
+    IStructuralComparable,
+#endif
+    IComparable,
+    IComparable<Result<TOk, TErr>>,
+    IComparer,
+    IComparer<Result<TOk, TErr>>,
+    IEqualityComparer,
     ICollection,
     ICloneable,
     IEquatable<Result<TOk, TErr>>,
@@ -80,6 +96,22 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(None), Pure, ValueRange(1)]
     int ICollection<TOk>.Count => 1;
 
+#if NETSTANDARD2_1_OR_GREATER || NET471_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+    /// <inheritdoc />
+    [Pure, ValueRange(2)]
+    int ITuple.Length => 2;
+
+    /// <inheritdoc />
+    [Pure]
+    object? ITuple.this[[ValueRange(0, 1)] int index] =>
+        index switch
+        {
+            0 => Ok,
+            1 => Err, // ReSharper disable once UnreachableSwitchArmDueToIntegerAnalysis
+            _ => null,
+        };
+#endif
+
     /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
     [CollectionAccess(None), Pure, ValueRange(1)]
     int IReadOnlyCollection<TOk>.Count => 1;
@@ -105,16 +137,17 @@ public readonly struct Result<TOk, TErr> :
     public TOk? Ok { get; }
 
     /// <inheritdoc cref="IList{T}.this"/>
-    [Pure]
     TOk IList<TOk>.this[int _]
     {
-        [CollectionAccess(Read)] get => Expect();
+        [CollectionAccess(Read), MustUseReturnValue] get => Expect();
         [CollectionAccess(None)] set { }
     }
 
     /// <inheritdoc cref="IList{T}.this"/>
-    [CollectionAccess(Read), Pure]
-    TOk IReadOnlyList<TOk>.this[int _] => Expect();
+    TOk IReadOnlyList<TOk>.this[int _]
+    {
+        [CollectionAccess(Read), MustUseReturnValue] get => Expect();
+    }
 
     /// <summary>
     /// Implicitly converts <typeparamref name="TErr"/> into <see cref="Result{TOk, TErr}"/>.
@@ -183,27 +216,67 @@ public readonly struct Result<TOk, TErr> :
     /// Determines if both results have the same value.
     /// <see cref="Ok"/> and <see cref="Err"/> are evaluated separately.
     /// </summary>
-    /// <param name="lh">The left-hand side parameter.</param>
-    /// <param name="rh">The right-hand side parameter.</param>
+    /// <param name="left">The left-hand side parameter.</param>
+    /// <param name="right">The right-hand side parameter.</param>
     /// <returns>
     /// The value <see langword="true"/> if both are <see cref="Ok"/> or <see cref="Err"/> and
     /// contain the same inner value, otherwise <see langword="false"/>.
     /// </returns>
     [CollectionAccess(Read), Pure]
-    public static bool operator ==(Result<TOk, TErr> lh, Result<TOk, TErr> rh) => lh.Equals(rh);
+    public static bool operator ==(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.Equals(right);
 
     /// <summary>
     /// Determines if both results do not have the same value.
     /// <see cref="Ok"/> and <see cref="Err"/> are evaluated separately.
     /// </summary>
-    /// <param name="lh">The left-hand side parameter.</param>
-    /// <param name="rh">The right-hand side parameter.</param>
+    /// <param name="left">The left-hand side parameter.</param>
+    /// <param name="right">The right-hand side parameter.</param>
     /// <returns>
     /// The value <see langword="false"/> if both are <see cref="Ok"/> or <see cref="Err"/> and
     /// contain the same inner value, otherwise <see langword="true"/>.
     /// </returns>
     [CollectionAccess(Read), Pure]
-    public static bool operator !=(Result<TOk, TErr> lh, Result<TOk, TErr> rh) => !(lh == rh);
+    public static bool operator !=(Result<TOk, TErr> left, Result<TOk, TErr> right) => !(left == right);
+
+    /// <summary>Determines if the left result is lesser than the right.</summary>
+    /// <param name="left">The left-hand side parameter.</param>
+    /// <param name="right">The right-hand side parameter.</param>
+    /// <returns>
+    /// The value <see langword="true"/> if either <paramref name="left"/> is <see cref="Err"/> and
+    /// <paramref name="right"/> is <see cref="Ok"/>, or both are <see cref="Ok"/> or <see cref="Err"/>
+    /// and <paramref name="left"/>'s inner value is lesser than the <paramref name="right"/>'s inner
+    /// value, otherwise <see langword="false"/>.
+    /// </returns>
+    public static bool operator <(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) < 0;
+
+    /// <summary>Determines if the left result is lesser or equal to the right.</summary>
+    /// <param name="left">The left-hand side parameter.</param>
+    /// <param name="right">The right-hand side parameter.</param>
+    /// <returns>
+    /// The value <see langword="true"/> if <paramref name="left"/> is lesser or equal to <paramref name="right"/>,
+    /// otherwise <see langword="false"/>.
+    /// </returns>
+    public static bool operator <=(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) <= 0;
+
+    /// <summary>Determines if the left result is greater than the right.</summary>
+    /// <param name="left">The left-hand side parameter.</param>
+    /// <param name="right">The right-hand side parameter.</param>
+    /// <returns>
+    /// The value <see langword="true"/> if either <paramref name="left"/> is <see cref="Err"/> and
+    /// <paramref name="right"/> is <see cref="Ok"/>, or both are <see cref="Ok"/> or <see cref="Err"/>
+    /// and <paramref name="left"/>'s inner value is greater than the <paramref name="right"/>'s inner
+    /// value, otherwise <see langword="false"/>.
+    /// </returns>
+    public static bool operator >(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) > 0;
+
+    /// <summary>Determines if the left result is greater or equal to the right.</summary>
+    /// <param name="left">The left-hand side parameter.</param>
+    /// <param name="right">The right-hand side parameter.</param>
+    /// <returns>
+    /// The value <see langword="true"/> if <paramref name="left"/> is greater or equal to <paramref name="right"/>,
+    /// otherwise <see langword="false"/>.
+    /// </returns>
+    public static bool operator >=(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) >= 0;
 
     /// <inheritdoc cref="OkOr(TOk)"/>
     [CollectionAccess(Read), Pure]
@@ -310,13 +383,6 @@ public readonly struct Result<TOk, TErr> :
             ? other.IsOk && EqualityComparer<TOk>.Default.Equals(Ok, other.Ok)
             : other.IsErr && EqualityComparer<TErr>.Default.Equals(Err, other.Err);
 
-    /// <inheritdoc/>
-    [CollectionAccess(Read), Pure]
-    public bool Equals(Result<TOk, TErr> x, Result<TOk, TErr> y) =>
-        x.IsOk
-            ? y.IsOk && EqualityComparer<TOk>.Default.Equals(x.Ok, y.Ok)
-            : y.IsErr && EqualityComparer<TErr>.Default.Equals(x.Err, y.Err);
-
     /// <summary>
     /// Calls a <see cref="Predicate{T}"/> for <see cref="Err"/> if <see cref="Err"/> is set,
     /// or returns <see langword="false"/>.
@@ -348,7 +414,12 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc cref="ISet{T}.IsProperSupersetOf" />
     [CollectionAccess(Read), Pure]
-    public bool IsProperSupersetOf([InstantHandle] IEnumerable<TOk> other) => !other.Any();
+    public bool IsProperSupersetOf([InstantHandle] IEnumerable<TOk> other) =>
+#if NET20 || NET30
+        !other.GetEnumerator().MoveNext();
+#else
+        !other.Any();
+#endif
 
     /// <inheritdoc cref="ISet{T}.IsSubsetOf" />
     [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
@@ -394,11 +465,24 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc cref="ISet{T}.Overlaps" />
     [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
-    public bool Overlaps([InstantHandle] IEnumerable<TOk> other) => IsOk && other.Contains(Ok);
+    public bool Overlaps([InstantHandle] IEnumerable<TOk> other) =>
+        IsOk &&
+        other
+#if NET20 || NET30
+           .ToCollectionLazily()
+#endif
+           .Contains(Ok);
 
     /// <inheritdoc cref="ISet{T}.SetEquals" />
     [CollectionAccess(Read), Pure]
-    public bool SetEquals([InstantHandle] IEnumerable<TOk> other) => other.SequenceEqual(this);
+    public bool SetEquals([InstantHandle] IEnumerable<TOk> other) =>
+#if NET20 || NET30
+        other.GetEnumerator() is var e && e.MoveNext()
+            ? IsOk && EqualityComparer<TOk>.Default.Equals(Ok, e.Current)
+            : IsErr;
+#else
+            other.SequenceEqual(this);
+#endif
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
@@ -406,18 +490,58 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
+    bool IEqualityComparer.Equals(object? x, object? y) =>
+        x is Result<TOk, TErr> a && y is Result<TOk, TErr> b ? Equals(a, b) : Equals(x, y);
+
+    /// <inheritdoc/>
+    [CollectionAccess(None), Pure]
+    bool IEqualityComparer<Result<TOk, TErr>>.Equals(Result<TOk, TErr> x, Result<TOk, TErr> y) =>
+        x.IsOk
+            ? y.IsOk && EqualityComparer<TOk>.Default.Equals(x.Ok, y.Ok)
+            : y.IsErr && EqualityComparer<TErr>.Default.Equals(x.Err, y.Err);
+
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
+    int IEqualityComparer.GetHashCode(object obj) => obj is Result<TOk, TErr> a ? a.GetHashCode() : obj.GetHashCode();
+
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
     bool ISet<TOk>.Add(TOk item) => false;
+
+    /// <inheritdoc />
+    [CollectionAccess(Read), Pure]
+    public int Compare(Result<TOk, TErr> x, Result<TOk, TErr> y) =>
+        IsOk ? y.IsOk ? Comparer<TOk>.Default.Compare(Ok, y.Ok) : 1 :
+        y.IsOk ? -1 : Comparer<TErr>.Default.Compare(Err, y.Err);
+
+    /// <inheritdoc />
+    [CollectionAccess(Read), Pure]
+    public int CompareTo(Result<TOk, TErr> other) => Compare(this, other);
 
     /// <inheritdoc/>
     [CollectionAccess(Read), Pure]
-    public int GetHashCode(Result<TOk, TErr> obj) =>
-        obj.Out(out var ok, out var err)
-            ? EqualityComparer<TOk>.Default.GetHashCode(ok)
-            : EqualityComparer<TErr>.Default.GetHashCode(err);
+    int IEqualityComparer<Result<TOk, TErr>>.GetHashCode(Result<TOk, TErr> obj) => obj.GetHashCode();
 
     /// <inheritdoc />
-    [CollectionAccess(Read)]
+    [CollectionAccess(None), Pure]
+    int IComparable.CompareTo(object? obj) =>
+        obj is Result<TOk, TErr> x ? CompareTo(x) : Comparer.Default.Compare(this, obj);
+
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
+    int IComparer.Compare(object? x, object? y) =>
+        x is Result<TOk, TErr> a && y is Result<TOk, TErr> b ? Compare(a, b) : Comparer.Default.Compare(x, y);
+
+    /// <inheritdoc />
+    [CollectionAccess(Read), Pure]
     int IList<TOk>.IndexOf(TOk item) => Contains(item) ? 0 : -1;
+
+#if NET40 || NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
+    int IStructuralComparable.CompareTo(object? other, IComparer comparer) =>
+        other is Result<TOk, TErr> x ? Compare(this, x) : comparer.Compare(this, other);
+#endif
 
     /// <inheritdoc/>
     [CollectionAccess(Read), Pure]
@@ -429,7 +553,7 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc/>
     [CollectionAccess(Read), Pure]
-    public override int GetHashCode() => Out(out var ok, out var err) ? ok.GetHashCode() : err.GetHashCode();
+    public override int GetHashCode() => IsOk ? Ok.GetHashCode() : Err.GetHashCode();
 
     /// <inheritdoc/>
     [CollectionAccess(Read), Pure]
