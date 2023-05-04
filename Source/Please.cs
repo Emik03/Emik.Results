@@ -21,7 +21,7 @@ public static class Please
             return ex;
         }
     }
-
+#if !NET20 && !NET30
     /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
     /// <param name="action">The <see cref="Delegate"/> to invoke.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
@@ -38,6 +38,7 @@ public static class Please
             return ex;
         }
     }
+#endif
 
     /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
     /// <typeparam name="T">The type of the first parameter.</typeparam>
@@ -58,6 +59,28 @@ public static class Please
         }
     }
 
+    /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
+    /// <typeparam name="T">The type of the first parameter.</typeparam>
+    /// <typeparam name="TResult">The type of the result of <paramref name="converter"/>.</typeparam>
+    /// <param name="converter">The <see cref="Delegate"/> to invoke.</param>
+    /// <param name="first">The first parameter to invoke <paramref name="converter"/> with.</param>
+    /// <returns>The result of <paramref name="converter"/>, or the <see cref="Exception"/> thrown.</returns>
+    [MustUseReturnValue]
+    public static Result<TResult, Exception> TryMap<T, TResult>(
+        [InstantHandle] Converter<T, TResult> converter,
+        T first
+    )
+    {
+        try
+        {
+            return converter(first);
+        }
+        catch (Exception ex) when (ex.IsBenign())
+        {
+            return ex;
+        }
+    }
+#if !NET20 && !NET30
     /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
     /// <typeparam name="T1">The type of the first parameter.</typeparam>
     /// <typeparam name="T2">The type of the second parameter.</typeparam>
@@ -257,26 +280,5 @@ public static class Please
             return ex;
         }
     }
-
-    /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
-    /// <typeparam name="T">The type of the first parameter.</typeparam>
-    /// <typeparam name="TResult">The type of the result of <paramref name="converter"/>.</typeparam>
-    /// <param name="converter">The <see cref="Delegate"/> to invoke.</param>
-    /// <param name="first">The first parameter to invoke <paramref name="converter"/> with.</param>
-    /// <returns>The result of <paramref name="converter"/>, or the <see cref="Exception"/> thrown.</returns>
-    [MustUseReturnValue]
-    public static Result<TResult, Exception> TryMap<T, TResult>(
-        [InstantHandle] Converter<T, TResult> converter,
-        T first
-    )
-    {
-        try
-        {
-            return converter(first);
-        }
-        catch (Exception ex) when (ex.IsBenign())
-        {
-            return ex;
-        }
-    }
+#endif
 }

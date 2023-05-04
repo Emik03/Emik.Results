@@ -83,16 +83,21 @@ public sealed class ResultException<T> : Exception, IFatal
         (Converter<T, TOther?>?)Delegate.CreateDelegate((Type)typeof(Converter<T, TOther>), method, false);
 
     [MustUseReturnValue] // ReSharper disable once SuggestBaseTypeForParameter
-    static MethodInfo? Get<TFrom, TTo>() =>
-        typeof(TFrom)
-           .GetMethods(Bindings)
-           .Concat(typeof(TTo).GetMethods(Bindings))
-           .FirstOrDefault(
-#pragma warning disable CS0252, CS0253
-                x => x.Name is Implicit or Explicit &&
-                    x.GetParameters() is { Length: 1 } arr &&
-                    arr[0].ParameterType == typeof(TFrom) &&
-                    x.ReturnType != typeof(TTo)
-#pragma warning restore CS0252, CS0253
-            );
+    static MethodInfo? Get<TFrom, TTo>()
+    {
+        var from = typeof(TFrom).GetMethods(Bindings);
+        var to = typeof(TTo).GetMethods(Bindings);
+        var both = new MethodInfo[from.Length + to.Length];
+
+        Array.Copy(from, both, from.Length);
+        Array.Copy(to, 0, both, from.Length, to.Length);
+
+        return Array.Find(both, HasCast<TFrom, TTo>);
+    }
+
+    static bool HasCast<TFrom, TTo>(MethodInfo x) =>
+        x.Name is Implicit or Explicit &&
+        x.GetParameters() is { Length: 1 } arr &&
+        arr[0].ParameterType == typeof(TFrom) &&
+        x.ReturnType != typeof(TTo);
 }

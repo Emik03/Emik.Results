@@ -22,7 +22,7 @@ public static class ResultFactory
     [Pure]
     public static Result<TOk, TErr> Then<TOk, TErr>(this bool value, TOk ifTrue, TErr ifFalse) =>
         value ? ifTrue : ifFalse;
-
+#if !NET20 && !NET30
     /// <summary>Creates a result from a boolean expression.</summary>
     /// <remarks><para>All parameters are lazily evaluated.</para></remarks>
     /// <typeparam name="TOk">The success type.</typeparam>
@@ -41,6 +41,7 @@ public static class ResultFactory
         [InstantHandle] Func<TErr> onFalse
     ) =>
         value ? onTrue() : onFalse();
+#endif
 
     /// <summary>
     /// Returns all <see cref="Result{TOk, TErr}.Ok"/> values,
