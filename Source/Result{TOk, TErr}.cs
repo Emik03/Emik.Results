@@ -201,7 +201,7 @@ public readonly struct Result<TOk, TErr> :
     /// <summary>Implicitly converts <see cref="Result{TOk, TErr}"/> into <typeparamref name="TOk"/>.</summary>
     /// <param name="result">The result to pass in.</param>
     /// <returns>The property <see cref="Ok"/>, coalesced.</returns>
-    [CollectionAccess(None), Pure]
+    [CollectionAccess(Read), Pure]
     public static explicit operator TOk?(Result<TOk, TErr>? result) => result.HasValue ? result.Value.Ok : default;
 
     /// <inheritdoc cref="IsOk"/>
@@ -247,6 +247,7 @@ public readonly struct Result<TOk, TErr> :
     /// and <paramref name="left"/>'s inner value is lesser than the <paramref name="right"/>'s inner
     /// value, otherwise <see langword="false"/>.
     /// </returns>
+    [CollectionAccess(Read), Pure]
     public static bool operator <(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) < 0;
 
     /// <summary>Determines if the left result is lesser or equal to the right.</summary>
@@ -256,6 +257,7 @@ public readonly struct Result<TOk, TErr> :
     /// The value <see langword="true"/> if <paramref name="left"/> is lesser or equal to <paramref name="right"/>,
     /// otherwise <see langword="false"/>.
     /// </returns>
+    [CollectionAccess(Read), Pure]
     public static bool operator <=(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) <= 0;
 
     /// <summary>Determines if the left result is greater than the right.</summary>
@@ -267,6 +269,7 @@ public readonly struct Result<TOk, TErr> :
     /// and <paramref name="left"/>'s inner value is greater than the <paramref name="right"/>'s inner
     /// value, otherwise <see langword="false"/>.
     /// </returns>
+    [CollectionAccess(Read), Pure]
     public static bool operator >(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) > 0;
 
     /// <summary>Determines if the left result is greater or equal to the right.</summary>
@@ -276,6 +279,7 @@ public readonly struct Result<TOk, TErr> :
     /// The value <see langword="true"/> if <paramref name="left"/> is greater or equal to <paramref name="right"/>,
     /// otherwise <see langword="false"/>.
     /// </returns>
+    [CollectionAccess(Read), Pure]
     public static bool operator >=(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) >= 0;
 
     /// <inheritdoc cref="OkOr(TOk)"/>
@@ -283,7 +287,7 @@ public readonly struct Result<TOk, TErr> :
     public static TOk operator |(Result<TOk, TErr> result, TOk def) => result.OkOr(def);
 
     /// <inheritdoc cref="ErrOr(TErr)"/>
-    [CollectionAccess(Read), Pure]
+    [CollectionAccess(None), Pure]
     public static TErr operator |(Result<TOk, TErr> result, TErr def) => result.ErrOr(def);
 
     /// <inheritdoc cref="Swap"/>
@@ -491,7 +495,7 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
     bool IEqualityComparer.Equals(object? x, object? y) =>
-        x is Result<TOk, TErr> a && y is Result<TOk, TErr> b ? Equals(a, b) : Equals(x, y);
+        x is Result<TOk, TErr> a && y is Result<TOk, TErr> b ? a.Equals(b) : Equals(x, y);
 
     /// <inheritdoc/>
     [CollectionAccess(None), Pure]
@@ -544,7 +548,7 @@ public readonly struct Result<TOk, TErr> :
 #endif
 
     /// <inheritdoc/>
-    [CollectionAccess(Read), Pure]
+    [CollectionAccess(None), Pure]
     public object Clone() => this;
 
     /// <inheritdoc/>
@@ -787,7 +791,7 @@ public readonly struct Result<TOk, TErr> :
     /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
     /// <exception cref="ResultException{T}">This <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>.</exception>
     /// <returns>The value <see cref="Err"/>.</returns>
-    [CollectionAccess(None), MemberNotNull(nameof(Err)), MustUseReturnValue]
+    [CollectionAccess(Read), MemberNotNull(nameof(Err)), MustUseReturnValue]
     public TErr ExpectErr(string? message = null) =>
         IsErr ? Err :
             message is null ?
