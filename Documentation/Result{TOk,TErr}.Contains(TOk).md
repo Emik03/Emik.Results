@@ -17,7 +17,7 @@ public bool Contains(TOk item);
 
 The value to compare.
 
-Implements [Contains(T)](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1.Contains#System_Collections_Generic_ICollection_1_Contains__0_ 'System.Collections.Generic.ICollection`1.Contains(`0)')
+Implements [Contains(T)](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlySet-1.Contains#System_Collections_Generic_IReadOnlySet_1_Contains__0_ 'System.Collections.Generic.IReadOnlySet`1.Contains(`0)'), [Contains(T)](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1.Contains#System_Collections_Generic_ICollection_1_Contains__0_ 'System.Collections.Generic.ICollection`1.Contains(`0)')
 
 #### Returns
 [System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')  

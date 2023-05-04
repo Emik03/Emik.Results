@@ -7,19 +7,19 @@ Determines if both results have the same value.
 [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok') and [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') are evaluated separately.
 
 ```csharp
-public static bool operator ==(Emik.Results.Result<TOk,TErr> lh, Emik.Results.Result<TOk,TErr> rh);
+public static bool operator ==(Emik.Results.Result<TOk,TErr> left, Emik.Results.Result<TOk,TErr> right);
 ```
 #### Parameters
 
-<a name='Emik.Results.Result_TOk,TErr_.op_Equality(Emik.Results.Result_TOk,TErr_,Emik.Results.Result_TOk,TErr_).lh'></a>
+<a name='Emik.Results.Result_TOk,TErr_.op_Equality(Emik.Results.Result_TOk,TErr_,Emik.Results.Result_TOk,TErr_).left'></a>
 
-`lh` [Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TOk](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TOk 'Emik.Results.Result<TOk,TErr>.TOk')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TErr](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TErr 'Emik.Results.Result<TOk,TErr>.TErr')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')
+`left` [Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TOk](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TOk 'Emik.Results.Result<TOk,TErr>.TOk')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TErr](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TErr 'Emik.Results.Result<TOk,TErr>.TErr')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')
 
 The left-hand side parameter.
 
-<a name='Emik.Results.Result_TOk,TErr_.op_Equality(Emik.Results.Result_TOk,TErr_,Emik.Results.Result_TOk,TErr_).rh'></a>
+<a name='Emik.Results.Result_TOk,TErr_.op_Equality(Emik.Results.Result_TOk,TErr_,Emik.Results.Result_TOk,TErr_).right'></a>
 
-`rh` [Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TOk](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TOk 'Emik.Results.Result<TOk,TErr>.TOk')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TErr](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TErr 'Emik.Results.Result<TOk,TErr>.TErr')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')
+`right` [Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TOk](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TOk 'Emik.Results.Result<TOk,TErr>.TOk')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TErr](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TErr 'Emik.Results.Result<TOk,TErr>.TErr')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')
 
 The right-hand side parameter.
 
