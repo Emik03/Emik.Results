@@ -481,7 +481,7 @@ public readonly struct Result<TOk, TErr> :
             ? IsOk && EqualityComparer<TOk>.Default.Equals(Ok, e.Current)
             : IsErr;
 #else
-            other.SequenceEqual(this);
+        other.SequenceEqual(this);
 #endif
 
     /// <inheritdoc />
