@@ -6,7 +6,7 @@
         <RepositoryUrl>https://github.com/Emik03/Emik.Results</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Emik03/Emik.Results</PackageProjectUrl>
         <TargetFrameworks>net7.0;netstandard2.1;netstandard2.0;net40;net35;net20</TargetFrameworks>
-        <PackageLicenseUrl>https://github.com/Emik03/Emik.Results/blob/main/LICENSE</PackageLicenseUrl>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/Emik03/Emik.Results/main/README.md</PackageLicenseUrl>
         <Description>Contains the Result type; A type representing either a success value or failure value.</Description>
         <PackageTags>Catch Either Err Exception Extension Functional Fluent Linq Monad Monadic Monoid Ok Struct Try</PackageTags>
     </PropertyGroup>
