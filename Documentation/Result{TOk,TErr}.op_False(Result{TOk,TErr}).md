@@ -3,7 +3,7 @@
 
 ## Result<TOk,TErr>.operator false(Result<TOk,TErr>) Operator
 
-Gets a value indicating whether this [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>') has an [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') value.
+Gets a value indicating whether this [IBoxedResult](IBoxedResult.md 'Emik.Results.IBoxedResult') has an `Err` value.
 
 ```csharp
 public static bool operator false(Emik.Results.Result<TOk,TErr> result);
