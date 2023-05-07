@@ -485,9 +485,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read), Pure]
     public bool SetEquals([InstantHandle] IEnumerable<TOk> other) =>
 #if NET20 || NET30
-        other.GetEnumerator() is var e && e.MoveNext()
-            ? IsOk && EqualityComparer<TOk>.Default.Equals(Ok, e.Current)
-            : IsErr;
+        other.GetEnumerator() is var e && e.MoveNext() ? Contains(e.Current) : IsErr;
 #else
         other.SequenceEqual(this);
 #endif
