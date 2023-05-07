@@ -1,5 +1,8 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 namespace Emik.Results;
+#if NETFRAMEWORK && !NET47_OR_GREATER || NETSTANDARD && !NETSTANDARD2_0_OR_GREATER || NETCOREAPP && !NETCOREAPP2_0_OR_GREATER
+using ValueTuple = Unit;
+#endif
 
 /// <summary>Methods to wrap try-catch into a <see cref="Result{TOk, TErr}"/>.</summary>
 public static class Please
@@ -142,7 +145,7 @@ public static class Please
     /// <param name="fourth">The fourth parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object?, Exception> Try<T1, T2, T3, T4>(
+    public static Result<ValueTuple, Exception> Try<T1, T2, T3, T4>(
         [InstantHandle] Action<T1, T2, T3, T4> action,
         T1 first,
         T2 second,
@@ -153,7 +156,7 @@ public static class Please
         try
         {
             action(first, second, third, fourth);
-            return Ok();
+            return (Result<ValueTuple, Exception>)UntypedResult.Ok;
         }
         catch (Exception ex) when (ex.IsBenign())
         {

@@ -1,6 +1,8 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 namespace Emik.Results;
-
+#if NETFRAMEWORK && !NET47_OR_GREATER || NETSTANDARD && !NETSTANDARD2_0_OR_GREATER || NETCOREAPP && !NETCOREAPP2_0_OR_GREATER
+using ValueTuple = Unit;
+#endif
 using static CollectionAccessType;
 
 /// <summary>
@@ -150,15 +152,6 @@ public readonly struct Result<TOk, TErr> :
     }
 
     /// <summary>
-    /// Implicitly converts <typeparamref name="TErr"/> into <see cref="Result{TOk, TErr}"/>.
-    /// The error value is specified.
-    /// </summary>
-    /// <param name="err">The error value to pass in.</param>
-    /// <returns>An encapsulation of the parameter <paramref name="err"/>.</returns>
-    [CollectionAccess(None), Pure]
-    public static implicit operator Result<TOk, TErr>(TErr err) => new(err);
-
-    /// <summary>
     /// Implicitly converts <typeparamref name="TOk"/> into <see cref="Result{TOk, TErr}"/>.
     /// The success value is specified.
     /// </summary>
@@ -179,6 +172,36 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read), Pure]
     public static implicit operator Result<TOk, TErr>(Result<Result<TOk, TErr>, Result<TOk, TErr>> result) =>
         result.Flatten();
+
+    /// <summary>Converts the <see cref="Ok"/> unit value to the default value of <typeparamref name="TOk"/>.</summary>
+    /// <param name="result">The result to pass in.</param>
+    /// <returns>The property <see cref="Err"/> or the default value of <typeparamref name="TOk"/>.</returns>
+    [CollectionAccess(None), Pure]
+    public static implicit operator Result<TOk?, TErr>(Result<ValueTuple, TErr> result) =>
+        result.IsOk ? default(TOk) : result.Err;
+
+    /// <summary>Converts the <see cref="Err"/> unit value to the default value of <typeparamref name="TErr"/>.</summary>
+    /// <param name="result">The result to pass in.</param>
+    /// <returns>The property <see cref="Ok"/> or the default value of <typeparamref name="TErr"/>.</returns>
+    [CollectionAccess(Read), Pure]
+    public static implicit operator Result<TOk, TErr?>(Result<TOk, ValueTuple> result) =>
+        result.IsOk ? result.Ok : default(TErr);
+
+    /// <summary>Converts the unit values to the default values.</summary>
+    /// <param name="result">The result to pass in.</param>
+    /// <returns>The units mapped to default values.</returns>
+    [CollectionAccess(None), Pure]
+    public static implicit operator Result<TOk?, TErr?>(Result<ValueTuple, ValueTuple> result) =>
+        result.IsOk ? default(TOk) : default(TErr);
+
+    /// <summary>
+    /// Implicitly converts <typeparamref name="TErr"/> into <see cref="Result{TOk, TErr}"/>.
+    /// The error value is specified.
+    /// </summary>
+    /// <param name="err">The error value to pass in.</param>
+    /// <returns>An encapsulation of the parameter <paramref name="err"/>.</returns>
+    [CollectionAccess(None), Pure]
+    public static implicit operator Result<TOk, TErr>(TErr err) => new(err);
 
     /// <summary>Implicitly converts <see cref="Result{TOk, TErr}"/> into <typeparamref name="TErr"/>.</summary>
     /// <param name="result">The result to pass in.</param>
