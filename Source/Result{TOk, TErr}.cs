@@ -515,8 +515,8 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
     public int Compare(Result<TOk, TErr> x, Result<TOk, TErr> y) =>
-        IsOk ? y.IsOk ? Comparer<TOk>.Default.Compare(Ok, y.Ok) : 1 :
-        y.IsOk ? -1 : Comparer<TErr>.Default.Compare(Err, y.Err);
+        IsOk ? y.IsOk ? Comparer<TOk>.Default.Compare(Ok, y.Ok) : -1 :
+        y.IsOk ? 1 : Comparer<TErr>.Default.Compare(Err, y.Err);
 
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
