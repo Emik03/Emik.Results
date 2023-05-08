@@ -9,8 +9,9 @@ public interface IBoxedResult
 {
     /// <summary>Gets a value indicating whether this <see cref="IBoxedResult"/> has an <c>Ok</c> value.</summary>
     public bool IsOk { get; }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+
     /// <summary>Gets a value indicating whether this <see cref="IBoxedResult"/> has an <c>Err</c> value.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
     public bool IsErr => !IsOk;
 #else
     public bool IsErr { get; }

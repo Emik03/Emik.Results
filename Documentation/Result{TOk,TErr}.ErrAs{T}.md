@@ -6,8 +6,7 @@
 Casts [TErr](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TErr 'Emik.Results.Result<TOk,TErr>.TErr') into [T](Result{TOk,TErr}.ErrAs{T}.md#Emik.Results.Result_TOk,TErr_.ErrAs_T_().T 'Emik.Results.Result<TOk,TErr>.ErrAs<T>().T').
 
 ```csharp
-public Emik.Results.Result<TOk,T?> ErrAs<T>()
-    where T : class?;
+public Emik.Results.Result<TOk,T?> ErrAs<T>();
 ```
 #### Type parameters
 

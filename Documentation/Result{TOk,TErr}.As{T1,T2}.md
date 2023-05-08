@@ -7,9 +7,7 @@ Casts [TOk](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TOk 'Emik.Results.
 [TOk](Result{TOk,TErr}.md#Emik.Results.Result_TOk,TErr_.TOk 'Emik.Results.Result<TOk,TErr>.TOk') into [T1](Result{TOk,TErr}.As{T1,T2}.md#Emik.Results.Result_TOk,TErr_.As_T1,T2_().T1 'Emik.Results.Result<TOk,TErr>.As<T1,T2>().T1').
 
 ```csharp
-public Emik.Results.Result<T1?,T2?> As<T1,T2>()
-    where T1 : class?
-    where T2 : class?;
+public Emik.Results.Result<T1?,T2?> As<T1,T2>();
 ```
 #### Type parameters
 

@@ -644,9 +644,8 @@ public readonly struct Result<TOk, TErr> :
     /// <see name="Err"/> as <typeparamref name="T"/>.
     /// </returns>
     [CollectionAccess(Read), Pure]
-    public Result<T?, T?> As<T>()
-        where T : class? =>
-        IsOk ? Ok(Ok as T).ErrAs<T>() : Err(Err as T).OkAs<T>();
+    public Result<T?, T?> As<T>() =>
+        IsOk ? Ok(Ok is T o ? o : default).ErrAs<T>() : Err(Ok is T e ? e : default).OkAs<T>();
 
     /// <summary>
     /// Casts <typeparamref name="TOk"/> into <typeparamref name="T1"/> and
@@ -659,18 +658,17 @@ public readonly struct Result<TOk, TErr> :
     /// <see name="Err"/> as <typeparamref name="T2"/>.
     /// </returns>
     [CollectionAccess(Read), Pure]
-    public Result<T1?, T2?> As<T1, T2>()
-        where T1 : class?
-        where T2 : class? =>
-        IsOk ? Ok as T1 : Err as T2;
+    public Result<T1?, T2?> As<T1, T2>() =>
+        IsOk ? Ok is T1 o ? o : default :
+        Err is T2 e ? e : default;
 
     /// <summary>Casts <typeparamref name="TErr"/> into <typeparamref name="T"/>.</summary>
     /// <typeparam name="T">The type parameter to convert <typeparamref name="TErr"/> into.</typeparam>
     /// <returns>The value <see name="Err"/> as <typeparamref name="T"/>.</returns>
     [CollectionAccess(Read), Pure]
-    public Result<TOk, T?> ErrAs<T>()
-        where T : class? =>
-        IsOk ? Ok : Err as T;
+    public Result<TOk, T?> ErrAs<T>() =>
+        IsOk ? Ok :
+        Err is T t ? t : default;
 
     /// <summary>
     /// Invokes a delegate if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>, and returns itself.
@@ -745,9 +743,7 @@ public readonly struct Result<TOk, TErr> :
     /// <typeparam name="T">The type parameter to convert <typeparamref name="TOk"/> into.</typeparam>
     /// <returns>The value <see name="Ok"/> as <typeparamref name="T"/>.</returns>
     [CollectionAccess(Read), Pure]
-    public Result<T?, TErr> OkAs<T>()
-        where T : class? =>
-        IsOk ? Ok as T : Err;
+    public Result<T?, TErr> OkAs<T>() => IsOk ? Ok is T t ? t : default : Err;
 
     /// <summary>
     /// Applies a selector to <see cref="Ok"/> if <see cref="Ok"/> is set, leaving <see cref="Err"/> untouched.
