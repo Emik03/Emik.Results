@@ -289,6 +289,24 @@ public static class ResultFactory
     /// Gets the value of the <see cref="Result{TOk, TErr}"/> by casting into <typeparamref name="TErr"/>.
     /// </summary>
     /// <remarks><para>
+    /// The generic parameter <typeparamref name="TErr"/> must implement or inherit <typeparamref name="TOk"/>.
+    /// </para></remarks>
+    /// <typeparam name="TOk">The success type.</typeparam>
+    /// <typeparam name="TErr">The error type.</typeparam>
+    /// <param name="result">The result parameter.</param>
+    /// <returns>
+    /// The value <see cref="Result{TOk, TErr}.Ok"/> as <typeparamref name="TErr"/>,
+    /// or <see cref="Result{TOk, TErr}.Err"/>.
+    /// </returns>
+    [Pure]
+    public static TErr ErrOr<TOk, TErr>(this Result<TOk, TErr> result)
+        where TOk : TErr =>
+        result.IsOk ? result.Ok : result.Err;
+
+    /// <summary>
+    /// Gets the value of the <see cref="Result{TOk, TErr}"/> by casting into <typeparamref name="TErr"/>.
+    /// </summary>
+    /// <remarks><para>
     /// The generic parameter <typeparamref name="TOk"/> must implement or inherit <typeparamref name="TErr"/>.
     /// </para></remarks>
     /// <typeparam name="TOk">The success type.</typeparam>
@@ -384,4 +402,86 @@ public static class ResultFactory
     /// <returns>The value of <paramref name="result"/>.</returns>
     [Pure]
     public static T OkOrErr<T>(this Result<T, T> result) => result.IsOk ? result.Ok : result.Err;
+
+    /// <summary>Asserts that <typeparamref name="TErr"/> is non-null.</summary>
+    /// <typeparam name="TOk">The success type.</typeparam>
+    /// <typeparam name="TErr">The error type.</typeparam>
+    /// <param name="result">The result parameter.</param>
+    /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
+    /// <returns>A <see cref="Result{TOk, TErr}"/> where <typeparamref name="TErr"/> is non-null.</returns>
+    // ReSharper disable NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+    public static Result<TOk, TErr> ErrNotNull<TOk, TErr>(this Result<TOk, TErr?> result, string? message = null)
+        where TErr : class =>
+        result.Out(out var ok, out var err)
+            ? ok
+            : err ?? (TErr)ResultException<TErr?>.SmartThrow(message, err, $"Received null on {nameof(ErrNotNull)}.");
+
+    /// <summary>Asserts that <typeparamref name="TErr"/> is non-null.</summary>
+    /// <typeparam name="TOk">The success type.</typeparam>
+    /// <typeparam name="TErr">The error type.</typeparam>
+    /// <param name="result">The result parameter.</param>
+    /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
+    /// <returns>A <see cref="Result{TOk, TErr}"/> where <typeparamref name="TErr"/> is non-null.</returns>
+    public static Result<TOk, TErr> ErrNotNull<TOk, TErr>(this Result<TOk, TErr?> result, string? message = null)
+        where TErr : struct =>
+        result.Out(out var ok, out var err)
+            ? ok
+            : err ??
+            (TErr)ResultException<TErr?>.SmartThrow(message, err, $"Received null on {nameof(ErrNotNull)}.");
+
+    /// <summary>Asserts that both generics are non-null.</summary>
+    /// <typeparam name="TOk">The success type.</typeparam>
+    /// <typeparam name="TErr">The error type.</typeparam>
+    /// <param name="result">The result parameter.</param>
+    /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
+    /// <returns>A <see cref="Result{TOk, TErr}"/> where neither generics are null.</returns>
+    public static Result<TOk, TErr> NotNull<TOk, TErr>(this Result<TOk?, TErr?> result, string? message = null)
+        where TOk : class
+        where TErr : class =>
+        result.Out(out var ok, out var err)
+            ? ok ??
+            (TOk)ResultException<TOk?>.SmartThrow(message, ok, $"Received {nameof(Ok)} null on {nameof(NotNull)}.")
+            : err ??
+            (TErr)ResultException<TErr?>.SmartThrow(message, err, $"Received {nameof(Err)} null on {nameof(NotNull)}.");
+
+    /// <summary>Asserts that both generics are non-null.</summary>
+    /// <typeparam name="TOk">The success type.</typeparam>
+    /// <typeparam name="TErr">The error type.</typeparam>
+    /// <param name="result">The result parameter.</param>
+    /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
+    /// <returns>A <see cref="Result{TOk, TErr}"/> where neither generics are null.</returns>
+    public static Result<TOk, TErr> NotNull<TOk, TErr>(this Result<TOk?, TErr?> result, string? message = null)
+        where TOk : struct
+        where TErr : struct =>
+        result.Out(out var ok, out var err)
+            ? ok ??
+            (TOk)ResultException<TOk?>.SmartThrow(message, ok, $"Received {nameof(Ok)} null on {nameof(NotNull)}.")
+            : err ??
+            (TErr)ResultException<TErr?>.SmartThrow(message, err, $"Received {nameof(Err)} null on {nameof(NotNull)}.");
+
+    /// <summary>Asserts that <typeparamref name="TOk"/> is non-null.</summary>
+    /// <typeparam name="TOk">The success type.</typeparam>
+    /// <typeparam name="TErr">The error type.</typeparam>
+    /// <param name="result">The result parameter.</param>
+    /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
+    /// <returns>A <see cref="Result{TOk, TErr}"/> where <typeparamref name="TOk"/> is non-null.</returns>
+    public static Result<TOk, TErr> OkNotNull<TOk, TErr>(this Result<TOk?, TErr> result, string? message = null)
+        where TOk : class =>
+        result.Out(out var ok, out var err)
+            ? ok ??
+            (TOk)ResultException<TOk?>.SmartThrow(message, result.Ok, $"Received null on {nameof(OkNotNull)}.")
+            : err;
+
+    /// <summary>Asserts that <typeparamref name="TOk"/> is non-null.</summary>
+    /// <typeparam name="TOk">The success type.</typeparam>
+    /// <typeparam name="TErr">The error type.</typeparam>
+    /// <param name="result">The result parameter.</param>
+    /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
+    /// <returns>A <see cref="Result{TOk, TErr}"/> where <typeparamref name="TOk"/> is non-null.</returns>
+    public static Result<TOk, TErr> OkNotNull<TOk, TErr>(this Result<TOk?, TErr> result, string? message = null)
+        where TOk : struct =>
+        result.Out(out var ok, out var err)
+            ? ok ??
+            (TOk)ResultException<TOk?>.SmartThrow(message, result.Ok, $"Received null on {nameof(OkNotNull)}.")
+            : err;
 }

@@ -15,7 +15,7 @@ public static class PleaseAsync
         try
         {
             await func();
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -37,7 +37,7 @@ public static class PleaseAsync
         try
         {
             await func(first);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -62,7 +62,7 @@ public static class PleaseAsync
         try
         {
             await func(first, second);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -90,7 +90,7 @@ public static class PleaseAsync
         try
         {
             await func(first, second, third);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -121,7 +121,7 @@ public static class PleaseAsync
         try
         {
             await func(first, second, third, fourth);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -263,7 +263,7 @@ public static class PleaseAsync
         try
         {
             await task;
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -298,7 +298,7 @@ public static class PleaseAsync
         try
         {
             await func();
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -320,7 +320,7 @@ public static class PleaseAsync
         try
         {
             await func(first);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -345,7 +345,7 @@ public static class PleaseAsync
         try
         {
             await func(first, second);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -373,7 +373,7 @@ public static class PleaseAsync
         try
         {
             await func(first, second, third);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -404,7 +404,7 @@ public static class PleaseAsync
         try
         {
             await func(first, second, third, fourth);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -546,7 +546,7 @@ public static class PleaseAsync
         try
         {
             await task;
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -646,7 +646,7 @@ public static class PleaseAsync
         try
         {
             task.GetAwaiter().GetResult();
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -680,7 +680,7 @@ public static class PleaseAsync
         try
         {
             task.GetResult();
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -714,7 +714,7 @@ public static class PleaseAsync
         try
         {
             task.GetAwaiter().GetResult();
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -748,7 +748,7 @@ public static class PleaseAsync
         try
         {
             task.GetResult();
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {

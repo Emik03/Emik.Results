@@ -59,24 +59,34 @@ public sealed class ResultException<T> : Exception, IFatal
     /// Throws a <see cref="ResultException{T}"/>, but the <paramref name="message"/>
     /// may be replaced with <paramref name="value"/> from type coercion.
     /// </summary>
-    /// <param name="message">The message of the exception,
-    /// if <paramref name="value"/> isn't a <see langword="string"/>.
+    /// <param name="message">
+    /// The message of the exception, if <paramref name="value"/> isn't a <see langword="string"/>.
     /// </param>
-    /// <param name="value">The value of the exception, and message
-    /// if <typeparamref name="T"/> is <see langword="string"/>.
+    /// <param name="value">
+    /// The value of the exception, and message if <typeparamref name="T"/> is <see langword="string"/>.
     /// </param>
     /// <exception cref="ResultException{T}">Always.</exception>
     /// <returns>This method does not return.</returns>
     [DoesNotReturn]
     internal static object CoerceThenThrow(string? message, T value) =>
-        throw (s_toEx?.Invoke(value) ??
-            new ResultException<T>(s_toStr?.Invoke(value) ?? message ?? $"{value}", value));
+        throw (s_toEx?.Invoke(value) ?? new ResultException<T>(s_toStr?.Invoke(value) ?? message ?? $"{value}", value));
+
+    /// <summary>Throws a <see cref="ResultException{T}"/>, format depending on <paramref name="message"/>.</summary>
+    /// <param name="message">
+    /// The message of the exception, if <paramref name="value"/> isn't a <see langword="string"/>.
+    /// </param>
+    /// <param name="value">
+    /// The value of the exception, and message if <typeparamref name="T"/> is <see langword="string"/>.
+    /// </param>
+    /// <param name="defaultMessage">The message to use when <paramref name="message"/> is left unspecified.</param>
+    /// <returns>This method does not return.</returns>
+    [DoesNotReturn]
+    internal static object SmartThrow(string? message, T value, string defaultMessage) =>
+        message is null ? CoerceThenThrow(defaultMessage, value) : Throw(message, value);
 
     [MustUseReturnValue]
     static Converter<T, TOther?>? MakeCast<TOther>() =>
-        Get<T, TOther>() is { } method && Create<TOther>(method) is { } converter
-            ? converter
-            : null;
+        Get<T, TOther>() is { } method && Create<TOther>(method) is { } converter ? converter : null;
 
     [MustUseReturnValue]
     static Converter<T, TOther?>? Create<TOther>(MethodInfo method) => // ReSharper disable once RedundantCast

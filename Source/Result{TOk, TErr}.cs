@@ -633,6 +633,46 @@ public readonly struct Result<TOk, TErr> :
         IsErr ? converter(Err) : Ok;
 
     /// <summary>
+    /// Casts <typeparamref name="TOk"/> into <typeparamref name="T"/> and
+    /// <typeparamref name="TOk"/> into <typeparamref name="T"/>.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type parameter to convert <typeparamref name="TOk"/> and <typeparamref name="TErr"/> into.
+    /// </typeparam>
+    /// <returns>
+    /// The value <see name="Ok"/> as <typeparamref name="T"/> or the value
+    /// <see name="Err"/> as <typeparamref name="T"/>.
+    /// </returns>
+    [CollectionAccess(Read), Pure]
+    public Result<T?, T?> As<T>()
+        where T : class? =>
+        IsOk ? Ok(Ok as T).ErrAs<T>() : Err(Err as T).OkAs<T>();
+
+    /// <summary>
+    /// Casts <typeparamref name="TOk"/> into <typeparamref name="T1"/> and
+    /// <typeparamref name="TOk"/> into <typeparamref name="T1"/>.
+    /// </summary>
+    /// <typeparam name="T1">The type parameter to convert <typeparamref name="TOk"/> into.</typeparam>
+    /// <typeparam name="T2">The type parameter to convert <typeparamref name="TErr"/> into.</typeparam>
+    /// <returns>
+    /// The value <see name="Ok"/> as <typeparamref name="T1"/> or the value
+    /// <see name="Err"/> as <typeparamref name="T2"/>.
+    /// </returns>
+    [CollectionAccess(Read), Pure]
+    public Result<T1?, T2?> As<T1, T2>()
+        where T1 : class?
+        where T2 : class? =>
+        IsOk ? Ok as T1 : Err as T2;
+
+    /// <summary>Casts <typeparamref name="TErr"/> into <typeparamref name="T"/>.</summary>
+    /// <typeparam name="T">The type parameter to convert <typeparamref name="TErr"/> into.</typeparam>
+    /// <returns>The value <see name="Err"/> as <typeparamref name="T"/>.</returns>
+    [CollectionAccess(Read), Pure]
+    public Result<TOk, T?> ErrAs<T>()
+        where T : class? =>
+        IsOk ? Ok : Err as T;
+
+    /// <summary>
     /// Invokes a delegate if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>, and returns itself.
     /// </summary>
     /// <param name="action">The delegate to invoke if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>.</param>
@@ -700,6 +740,14 @@ public readonly struct Result<TOk, TErr> :
     /// </returns>
     [CollectionAccess(Read), MustUseReturnValue]
     public Result<TOk, T> MapErr<T>([InstantHandle] Converter<TErr, T> converter) => IsErr ? converter(Err) : Ok;
+
+    /// <summary>Casts <typeparamref name="TOk"/> into <typeparamref name="T"/>.</summary>
+    /// <typeparam name="T">The type parameter to convert <typeparamref name="TOk"/> into.</typeparam>
+    /// <returns>The value <see name="Ok"/> as <typeparamref name="T"/>.</returns>
+    [CollectionAccess(Read), Pure]
+    public Result<T?, TErr> OkAs<T>()
+        where T : class? =>
+        IsOk ? Ok as T : Err;
 
     /// <summary>
     /// Applies a selector to <see cref="Ok"/> if <see cref="Ok"/> is set, leaving <see cref="Err"/> untouched.
@@ -818,23 +866,21 @@ public readonly struct Result<TOk, TErr> :
     /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
     /// <exception cref="ResultException{T}">This <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>.</exception>
     /// <returns>The value <see cref="Err"/>.</returns>
-    [CollectionAccess(Read), MemberNotNull(nameof(Err)), MustUseReturnValue]
+    [CollectionAccess(Read), MemberNotNull(nameof(Err))]
     public TErr ExpectErr(string? message = null) =>
-        IsErr ? Err :
-            message is null ?
-                (TErr)ResultException<TOk>.CoerceThenThrow($"Received an {nameof(Ok)} on {nameof(ExpectErr)}.", Ok) :
-                (TErr)ResultException<TOk>.Throw(message, Ok);
+        IsErr
+            ? Err
+            : (TErr)ResultException<TOk>.SmartThrow(message, Ok, $"Received an {nameof(Ok)} on {nameof(ExpectErr)}.");
 
     /// <summary>Gets the success value. Throws if this value is not set.</summary>
     /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
     /// <exception cref="ResultException{T}">This <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>.</exception>
     /// <returns>The value <see cref="Ok"/>.</returns>
-    [CollectionAccess(Read), MemberNotNull(nameof(Ok)), MustUseReturnValue]
+    [CollectionAccess(Read), MemberNotNull(nameof(Ok))]
     public TOk Expect(string? message = null) =>
-        IsOk ? Ok :
-            message is null ?
-                (TOk)ResultException<TErr>.CoerceThenThrow($"Received an {nameof(Err)} on {nameof(Expect)}.", Err) :
-                (TOk)ResultException<TErr>.Throw(message, Err);
+        IsOk
+            ? Ok
+            : (TOk)ResultException<TErr>.SmartThrow(message, Err, $"Received an {nameof(Err)} on {nameof(Expect)}.");
 
     /// <summary>Gets the <see cref="Ok"/> value, or the parameter.</summary>
     /// <remarks><para>

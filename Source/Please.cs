@@ -31,7 +31,7 @@ public static class Please
         try
         {
             action();
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -51,7 +51,7 @@ public static class Please
         try
         {
             action(first);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -94,7 +94,7 @@ public static class Please
         try
         {
             action(first, second);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -122,7 +122,7 @@ public static class Please
         try
         {
             action(first, second, third);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -153,7 +153,7 @@ public static class Please
         try
         {
             action(first, second, third, fourth);
-            return Ok();
+            return Ok<object?, Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
