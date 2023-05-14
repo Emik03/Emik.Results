@@ -6,7 +6,7 @@
 Gets `Ok` if this [IBoxedResult](IBoxedResult.md 'Emik.Results.IBoxedResult') has a success value and `Err` otherwise.
 
 ```csharp
-public object? Value { get; }
+public object Value { get; }
 ```
 
 Implements [Value](IBoxedResult.Value.md 'Emik.Results.IBoxedResult.Value')

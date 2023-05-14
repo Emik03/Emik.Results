@@ -6,7 +6,8 @@
 Attempts to invoke a [System.Delegate](https://docs.microsoft.com/en-us/dotnet/api/System.Delegate 'System.Delegate').
 
 ```csharp
-public static Emik.Results.Result<TResult,System.Exception> TryMap<T,TResult>(System.Converter<T,TResult> converter, T first);
+public static Emik.Results.Result<TResult,System.Exception> TryMap<T,TResult>(System.Converter<T,TResult> converter, T first)
+    where TResult : notnull;
 ```
 #### Type parameters
 

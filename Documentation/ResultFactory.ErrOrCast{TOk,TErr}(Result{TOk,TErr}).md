@@ -7,7 +7,8 @@ Gets the value of the [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results
 
 ```csharp
 public static TErr ErrOrCast<TOk,TErr>(this Emik.Results.Result<TOk,TErr> result)
-    where TOk : TErr;
+    where TOk : TErr
+    where TErr : notnull;
 ```
 #### Type parameters
 

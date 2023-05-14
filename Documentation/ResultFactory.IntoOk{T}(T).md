@@ -6,7 +6,7 @@
 Maps [T](ResultFactory.IntoOk{T}(T).md#Emik.Results.Extensions.ResultFactory.IntoOk_T_(thisT).T 'Emik.Results.Extensions.ResultFactory.IntoOk<T>(this T).T') into a [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>').
 
 ```csharp
-public static Emik.Results.Result<T,object?> IntoOk<T>(this T? ok)
+public static Emik.Results.Result<T,object> IntoOk<T>(this T? ok)
     where T : class;
 ```
 #### Type parameters

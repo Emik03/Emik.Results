@@ -6,7 +6,7 @@
 Maps [T](ResultFactory.IntoErr{T}(Nullable{T}).md#Emik.Results.Extensions.ResultFactory.IntoErr_T_(thisSystem.Nullable_T_).T 'Emik.Results.Extensions.ResultFactory.IntoErr<T>(this System.Nullable<T>).T') into a [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>').
 
 ```csharp
-public static Emik.Results.Result<object?,T> IntoErr<T>(this System.Nullable<T> err)
+public static Emik.Results.Result<object,T> IntoErr<T>(this System.Nullable<T> err)
     where T : struct, System.ValueType, System.ValueType;
 ```
 #### Type parameters

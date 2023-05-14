@@ -7,6 +7,7 @@ Maps [TErr](ResultFactory.IntoErrOr{TOk,TErr}(Nullable{TErr},TOk).md#Emik.Result
 
 ```csharp
 public static Emik.Results.Result<TOk,TErr> IntoErrOr<TOk,TErr>(this System.Nullable<TErr> err, TOk ok)
+    where TOk : notnull
     where TErr : struct, System.ValueType, System.ValueType;
 ```
 #### Type parameters

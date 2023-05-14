@@ -6,7 +6,8 @@
 Creates an [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') value.
 
 ```csharp
-public static Emik.Results.Result<object?,T> Err<T>(T err);
+public static Emik.Results.Result<object,T> Err<T>(T err)
+    where T : notnull;
 ```
 #### Type parameters
 

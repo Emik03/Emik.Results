@@ -6,7 +6,7 @@
 Applies a selector to [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok') if [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok') is set, leaving [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') untouched.
 
 ```csharp
-public Emik.Results.Result<Emik.Results.Result<object?,System.Exception>,TErr> Try(System.Action<TOk> action);
+public Emik.Results.Result<Emik.Results.Result<object,System.Exception>,TErr> Try(System.Action<TOk> action);
 ```
 #### Parameters
 

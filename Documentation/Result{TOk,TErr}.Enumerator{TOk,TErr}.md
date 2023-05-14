@@ -10,6 +10,8 @@ public struct Result<TOk,TErr>.Enumerator :
 System.Collections.Generic.IEnumerator<TOk>,
 System.Collections.IEnumerator,
 System.IDisposable
+    where TOk : notnull
+    where TErr : notnull
 ```
 #### Type parameters
 

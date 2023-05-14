@@ -6,7 +6,7 @@
 Maps [T](ResultFactory.IntoErr{T}(T).md#Emik.Results.Extensions.ResultFactory.IntoErr_T_(thisT).T 'Emik.Results.Extensions.ResultFactory.IntoErr<T>(this T).T') into a [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>').
 
 ```csharp
-public static Emik.Results.Result<object?,T> IntoErr<T>(this T? err)
+public static Emik.Results.Result<object,T> IntoErr<T>(this T? err)
     where T : class;
 ```
 #### Type parameters

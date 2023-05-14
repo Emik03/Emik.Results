@@ -7,6 +7,7 @@ Maps [TErr](ResultFactory.IntoErrOr{TOk,TErr}(TErr,TOk).md#Emik.Results.Extensio
 
 ```csharp
 public static Emik.Results.Result<TOk,TErr> IntoErrOr<TOk,TErr>(this TErr? err, TOk ok)
+    where TOk : notnull
     where TErr : class;
 ```
 #### Type parameters

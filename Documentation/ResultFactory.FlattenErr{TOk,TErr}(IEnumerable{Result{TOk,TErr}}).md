@@ -7,7 +7,9 @@ Returns all [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') v
 or the first-found [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok') if any exist.
 
 ```csharp
-public static Emik.Results.Result<TOk,System.Collections.Generic.IEnumerable<TErr>> FlattenErr<TOk,TErr>(this System.Collections.Generic.IEnumerable<Emik.Results.Result<TOk,TErr>> enumerable);
+public static Emik.Results.Result<TOk,System.Collections.Generic.IEnumerable<TErr>> FlattenErr<TOk,TErr>(this System.Collections.Generic.IEnumerable<Emik.Results.Result<TOk,TErr>> enumerable)
+    where TOk : notnull
+    where TErr : notnull;
 ```
 #### Type parameters
 

@@ -6,7 +6,8 @@
 Wraps a [System.Threading.Tasks.Task&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task-1 'System.Threading.Tasks.Task`1') within a try-catch.
 
 ```csharp
-public static System.Threading.Tasks.ValueTask<Emik.Results.Result<T,System.Exception>> Try<T>(this System.Threading.Tasks.ValueTask<T> task);
+public static System.Threading.Tasks.ValueTask<Emik.Results.Result<T,System.Exception>> Try<T>(this System.Threading.Tasks.ValueTask<T> task)
+    where T : notnull;
 ```
 #### Type parameters
 
