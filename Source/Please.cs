@@ -26,12 +26,12 @@ public static class Please
     /// <param name="action">The <see cref="Delegate"/> to invoke.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object?, Exception> Try([InstantHandle] Action action)
+    public static Result<object, Exception> Try([InstantHandle] Action action)
     {
         try
         {
             action();
-            return Ok<object?, Exception>();
+            return Ok<Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -46,12 +46,12 @@ public static class Please
     /// <param name="first">The first parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object?, Exception> Try<T>([InstantHandle] Action<T> action, T first)
+    public static Result<object, Exception> Try<T>([InstantHandle] Action<T> action, T first)
     {
         try
         {
             action(first);
-            return Ok<object?, Exception>();
+            return Ok<Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -70,6 +70,7 @@ public static class Please
         [InstantHandle] Converter<T, TResult> converter,
         T first
     )
+        where TResult : notnull
     {
         try
         {
@@ -89,12 +90,12 @@ public static class Please
     /// <param name="second">The second parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object?, Exception> Try<T1, T2>([InstantHandle] Action<T1, T2> action, T1 first, T2 second)
+    public static Result<object, Exception> Try<T1, T2>([InstantHandle] Action<T1, T2> action, T1 first, T2 second)
     {
         try
         {
             action(first, second);
-            return Ok<object?, Exception>();
+            return Ok<Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -112,7 +113,7 @@ public static class Please
     /// <param name="third">The third parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object?, Exception> Try<T1, T2, T3>(
+    public static Result<object, Exception> Try<T1, T2, T3>(
         [InstantHandle] Action<T1, T2, T3> action,
         T1 first,
         T2 second,
@@ -122,7 +123,7 @@ public static class Please
         try
         {
             action(first, second, third);
-            return Ok<object?, Exception>();
+            return Ok<Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -142,7 +143,7 @@ public static class Please
     /// <param name="fourth">The fourth parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object?, Exception> Try<T1, T2, T3, T4>(
+    public static Result<object, Exception> Try<T1, T2, T3, T4>(
         [InstantHandle] Action<T1, T2, T3, T4> action,
         T1 first,
         T2 second,
@@ -153,7 +154,7 @@ public static class Please
         try
         {
             action(first, second, third, fourth);
-            return Ok<object?, Exception>();
+            return Ok<Exception>();
         }
         catch (Exception ex) when (ex.IsBenign())
         {
@@ -167,6 +168,7 @@ public static class Please
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
     public static Result<TResult, Exception> Try<TResult>([InstantHandle] Func<TResult> func)
+        where TResult : notnull
     {
         try
         {
@@ -186,6 +188,7 @@ public static class Please
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
     public static Result<TResult, Exception> Try<T, TResult>([InstantHandle] Func<T, TResult> func, T first)
+        where TResult : notnull
     {
         try
         {
@@ -211,6 +214,7 @@ public static class Please
         T1 first,
         T2 second
     )
+        where TResult : notnull
     {
         try
         {
@@ -239,6 +243,7 @@ public static class Please
         T2 second,
         T3 third
     )
+        where TResult : notnull
     {
         try
         {
@@ -270,6 +275,7 @@ public static class Please
         T3 third,
         T4 fourth
     )
+        where TResult : notnull
     {
         try
         {

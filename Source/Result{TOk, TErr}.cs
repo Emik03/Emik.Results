@@ -52,6 +52,8 @@ public readonly struct Result<TOk, TErr> :
     IReadOnlyList<TOk>,
     IReadOnlySet<TOk>,
     ISet<TOk>
+    where TOk : notnull
+    where TErr : notnull
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Result{TOk, TErr}"/> struct. The error value is specified.
@@ -103,13 +105,14 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
-    object? ITuple.this[[ValueRange(0, 1)] int index] =>
+    object ITuple.this[[ValueRange(0, 1)] int index] =>
         index switch
         {
             0 => Ok,
             1 => Err, // ReSharper disable once UnreachableSwitchArmDueToIntegerAnalysis
-            _ => null,
-        };
+            _ => (object?)null,
+        } ??
+        Result.None;
 #endif
 
     /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
@@ -122,7 +125,7 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
-    public object? Value => IsOk ? Ok : Err;
+    public object Value => (IsOk ? (object)Ok : Err) ?? Result.None;
 
     /// <summary>Gets the error value. This value may not be set and is therefore optional.</summary>
     [CollectionAccess(None), Pure]
@@ -278,13 +281,42 @@ public readonly struct Result<TOk, TErr> :
     [Pure]
     public static bool operator >=(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) >= 0;
 
-    /// <inheritdoc cref="OkOr(TOk)"/>
+    /// <inheritdoc cref="Or(Converter{TErr, Result{TOk, TErr}})"/>
     [Pure]
-    public static TOk operator |(Result<TOk, TErr> result, TOk def) => result.OkOr(def);
+    public static Result<TOk, TErr> operator |(
+        Result<TOk, TErr> result,
+        Converter<TErr, Result<TOk, TErr>> converter
+    ) =>
+        result.Or(converter);
+
+    /// <inheritdoc cref="Or(Result{TOk, TErr})"/>
+    [Pure]
+    public static Result<TOk, TErr> operator |(Result<TOk, TErr> result, Result<TOk, TErr> def) => result.Or(def);
+
+    /// <inheritdoc cref="ErrOr(Converter{TOk, TErr})"/>
+    [Pure]
+    public static TErr operator |(Result<TOk, TErr> result, Converter<TOk, TErr> def) => result.ErrOr(def);
 
     /// <inheritdoc cref="ErrOr(TErr)"/>
     [Pure]
     public static TErr operator |(Result<TOk, TErr> result, TErr def) => result.ErrOr(def);
+
+    /// <inheritdoc cref="OkOr(Converter{TErr, TOk})"/>
+    [Pure]
+    public static TOk operator |(Result<TOk, TErr> result, Converter<TErr, TOk> def) => result.OkOr(def);
+
+    /// <inheritdoc cref="OkOr(TOk)"/>
+    [Pure]
+    public static TOk operator |(Result<TOk, TErr> result, TOk def) => result.OkOr(def);
+
+    /// <inheritdoc cref="And(Converter{TOk, Result{TOk, TErr}})"/>
+    [Pure]
+    public static Result<TOk, TErr> operator &(Result<TOk, TErr> result, Converter<TOk, Result<TOk, TErr>> converter) =>
+        result.And(converter);
+
+    /// <inheritdoc cref="And(Result{TOk, TErr})"/>
+    [Pure]
+    public static Result<TOk, TErr> operator &(Result<TOk, TErr> result, Result<TOk, TErr> def) => result.And(def);
 
     /// <inheritdoc cref="Swap"/>
     [Pure]
@@ -365,7 +397,9 @@ public readonly struct Result<TOk, TErr> :
     /// or <see langword="false"/>.
     /// </summary>
     /// <param name="item">The value to compare.</param>
-    /// <returns>The result of the comparison of <see cref="Result{TOk, TErr}.Ok"/>, or <see langword="false"/>.</returns>
+    /// <returns>
+    /// The result of the comparison of <see cref="Result{TOk, TErr}.Ok"/>, or <see langword="false"/>.
+    /// </returns>
     [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
     public bool Contains(TOk item) => IsOk && IsEqual(Ok, item);
 
@@ -608,7 +642,21 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read), Pure]
     IEnumerator<TOk> IEnumerable<TOk>.GetEnumerator() => GetEnumerator();
 
-    /// <summary>Applies a selector to <see cref="Ok"/> if <see cref="Ok"/> is set, leaving <see cref="Err"/> untouched.</summary>
+    /// <summary>Gets itself, or the returned value of the parameter.</summary>
+    /// <remarks><para>
+    /// The default value is lazily evaluated, use <see cref="And(Result{TOk, TErr})"/> for eager evaluation.
+    /// </para></remarks>
+    /// <param name="converter">
+    /// The delegate to invoke and return if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>.
+    /// </param>
+    /// <returns>Itself or the result of <paramref name="converter"/>.</returns>
+    [CollectionAccess(None), MustUseReturnValue]
+    public Result<TOk, TErr> And([InstantHandle] Converter<TOk, Result<TOk, TErr>> converter) =>
+        IsOk ? converter(Ok) : this;
+
+    /// <summary>
+    /// Applies a selector to <see cref="Ok"/> if <see cref="Ok"/> is set, leaving <see cref="Err"/> untouched.
+    /// </summary>
     /// <typeparam name="T">The new <typeparamref name="TOk"/> type.</typeparam>
     /// <param name="converter">The selector to change <see cref="Ok"/>.</param>
     /// <returns>
@@ -616,59 +664,19 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>, otherwise <see cref="Err"/>.
     /// </returns>
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
-    public Result<T, TErr> AndThen<T>([InstantHandle] Converter<TOk, Result<T, TErr>> converter) =>
+    public Result<T, TErr> And<T>([InstantHandle] Converter<TOk, Result<T, TErr>> converter)
+        where T : notnull =>
         IsOk ? converter(Ok) : Err;
 
-    /// <summary>
-    /// Applies a selector to <see cref="Err"/> if <see cref="Err"/> is set, leaving <see cref="Ok"/> untouched.
-    /// </summary>
-    /// <typeparam name="T">The new <typeparamref name="TErr"/> type.</typeparam>
-    /// <param name="converter">The selector to change <see cref="Err"/>.</param>
-    /// <returns>
-    /// Another <see cref="Result{TOk, TErr}"/> with the result of <paramref name="converter"/>
-    /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>, otherwise <see cref="Ok"/>.
-    /// </returns>
-    [CollectionAccess(Read), MustUseReturnValue]
-    public Result<TOk, T> AndThenErr<T>([InstantHandle] Converter<TErr, Result<TOk, T>> converter) =>
-        IsErr ? converter(Err) : Ok;
-
-    /// <summary>
-    /// Casts <typeparamref name="TOk"/> into <typeparamref name="T"/> and
-    /// <typeparamref name="TOk"/> into <typeparamref name="T"/>.
-    /// </summary>
-    /// <typeparam name="T">
-    /// The type parameter to convert <typeparamref name="TOk"/> and <typeparamref name="TErr"/> into.
-    /// </typeparam>
-    /// <returns>
-    /// The value <see name="Ok"/> as <typeparamref name="T"/> or the value
-    /// <see name="Err"/> as <typeparamref name="T"/>.
-    /// </returns>
-    [CollectionAccess(Read), Pure]
-    public Result<T?, T?> As<T>() =>
-        IsOk ? Ok(Ok is T o ? o : default).ErrAs<T>() : Err(Ok is T e ? e : default).OkAs<T>();
-
-    /// <summary>
-    /// Casts <typeparamref name="TOk"/> into <typeparamref name="T1"/> and
-    /// <typeparamref name="TOk"/> into <typeparamref name="T1"/>.
-    /// </summary>
-    /// <typeparam name="T1">The type parameter to convert <typeparamref name="TOk"/> into.</typeparam>
-    /// <typeparam name="T2">The type parameter to convert <typeparamref name="TErr"/> into.</typeparam>
-    /// <returns>
-    /// The value <see name="Ok"/> as <typeparamref name="T1"/> or the value
-    /// <see name="Err"/> as <typeparamref name="T2"/>.
-    /// </returns>
-    [CollectionAccess(Read), Pure]
-    public Result<T1?, T2?> As<T1, T2>() =>
-        IsOk ? Ok is T1 o ? o : default :
-        Err is T2 e ? e : default;
-
-    /// <summary>Casts <typeparamref name="TErr"/> into <typeparamref name="T"/>.</summary>
-    /// <typeparam name="T">The type parameter to convert <typeparamref name="TErr"/> into.</typeparam>
-    /// <returns>The value <see name="Err"/> as <typeparamref name="T"/>.</returns>
-    [CollectionAccess(Read), Pure]
-    public Result<TOk, T?> ErrAs<T>() =>
-        IsOk ? Ok :
-        Err is T t ? t : default;
+    /// <summary>Gets itself, or the parameter.</summary>
+    /// <remarks><para>
+    /// The default value is eagerly evaluated,
+    /// use <see cref="And(Converter{TOk, Result{TOk, TErr}})"/> for lazy evaluation.
+    /// </para></remarks>
+    /// <param name="def">The default value if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>.</param>
+    /// <returns>Itself or <paramref name="def"/>.</returns>
+    [CollectionAccess(None), Pure]
+    public Result<TOk, TErr> And(Result<TOk, TErr> def) => IsOk ? def : this;
 
     /// <summary>
     /// Invokes a delegate if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>, and returns itself.
@@ -680,6 +688,21 @@ public readonly struct Result<TOk, TErr> :
     {
         if (IsOk)
             action(Ok);
+
+        return this;
+    }
+
+    /// <summary>Performs a non-exhaustive match statement.</summary>
+    /// <param name="onOk">The delegate to invoke when <see cref="Ok"/>.</param>
+    /// <param name="onErr">The delegate to invoke when <see cref="Err"/>.</param>
+    /// <returns>Itself.</returns>
+    [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
+    public Result<TOk, TErr> Inspect([InstantHandle] Action<TOk> onOk, [InstantHandle] Action<TErr> onErr)
+    {
+        if (IsOk)
+            onOk(Ok);
+        else
+            onErr(Err);
 
         return this;
     }
@@ -700,21 +723,6 @@ public readonly struct Result<TOk, TErr> :
         return this;
     }
 
-    /// <summary>Performs a non-exhaustive match statement.</summary>
-    /// <param name="onOk">The delegate to invoke when <see cref="Ok"/>.</param>
-    /// <param name="onErr">The delegate to invoke when <see cref="Err"/>.</param>
-    /// <returns>Itself.</returns>
-    [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
-    public Result<TOk, TErr> Match([InstantHandle] Action<TOk>? onOk = null, [InstantHandle] Action<TErr>? onErr = null)
-    {
-        if (IsOk)
-            onOk?.Invoke(Ok);
-        else
-            onErr?.Invoke(Err);
-
-        return this;
-    }
-
     /// <summary>
     /// Applies a selector to <see cref="Ok"/> if <see cref="Ok"/> is set, leaving <see cref="Err"/> untouched.
     /// </summary>
@@ -725,7 +733,9 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>, otherwise <see cref="Err"/>.
     /// </returns>
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
-    public Result<T, TErr> Map<T>([InstantHandle] Converter<TOk, T> converter) => IsOk ? converter(Ok) : Err;
+    public Result<T, TErr> Map<T>([InstantHandle] Converter<TOk, T> converter)
+        where T : notnull =>
+        IsOk ? converter(Ok) : Err;
 
     /// <summary>
     /// Applies a selector to <see cref="Err"/> if <see cref="Err"/> is set, leaving <see cref="Ok"/> untouched.
@@ -737,13 +747,45 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>, otherwise <see cref="Ok"/>.
     /// </returns>
     [CollectionAccess(Read), MustUseReturnValue]
-    public Result<TOk, T> MapErr<T>([InstantHandle] Converter<TErr, T> converter) => IsErr ? converter(Err) : Ok;
+    public Result<TOk, T> MapErr<T>([InstantHandle] Converter<TErr, T> converter)
+        where T : notnull =>
+        IsErr ? converter(Err) : Ok;
 
-    /// <summary>Casts <typeparamref name="TOk"/> into <typeparamref name="T"/>.</summary>
-    /// <typeparam name="T">The type parameter to convert <typeparamref name="TOk"/> into.</typeparam>
-    /// <returns>The value <see name="Ok"/> as <typeparamref name="T"/>.</returns>
-    [CollectionAccess(Read), Pure]
-    public Result<T?, TErr> OkAs<T>() => IsOk ? Ok is T t ? t : default : Err;
+    /// <summary>Gets itself, or the returned value of the parameter.</summary>
+    /// <remarks><para>
+    /// The default value is lazily evaluated, use <see cref="Or(Result{TOk, TErr})"/> for eager evaluation.
+    /// </para></remarks>
+    /// <param name="converter">
+    /// The delegate to invoke and return if this <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>.
+    /// </param>
+    /// <returns>Itself or the result of <paramref name="converter"/>.</returns>
+    [CollectionAccess(None), MustUseReturnValue]
+    public Result<TOk, TErr> Or([InstantHandle] Converter<TErr, Result<TOk, TErr>> converter) =>
+        IsOk ? this : converter(Err);
+
+    /// <summary>
+    /// Applies a selector to <see cref="Err"/> if <see cref="Err"/> is set, leaving <see cref="Ok"/> untouched.
+    /// </summary>
+    /// <typeparam name="T">The new <typeparamref name="TErr"/> type.</typeparam>
+    /// <param name="converter">The selector to change <see cref="Err"/>.</param>
+    /// <returns>
+    /// Another <see cref="Result{TOk, TErr}"/> with the result of <paramref name="converter"/>
+    /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>, otherwise <see cref="Ok"/>.
+    /// </returns>
+    [CollectionAccess(Read), MustUseReturnValue]
+    public Result<TOk, T> Or<T>([InstantHandle] Converter<TErr, Result<TOk, T>> converter)
+        where T : notnull =>
+        IsErr ? converter(Err) : Ok;
+
+    /// <summary>Gets itself, or the parameter.</summary>
+    /// <remarks><para>
+    /// The default value is eagerly evaluated,
+    /// use <see cref="Or(Converter{TErr, Result{TOk, TErr}})"/> for lazy evaluation.
+    /// </para></remarks>
+    /// <param name="def">The default value if this <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>.</param>
+    /// <returns>Itself or <paramref name="def"/>.</returns>
+    [CollectionAccess(None), Pure]
+    public Result<TOk, TErr> Or(Result<TOk, TErr> def) => IsOk ? this : def;
 
     /// <summary>
     /// Applies a selector to <see cref="Ok"/> if <see cref="Ok"/> is set, leaving <see cref="Err"/> untouched.
@@ -754,7 +796,7 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>, otherwise <see cref="Err"/>.
     /// </returns>
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
-    public Result<Result<object?, Exception>, TErr> Try([InstantHandle] Action<TOk> action) =>
+    public Result<Result<object, Exception>, TErr> Try([InstantHandle] Action<TOk> action) =>
         IsOk ? Please.Try(action, Ok) : Err;
 
     /// <summary>
@@ -767,7 +809,8 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>, otherwise <see cref="Err"/>.
     /// </returns>
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
-    public Result<Result<T, Exception>, TErr> Try<T>([InstantHandle] Converter<TOk, T> converter) =>
+    public Result<Result<T, Exception>, TErr> Try<T>([InstantHandle] Converter<TOk, T> converter)
+        where T : notnull =>
         IsOk ? Please.TryMap(converter, Ok) : Err;
 
     /// <summary>
@@ -779,7 +822,7 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>, otherwise <see cref="Ok"/>.
     /// </returns>
     [CollectionAccess(Read), MustUseReturnValue]
-    public Result<TOk, Result<object?, Exception>> TryErr([InstantHandle] Action<TErr> action) =>
+    public Result<TOk, Result<object, Exception>> TryErr([InstantHandle] Action<TErr> action) =>
         IsErr ? Please.Try(action, Err) : Ok;
 
     /// <summary>
@@ -792,7 +835,8 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>, otherwise <see cref="Ok"/>.
     /// </returns>
     [CollectionAccess(Read), MustUseReturnValue]
-    public Result<TOk, Result<T, Exception>> TryErr<T>([InstantHandle] Converter<TErr, T> converter) =>
+    public Result<TOk, Result<T, Exception>> TryErr<T>([InstantHandle] Converter<TErr, T> converter)
+        where T : notnull =>
         IsErr ? Please.TryMap(converter, Err) : Ok;
 
     /// <summary>Performs an exhaustive match statement.</summary>
@@ -802,7 +846,7 @@ public readonly struct Result<TOk, TErr> :
     /// The result of <paramref name="onOk"/> if <see cref="Ok"/>, otherwise the result of <paramref name="onErr"/>.
     /// </returns>
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
-    public Result<object?, Exception> TryMatch(
+    public Result<object, Exception> TryMatch(
         [InstantHandle] Action<TOk> onOk,
         [InstantHandle] Action<TErr> onErr
     ) =>
@@ -819,7 +863,8 @@ public readonly struct Result<TOk, TErr> :
     public Result<T, Exception> TryMatch<T>(
         [InstantHandle] Converter<TOk, T> onOk,
         [InstantHandle] Converter<TErr, T> onErr
-    ) =>
+    )
+        where T : notnull =>
         IsOk ? Please.TryMap(onOk, Ok) : Please.TryMap(onErr, Err);
 
     /// <summary>Swaps the success and error value.</summary>
@@ -974,7 +1019,7 @@ public readonly struct Result<TOk, TErr> :
 
         /// <inheritdoc />
         [Pure]
-        readonly object? IEnumerator.Current => Current;
+        readonly object IEnumerator.Current => Current;
 
         /// <inheritdoc />
         readonly void IDisposable.Dispose() { }
