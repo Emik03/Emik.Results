@@ -6,7 +6,8 @@
 Creates an [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok') value.
 
 ```csharp
-public static Emik.Results.Result<T,object?> Ok<T>(T ok);
+public static Emik.Results.Result<T,object> Ok<T>(T ok)
+    where T : notnull;
 ```
 #### Type parameters
 

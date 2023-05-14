@@ -519,7 +519,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read), Pure]
     public bool SetEquals([InstantHandle] IEnumerable<TOk> other) =>
 #if NET20 || NET30
-        other.GetEnumerator() is var e && e.MoveNext() ? Contains(e.Current) : IsErr;
+        other.GetEnumerator() is var e && e.MoveNext() && e.Current is { } current ? Contains(current) : IsErr;
 #else
         other.SequenceEqual(this);
 #endif

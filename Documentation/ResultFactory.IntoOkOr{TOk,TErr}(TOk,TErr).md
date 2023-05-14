@@ -7,7 +7,8 @@ Maps [TOk](ResultFactory.IntoOkOr{TOk,TErr}(TOk,TErr).md#Emik.Results.Extensions
 
 ```csharp
 public static Emik.Results.Result<TOk,TErr> IntoOkOr<TOk,TErr>(this TOk? ok, TErr err)
-    where TOk : class;
+    where TOk : class
+    where TErr : notnull;
 ```
 #### Type parameters
 

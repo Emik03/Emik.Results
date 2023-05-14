@@ -6,7 +6,9 @@
 Maps the nested results into one result.
 
 ```csharp
-public static Emik.Results.Result<TOk,TErr> Flatten<TOk,TErr>(this Emik.Results.Result<Emik.Results.Result<TOk,TErr>,TErr> result);
+public static Emik.Results.Result<TOk,TErr> Flatten<TOk,TErr>(this Emik.Results.Result<Emik.Results.Result<TOk,TErr>,TErr> result)
+    where TOk : notnull
+    where TErr : notnull;
 ```
 #### Type parameters
 

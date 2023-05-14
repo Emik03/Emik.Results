@@ -6,7 +6,9 @@
 Creates a result from a boolean expression.
 
 ```csharp
-public static Emik.Results.Result<TOk,TErr> Then<TOk,TErr>(this bool value, System.Func<TOk> onTrue, System.Func<TErr> onFalse);
+public static Emik.Results.Result<TOk,TErr> Then<TOk,TErr>(this bool value, System.Func<TOk> onTrue, System.Func<TErr> onFalse)
+    where TOk : notnull
+    where TErr : notnull;
 ```
 #### Type parameters
 

@@ -7,7 +7,8 @@ Returns the value, but unlike [Value](Result{TOk,TErr}.Value.md 'Emik.Results.Re
 nothing is boxed since both types are the same.
 
 ```csharp
-public static T OkOrErr<T>(this Emik.Results.Result<T,T> result);
+public static T OkOrErr<T>(this Emik.Results.Result<T,T> result)
+    where T : notnull;
 ```
 #### Type parameters
 

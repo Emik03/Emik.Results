@@ -6,7 +6,7 @@
 Performs an exhaustive match statement.
 
 ```csharp
-public Emik.Results.Result<object?,System.Exception> TryMatch(System.Action<TOk> onOk, System.Action<TErr> onErr);
+public Emik.Results.Result<object,System.Exception> TryMatch(System.Action<TOk> onOk, System.Action<TErr> onErr);
 ```
 #### Parameters
 

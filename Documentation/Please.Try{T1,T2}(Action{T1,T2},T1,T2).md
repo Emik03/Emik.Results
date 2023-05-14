@@ -6,7 +6,7 @@
 Attempts to invoke a [System.Delegate](https://docs.microsoft.com/en-us/dotnet/api/System.Delegate 'System.Delegate').
 
 ```csharp
-public static Emik.Results.Result<object?,System.Exception> Try<T1,T2>(System.Action<T1,T2> action, T1 first, T2 second);
+public static Emik.Results.Result<object,System.Exception> Try<T1,T2>(System.Action<T1,T2> action, T1 first, T2 second);
 ```
 #### Type parameters
 

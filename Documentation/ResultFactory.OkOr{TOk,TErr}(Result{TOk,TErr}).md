@@ -7,6 +7,7 @@ Gets the value of the [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results
 
 ```csharp
 public static TOk OkOr<TOk,TErr>(this Emik.Results.Result<TOk,TErr> result)
+    where TOk : notnull
     where TErr : TOk;
 ```
 #### Type parameters

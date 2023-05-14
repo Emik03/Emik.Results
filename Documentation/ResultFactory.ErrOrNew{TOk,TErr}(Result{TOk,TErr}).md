@@ -7,7 +7,8 @@ Gets [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err'), or call
 
 ```csharp
 public static TErr ErrOrNew<TOk,TErr>(this Emik.Results.Result<TOk,TErr> result)
-    where TErr : new();
+    where TOk : notnull
+    where TErr : notnull, new();
 ```
 #### Type parameters
 

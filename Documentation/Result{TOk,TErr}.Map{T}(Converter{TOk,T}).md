@@ -6,7 +6,8 @@
 Applies a selector to [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok') if [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok') is set, leaving [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') untouched.
 
 ```csharp
-public Emik.Results.Result<T,TErr> Map<T>(System.Converter<TOk,T> converter);
+public Emik.Results.Result<T,TErr> Map<T>(System.Converter<TOk,T> converter)
+    where T : notnull;
 ```
 #### Type parameters
 

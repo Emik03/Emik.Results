@@ -7,7 +7,8 @@ Gets [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok'), or calls t
 
 ```csharp
 public static TOk OkOrNew<TOk,TErr>(this Emik.Results.Result<TOk,TErr> result)
-    where TOk : new();
+    where TOk : notnull, new()
+    where TErr : notnull;
 ```
 #### Type parameters
 

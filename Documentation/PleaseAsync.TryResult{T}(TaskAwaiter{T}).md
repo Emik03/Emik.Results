@@ -6,7 +6,8 @@
 Wraps a [System.Runtime.CompilerServices.TaskAwaiter&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Runtime.CompilerServices.TaskAwaiter-1 'System.Runtime.CompilerServices.TaskAwaiter`1') within a try-catch.
 
 ```csharp
-public static Emik.Results.Result<T,System.Exception> TryResult<T>(this System.Runtime.CompilerServices.TaskAwaiter<T> task);
+public static Emik.Results.Result<T,System.Exception> TryResult<T>(this System.Runtime.CompilerServices.TaskAwaiter<T> task)
+    where T : notnull;
 ```
 #### Type parameters
 
