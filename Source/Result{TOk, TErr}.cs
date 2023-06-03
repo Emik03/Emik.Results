@@ -35,16 +35,20 @@ public readonly struct Result<TOk, TErr> :
 #endif
     IBoxedResult,
     IComparable,
+    IComparable<object>,
     IComparable<IBoxedResult>,
     IComparable<Result<TOk, TErr>>,
     IComparer,
+    IComparer<object>,
     IComparer<IBoxedResult>,
     IComparer<Result<TOk, TErr>>,
     IEqualityComparer,
     ICollection,
     ICloneable,
+    IEquatable<object>,
     IEquatable<IBoxedResult>,
     IEquatable<Result<TOk, TErr>>,
+    IEqualityComparer<object>,
     IEqualityComparer<IBoxedResult>,
     IEqualityComparer<Result<TOk, TErr>>,
     IFormattable,
@@ -123,7 +127,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(None), Pure]
     object ICollection.SyncRoot => new();
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="IBoxedResult.Value"/>
     [CollectionAccess(Read), Pure]
     public object Value => (IsOk ? (object)Ok : Err) ?? Result.None;
 
@@ -388,7 +392,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(None)]
     void ISet<TOk>.UnionWith(IEnumerable<TOk> other) { }
 
-    /// <inheritdoc/>
+    /// <inheritdoc cref="object.Equals(object)"/>
     [CollectionAccess(Read), Pure]
     public override bool Equals([NotNullWhen(true)] object? obj) => Equals(obj as IBoxedResult);
 
@@ -535,6 +539,10 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
+    bool IEqualityComparer<object>.Equals(object? x, object? y) => x is null ? y is null : y is not null && x.Equals(y);
+
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
     bool IEqualityComparer<IBoxedResult>.Equals(IBoxedResult? x, IBoxedResult? y) =>
         x switch
         {
@@ -555,7 +563,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read), Pure]
     public override int GetHashCode() => IsOk ? Ok.GetHashCode() ^ 0x6b6f7961 : Err.GetHashCode() ^ 0x7265726f;
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="IComparable{T}.CompareTo" />
     [CollectionAccess(Read), Pure]
     public int CompareTo(object? obj) => obj is IBoxedResult x ? CompareTo(x) : DoCompare(obj, this);
 
@@ -596,11 +604,19 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
+    int IComparer<object>.Compare(object? x, object? y) => Comparer.Default.Compare(x, y);
+
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
     int IComparer<Result<TOk, TErr>>.Compare(Result<TOk, TErr> x, Result<TOk, TErr> y) => x.CompareTo(y);
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
-    int IEqualityComparer.GetHashCode(object obj) => obj.GetHashCode();
+    int IEqualityComparer.GetHashCode(object? obj) => obj?.GetHashCode() ?? 0;
+
+    /// <inheritdoc />
+    [CollectionAccess(None), Pure]
+    int IEqualityComparer<object>.GetHashCode(object? obj) => obj?.GetHashCode() ?? 0;
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
@@ -947,7 +963,7 @@ public readonly struct Result<TOk, TErr> :
     static bool IsEqual<T>(T? x, T? y) =>
         x is null || y is null ? x is null && y is null : EqualityComparer<T>.Default.Equals(x, y);
 
-    [Pure]
+    [CollectionAccess(None), Pure]
     static int DoCompare(IBoxedResult? x, IBoxedResult? y)
     {
         if (x is null || y is null)
@@ -973,6 +989,7 @@ public readonly struct Result<TOk, TErr> :
             };
     }
 
+    [CollectionAccess(None), Pure]
     static int DoCompare<T>(T? x, T? y) =>
         x switch
         {
