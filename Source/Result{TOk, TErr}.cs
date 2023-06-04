@@ -20,7 +20,7 @@ using static CollectionAccessType;
 /// <typeparam name="TErr">The type of the error value.</typeparam>
 [StructLayout(LayoutKind.Auto)]
 #pragma warning disable MA0048, CA1710
-public readonly struct Result<TOk, TErr> :
+public readonly partial struct Result<TOk, TErr> :
 #pragma warning restore MA0048, CA1710
 #if NET7_0_OR_GREATER
     IComparisonOperators<Result<TOk, TErr>, Result<TOk, TErr>, bool>,
@@ -362,7 +362,7 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None)]
-    void ICollection<TOk>.Add(TOk item) { }
+    void ICollection<TOk>.Add(TOk? item) { }
 
     /// <inheritdoc />
     [CollectionAccess(None)]
@@ -370,7 +370,7 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None)]
-    void IList<TOk>.Insert(int index, TOk item) { }
+    void IList<TOk>.Insert(int index, TOk? item) { }
 
     /// <inheritdoc />
     [CollectionAccess(None)]
@@ -378,19 +378,19 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None)]
-    void ISet<TOk>.ExceptWith(IEnumerable<TOk> other) { }
+    void ISet<TOk>.ExceptWith(IEnumerable<TOk>? other) { }
 
     /// <inheritdoc />
     [CollectionAccess(None)]
-    void ISet<TOk>.IntersectWith(IEnumerable<TOk> other) { }
+    void ISet<TOk>.IntersectWith(IEnumerable<TOk>? other) { }
 
     /// <inheritdoc />
     [CollectionAccess(None)]
-    void ISet<TOk>.SymmetricExceptWith(IEnumerable<TOk> other) { }
+    void ISet<TOk>.SymmetricExceptWith(IEnumerable<TOk>? other) { }
 
     /// <inheritdoc />
     [CollectionAccess(None)]
-    void ISet<TOk>.UnionWith(IEnumerable<TOk> other) { }
+    void ISet<TOk>.UnionWith(IEnumerable<TOk>? other) { }
 
     /// <inheritdoc cref="object.Equals(object)"/>
     [CollectionAccess(Read), Pure]
@@ -405,7 +405,7 @@ public readonly struct Result<TOk, TErr> :
     /// The result of the comparison of <see cref="Result{TOk, TErr}.Ok"/>, or <see langword="false"/>.
     /// </returns>
     [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
-    public bool Contains(TOk item) => IsOk && IsEqual(Ok, item);
+    public bool Contains([NotNullWhen(true)] TOk? item) => IsOk && IsEqual(Ok, item);
 
     /// <summary>
     /// Performs an equality comparison between <see cref="Result{TOk, TErr}.Err"/> and the parameter,
@@ -416,7 +416,7 @@ public readonly struct Result<TOk, TErr> :
     /// The result of the comparison of <see cref="Result{TOk, TErr}.Err"/>, or <see langword="false"/>.
     /// </returns>
     [CollectionAccess(None), MemberNotNullWhen(true, nameof(Err)), Pure]
-    public bool ContainsErr(TErr item) => IsErr && IsEqual(Err, item);
+    public bool ContainsErr([NotNullWhen(true)] TErr? item) => IsErr && IsEqual(Err, item);
 
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
@@ -557,7 +557,7 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
-    bool ISet<TOk>.Add(TOk item) => false;
+    bool ISet<TOk>.Add(TOk? item) => false;
 
     /// <inheritdoc/>
     [CollectionAccess(Read), Pure]
@@ -570,8 +570,8 @@ public readonly struct Result<TOk, TErr> :
 #if NET40 || NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
-    public int CompareTo(object? other, IComparer comparer) =>
-        other is IBoxedResult result ? CompareTo(result) : comparer.Compare(this, other);
+    public int CompareTo(object? other, IComparer? comparer) =>
+        other is IBoxedResult result ? CompareTo(result) : (comparer ?? Comparer.Default).Compare(this, other);
 #endif
 
     /// <inheritdoc />
@@ -620,15 +620,15 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
-    int IEqualityComparer<IBoxedResult>.GetHashCode(IBoxedResult obj) => obj.GetHashCode();
+    int IEqualityComparer<IBoxedResult>.GetHashCode(IBoxedResult? obj) => obj?.GetHashCode() ?? 0;
 
     /// <inheritdoc/>
     [CollectionAccess(None), Pure]
     int IEqualityComparer<Result<TOk, TErr>>.GetHashCode(Result<TOk, TErr> obj) => obj.GetHashCode();
 
     /// <inheritdoc />
-    [CollectionAccess(Read), Pure]
-    int IList<TOk>.IndexOf(TOk item) => Contains(item) ? 0 : -1;
+    [CollectionAccess(Read), Pure, ValueRange(-1, 0)]
+    int IList<TOk>.IndexOf(TOk? item) => Contains(item) ? 0 : -1;
 
     /// <inheritdoc/>
     [CollectionAccess(Read), Pure]

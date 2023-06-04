@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: MPL-2.0 -->
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <FileVersion>2.0.2</FileVersion>
+        <FileVersion>2.1</FileVersion>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Emik03/Emik.Results</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Emik03/Emik.Results</PackageProjectUrl>
@@ -9,4 +9,7 @@
         <Description>Contains the Result type; A type representing either a success value or failure value.</Description>
         <PackageTags>Catch Either Err Exception Extension Functional Fluent Linq Monad Monadic Monoid Ok Struct Try</PackageTags>
     </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="../Emik.SourceGenerators.TheSquareHole/*.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all"/>
+    </ItemGroup>
 </Project>
