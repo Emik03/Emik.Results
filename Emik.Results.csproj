@@ -9,7 +9,4 @@
         <Description>Contains the Result type; A type representing either a success value or failure value.</Description>
         <PackageTags>Catch Either Err Exception Extension Functional Fluent Linq Monad Monadic Monoid Ok Struct Try</PackageTags>
     </PropertyGroup>
-    <ItemGroup>
-        <ProjectReference Include="../Emik.SourceGenerators.TheSquareHole/*.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all"/>
-    </ItemGroup>
 </Project>
