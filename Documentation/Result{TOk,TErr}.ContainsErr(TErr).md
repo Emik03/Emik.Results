@@ -7,7 +7,7 @@ Performs an equality comparison between [Err](Result{TOk,TErr}.Err.md 'Emik.Resu
 or [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool').
 
 ```csharp
-public bool ContainsErr(TErr item);
+public bool ContainsErr(TErr? item);
 ```
 #### Parameters
 
