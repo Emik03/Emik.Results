@@ -1,6 +1,7 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 namespace Emik.Results;
 
+// ReSharper disable NullnessAnnotationConflictWithJetBrainsAnnotations RedundantExtendsListEntry
 using static CollectionAccessType;
 
 /// <summary>
