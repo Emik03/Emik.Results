@@ -1,7 +1,7 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 namespace Emik.Results;
 
-// ReSharper disable NullnessAnnotationConflictWithJetBrainsAnnotations RedundantExtendsListEntry
+// ReSharper disable NullnessAnnotationConflictWithJetBrainsAnnotations
 using static CollectionAccessType;
 
 /// <summary>
@@ -21,7 +21,7 @@ using static CollectionAccessType;
 /// <typeparam name="TErr">The type of the error value.</typeparam>
 [StructLayout(LayoutKind.Auto)]
 #pragma warning disable MA0048, CA1710
-public readonly partial struct Result<TOk, TErr> :
+public readonly struct Result<TOk, TErr> :
 #pragma warning restore MA0048, CA1710
 #if NET7_0_OR_GREATER
     IComparisonOperators<Result<TOk, TErr>, Result<TOk, TErr>, bool>,
