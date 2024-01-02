@@ -59,7 +59,7 @@ public static class ResultFactory
     /// All <see cref="Result{TOk, TErr}.Ok"/> values, or the first <see cref="Result{TOk, TErr}.Err"/>.
     /// </returns>
     [Pure]
-    public static Result<IEnumerable<TOk>, TErr> Flatten<TOk, TErr>(
+    public static Result<IList<TOk>, TErr> Flatten<TOk, TErr>(
         [InstantHandle] this IEnumerable<Result<TOk, TErr>> enumerable
     )
         where TOk : notnull
@@ -70,9 +70,9 @@ public static class ResultFactory
             : Enumerable(enumerable);
 
         [Pure]
-        static Result<IEnumerable<TOk>, TErr> Collection([InstantHandle] ICollection<Result<TOk, TErr>> collection)
+        static Result<IList<TOk>, TErr> Collection([InstantHandle] ICollection<Result<TOk, TErr>> collection)
         {
-            List<TOk> output = new(collection.Count);
+            var output = new TOk[collection.Count];
             var i = 0;
 
             foreach (var item in collection)
@@ -87,9 +87,9 @@ public static class ResultFactory
         }
 
         [Pure]
-        static Result<IEnumerable<TOk>, TErr> Enumerable([InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable)
+        static Result<IList<TOk>, TErr> Enumerable([InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable)
         {
-            List<TOk> output = new();
+            List<TOk> output = [];
 
             foreach (var item in enumerable)
             {
@@ -115,7 +115,7 @@ public static class ResultFactory
     /// All <see cref="Result{TOk, TErr}.Err"/> values, or the first <see cref="Result{TOk, TErr}.Ok"/>.
     /// </returns>
     [Pure]
-    public static Result<TOk, IEnumerable<TErr>> FlattenErr<TOk, TErr>(
+    public static Result<TOk, IList<TErr>> FlattenErr<TOk, TErr>(
         [InstantHandle] this IEnumerable<Result<TOk, TErr>> enumerable
     )
         where TOk : notnull
@@ -126,9 +126,9 @@ public static class ResultFactory
             : Enumerable(enumerable);
 
         [Pure]
-        static Result<TOk, IEnumerable<TErr>> Collection([InstantHandle] ICollection<Result<TOk, TErr>> collection)
+        static Result<TOk, IList<TErr>> Collection([InstantHandle] ICollection<Result<TOk, TErr>> collection)
         {
-            List<TErr> output = new(collection.Count);
+            var output = new TErr[collection.Count];
             var i = 0;
 
             foreach (var item in collection)
@@ -143,9 +143,9 @@ public static class ResultFactory
         }
 
         [Pure]
-        static Result<TOk, IEnumerable<TErr>> Enumerable([InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable)
+        static Result<TOk, IList<TErr>> Enumerable([InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable)
         {
-            List<TErr> output = new();
+            List<TErr> output = [];
 
             foreach (var item in enumerable)
             {
