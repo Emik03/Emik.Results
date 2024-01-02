@@ -2,7 +2,8 @@
 #if !(NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
 namespace Emik.Results;
 
-/// <summary>Represents a method that converts an object from one type to another type.</summary>
+/// <summary><b>POLYFILL:</b> Represents a method that converts an object from one type to another type.</summary>
+/// <remarks><para>This type only appears for .NET Standard 1.0 - 1.6.</para></remarks>
 /// <typeparam name="TInput">The type of object that is to be converted.</typeparam>
 /// <typeparam name="TOutput">The type the input object is to be converted to.</typeparam>
 /// <param name="input">The object to convert.</param>
