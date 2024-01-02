@@ -310,6 +310,7 @@ public readonly struct Result<TOk, TErr> :
     [Pure]
     public static bool operator >=(Result<TOk, TErr> left, Result<TOk, TErr> right) => left.CompareTo(right) >= 0;
 
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <inheritdoc cref="Or(Converter{TErr, Result{TOk, TErr}})"/>
     [Pure]
     public static Result<TOk, TErr> operator |(
@@ -317,31 +318,38 @@ public readonly struct Result<TOk, TErr> :
         Converter<TErr, Result<TOk, TErr>> converter
     ) =>
         result.Or(converter);
+#endif
 
     /// <inheritdoc cref="Or(Result{TOk, TErr})"/>
     [Pure]
     public static Result<TOk, TErr> operator |(Result<TOk, TErr> result, Result<TOk, TErr> def) => result.Or(def);
 
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <inheritdoc cref="ErrOr(Converter{TOk, TErr})"/>
     [Pure]
     public static TErr operator |(Result<TOk, TErr> result, Converter<TOk, TErr> def) => result.ErrOr(def);
+#endif
 
     /// <inheritdoc cref="ErrOr(TErr)"/>
     [Pure]
     public static TErr operator |(Result<TOk, TErr> result, TErr def) => result.ErrOr(def);
 
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <inheritdoc cref="OkOr(Converter{TErr, TOk})"/>
     [Pure]
     public static TOk operator |(Result<TOk, TErr> result, Converter<TErr, TOk> def) => result.OkOr(def);
+#endif
 
     /// <inheritdoc cref="OkOr(TOk)"/>
     [Pure]
     public static TOk operator |(Result<TOk, TErr> result, TOk def) => result.OkOr(def);
 
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <inheritdoc cref="And(Converter{TOk, Result{TOk, TErr}})"/>
     [Pure]
     public static Result<TOk, TErr> operator &(Result<TOk, TErr> result, Converter<TOk, Result<TOk, TErr>> converter) =>
         result.And(converter);
+#endif
 
     /// <inheritdoc cref="And(Result{TOk, TErr})"/>
     [Pure]
@@ -700,6 +708,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read), Pure]
     IEnumerator<TOk> IEnumerable<TOk>.GetEnumerator() => GetEnumerator();
 
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>Gets itself, or the returned value of the parameter.</summary>
     /// <remarks><para>
     /// The default value is lazily evaluated, use <see cref="And(Result{TOk, TErr})"/> for eager evaluation.
@@ -725,6 +734,10 @@ public readonly struct Result<TOk, TErr> :
     public Result<T, TErr> And<T>([InstantHandle] Converter<TOk, Result<T, TErr>> converter)
         where T : notnull =>
         IsOk ? converter(Ok) : Err;
+#endif
+#if !(NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER)
+#pragma warning disable 1574, 1580, 1581, 1584
+#endif
 
     /// <summary>Gets itself, or the parameter.</summary>
     /// <remarks><para>
@@ -781,6 +794,7 @@ public readonly struct Result<TOk, TErr> :
         return this;
     }
 
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>
     /// Applies a selector to <see cref="Ok"/> if <see cref="Ok"/> is set, leaving <see cref="Err"/> untouched.
     /// </summary>
@@ -834,6 +848,7 @@ public readonly struct Result<TOk, TErr> :
     public Result<TOk, T> Or<T>([InstantHandle] Converter<TErr, Result<TOk, T>> converter)
         where T : notnull =>
         IsErr ? converter(Err) : Ok;
+#endif
 
     /// <summary>Gets itself, or the parameter.</summary>
     /// <remarks><para>
@@ -856,7 +871,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
     public Result<Result<object, Exception>, TErr> Try([InstantHandle] Action<TOk> action) =>
         IsOk ? Please.Try(action, Ok) : Err;
-
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>
     /// Applies a selector to <see cref="Ok"/> if <see cref="Ok"/> is set, leaving <see cref="Err"/> untouched.
     /// </summary>
@@ -870,6 +885,7 @@ public readonly struct Result<TOk, TErr> :
     public Result<Result<T, Exception>, TErr> Try<T>([InstantHandle] Converter<TOk, T> converter)
         where T : notnull =>
         IsOk ? Please.TryMap(converter, Ok) : Err;
+#endif
 
     /// <summary>
     /// Applies a selector to <see cref="Err"/> if <see cref="Err"/> is set, leaving <see cref="Ok"/> untouched.
@@ -882,7 +898,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read), MustUseReturnValue]
     public Result<TOk, Result<object, Exception>> TryErr([InstantHandle] Action<TErr> action) =>
         IsErr ? Please.Try(action, Err) : Ok;
-
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>
     /// Applies a selector to <see cref="Err"/> if <see cref="Err"/> is set, leaving <see cref="Ok"/> untouched.
     /// </summary>
@@ -896,6 +912,7 @@ public readonly struct Result<TOk, TErr> :
     public Result<TOk, Result<T, Exception>> TryErr<T>([InstantHandle] Converter<TErr, T> converter)
         where T : notnull =>
         IsErr ? Please.TryMap(converter, Err) : Ok;
+#endif
 
     /// <summary>Performs an exhaustive match statement.</summary>
     /// <param name="onOk">The delegate to invoke when <see cref="Ok"/>.</param>
@@ -910,6 +927,7 @@ public readonly struct Result<TOk, TErr> :
     ) =>
         IsOk ? Please.Try(onOk, Ok) : Please.Try(onErr, Err);
 
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>Performs an exhaustive match statement.</summary>
     /// <typeparam name="T">The return value of both converters.</typeparam>
     /// <param name="onOk">The delegate to invoke when <see cref="Ok"/>.</param>
@@ -924,12 +942,14 @@ public readonly struct Result<TOk, TErr> :
     )
         where T : notnull =>
         IsOk ? Please.TryMap(onOk, Ok) : Please.TryMap(onErr, Err);
+#endif
 
     /// <summary>Swaps the success and error value.</summary>
     /// <returns>Itself with the generics and values swapped.</returns>
     [CollectionAccess(Read), Pure]
     public Result<TErr, TOk> Swap() => IsOk ? Ok : Err;
 
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>Performs an exhaustive match statement.</summary>
     /// <typeparam name="T">The return value of both converters.</typeparam>
     /// <param name="onOk">The delegate to invoke when <see cref="Ok"/>.</param>
@@ -940,6 +960,7 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
     public T Match<T>([InstantHandle] Converter<TOk, T> onOk, [InstantHandle] Converter<TErr, T> onErr) =>
         IsOk ? onOk(Ok) : onErr(Err);
+#endif
 
     /// <summary>Gets the <see cref="Ok"/> value, or the parameter.</summary>
     /// <remarks><para>
@@ -949,7 +970,7 @@ public readonly struct Result<TOk, TErr> :
     /// <returns>The value <see cref="Ok"/>, or <paramref name="def"/>.</returns>
     [CollectionAccess(None), Pure]
     public TErr ErrOr(TErr def) => IsErr ? Err : def;
-
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>Gets the <see cref="Ok"/> value, or the returned value of the parameter.</summary>
     /// <remarks><para>
     /// The default value is lazily evaluated, use <see cref="OkOr(TOk)"/> for eager evaluation.
@@ -960,6 +981,7 @@ public readonly struct Result<TOk, TErr> :
     /// <returns>The value <see cref="Ok"/>, or the result of <paramref name="converter"/>.</returns>
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
     public TErr ErrOr([InstantHandle] Converter<TOk, TErr> converter) => IsErr ? Err : converter(Ok);
+#endif
 
     /// <summary>Gets the error value. Throws if this value is not set.</summary>
     /// <param name="message">The message to send into <see cref="ResultException{T}"/>.</param>
@@ -989,7 +1011,7 @@ public readonly struct Result<TOk, TErr> :
     /// <returns>The value <see cref="Ok"/>, or <paramref name="def"/>.</returns>
     [CollectionAccess(Read), Pure]
     public TOk OkOr(TOk def) => IsOk ? Ok : def;
-
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>Gets the <see cref="Ok"/> value, or the returned value of the parameter.</summary>
     /// <remarks><para>
     /// The default value is lazily evaluated, use <see cref="OkOr(TOk)"/> for eager evaluation.
@@ -1000,6 +1022,7 @@ public readonly struct Result<TOk, TErr> :
     /// <returns>The value <see cref="Ok"/>, or the result of <paramref name="converter"/>.</returns>
     [CollectionAccess(Read), MustUseReturnValue]
     public TOk OkOr([InstantHandle] Converter<TErr, TOk> converter) => IsOk ? Ok : converter(Err);
+#endif
 
     [Pure]
     static bool IsEqual<T>(T? x, T? y) =>

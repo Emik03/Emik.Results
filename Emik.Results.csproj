@@ -12,6 +12,7 @@
     <ItemGroup>
         <PackageReference Remove="FastGenericNew.SourceGenerator"/>
         <Compile Remove="$(Morsels)/Compile/Source/References/*/**/*.cs"/>
+        <Compile Include="$(Morsels)/Compile/Source/References/System/Delegates.cs" Link="Source/References/System/Delegates.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/Emik/Linq/Collected.cs" Link="Source/References/Emik/Linq/Collected.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/System/Diagnostics/Attributes.cs" Link="Source/References/System/Diagnostics/Attributes.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/System/Collections/Generics/IReadOnly.cs" Link="Source/References/System/Collections/Generics/IReadOnly.cs"/>

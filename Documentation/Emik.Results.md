@@ -17,7 +17,3 @@
 | :--- | :--- |
 | [IBoxedResult](IBoxedResult.md 'Emik.Results.IBoxedResult') | Represents an untyped result type, which allows [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')<br/>instances to interact regardless of its generic parameters. |
 | [IFatal](IFatal.md 'Emik.Results.IFatal') | Non-generic [ResultException&lt;T&gt;](ResultException{T}.md 'Emik.Results.ResultException<T>'). Implement this to disallow catching in [Please](Please.md 'Emik.Results.Please').<br/>If [Value](IFatal.Value.md 'Emik.Results.IFatal.Value') has no appropriate implementation, simply [return](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/return 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/return')[null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null'). |
-
-| Delegates | |
-| :--- | :--- |
-| [Converter&lt;TInput,TOutput&gt;(TInput)](Converter{TInput,TOutput}(TInput).md 'Emik.Results.Converter<TInput,TOutput>(TInput)') | <b>POLYFILL:</b> Represents a method that converts an object from one type to another type. |

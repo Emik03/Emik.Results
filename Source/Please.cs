@@ -128,7 +128,7 @@ public static class Please
             return ex;
         }
     }
-
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
     /// <typeparam name="T">The type of the first parameter.</typeparam>
     /// <typeparam name="TResult">The type of the result of <paramref name="converter"/>.</typeparam>
@@ -158,6 +158,7 @@ public static class Please
             return ex;
         }
     }
+#endif
 #if !NET20 && !NET30
     /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
     /// <typeparam name="T1">The type of the first parameter.</typeparam>
