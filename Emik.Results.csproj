@@ -1,12 +1,19 @@
 <!-- SPDX-License-Identifier: MPL-2.0 -->
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <FileVersion>2.1.1</FileVersion>
+        <FileVersion>2.2</FileVersion>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/Emik03/Emik.Results</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Emik03/Emik.Results</PackageProjectUrl>
-        <TargetFrameworks>net7.0;netstandard2.1;netstandard2.0;net40;net35;net20</TargetFrameworks>
         <Description>Contains the Result type; A type representing either a success value or failure value.</Description>
         <PackageTags>Catch Either Err Exception Extension Functional Fluent Linq Monad Monadic Monoid Ok Struct Try</PackageTags>
+        <TargetFrameworks>net7.0;net5.0;netcoreapp1.0;netstandard2.1;netstandard2.0;netstandard1.0;net40;net35;net20</TargetFrameworks>
     </PropertyGroup>
+    <ItemGroup>
+        <Compile Remove="$(Morsels)/Compile/Source/References/*/**/*.cs"/>
+        <Compile Include="$(Morsels)/Compile/Source/References/Emik/Linq/Collected.cs" Link="Source/References/Emik/Linq/Collected.cs"/>
+        <Compile Include="$(Morsels)/Compile/Source/References/System/Diagnostics/Attributes.cs" Link="Source/References/System/Diagnostics/Attributes.cs"/>
+        <Compile Include="$(Morsels)/Compile/Source/References/System/Collections/Generics/IReadOnly.cs" Link="Source/References/System/Collections/Generics/IReadOnly.cs"/>
+        <Compile Include="$(Morsels)/Compile/Source/References/System/Linq/EnumerableTryGetNonEnumeratedCount.cs" Link="Source/References/System/Linq/EnumerableTryGetNonEnumeratedCount.cs"/>
+    </ItemGroup>
 </Project>
