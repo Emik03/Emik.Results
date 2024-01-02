@@ -1,9 +1,58 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 namespace Emik.Results;
-
+#pragma warning disable RCS1236
 /// <summary>Methods to wrap try-catch into a <see cref="Result{TOk, TErr}"/>.</summary>
 public static class Please
 {
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
+    static readonly
+#if NET20
+        Dictionary<Assembly, bool>
+#else
+        HashSet<Assembly?>
+#endif
+        s_scared = [];
+#else
+    const string No = $"{nameof(Please)}.{nameof(CatchFatalExceptions)} is not supported on .NET Standard 1.0 - 1.6.";
+#endif
+
+    /// <summary>
+    /// Gets or sets a value indicating whether exception filters should be
+    /// according to <see cref="Fatalities.IsFatal"/>, or have no filter at all.
+    /// </summary>
+    /// <remarks><para>
+    /// This value is unique per assembly to allow for configuration, without altering the behavior of other assemblies.
+    /// </para><para>
+    /// It is encouraged to use a module initializer or static constructor to set this value.
+    /// </para></remarks>
+    /// <exception cref="NotSupportedException">The setter is used in .NET Standard 1.0 - 1.6.</exception>
+    public static bool CatchFatalExceptions
+    {
+#if NET20
+        [Pure] get => Caller is { } caller && s_scared.TryGetValue(caller, out _);
+        set => _ = Caller is { } caller && (value ? s_scared[caller] = false : s_scared.Remove(caller));
+#elif !NETSTANDARD2_0_OR_GREATER && NETSTANDARD
+        [Pure] get => false;
+        [DoesNotReturn, Obsolete(No, true)] set => throw new NotSupportedException(No);
+#else
+        [Pure] get => s_scared.Contains(Caller);
+        set => _ = value ? s_scared.Add(Caller) : s_scared.Remove(Caller);
+#endif
+    }
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
+    static Assembly? Caller
+    {
+        [Pure]
+        get
+        {
+            for (var i = 2;; i++) // ReSharper disable once PossibleUnintendedReferenceComparison
+                if (new StackFrame(i).GetMethod()?.DeclaringType?.Assembly is var assembly &&
+                    assembly != typeof(Please).Assembly)
+                    return assembly;
+        }
+    }
+#endif
+
     /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
     /// <typeparam name="T">The type of the first parameter.</typeparam>
     /// <param name="predicate">The <see cref="Delegate"/> to invoke.</param>
@@ -16,8 +65,15 @@ public static class Please
         {
             return predicate(first);
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -33,8 +89,15 @@ public static class Please
             action();
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -53,8 +116,15 @@ public static class Please
             action(first);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -76,8 +146,15 @@ public static class Please
         {
             return converter(first);
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -97,8 +174,15 @@ public static class Please
             action(first, second);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -125,8 +209,15 @@ public static class Please
             action(first, second, third);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -156,8 +247,15 @@ public static class Please
             action(first, second, third, fourth);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -174,8 +272,15 @@ public static class Please
         {
             return func();
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -194,8 +299,15 @@ public static class Please
         {
             return func(first);
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -220,8 +332,15 @@ public static class Please
         {
             return func(first, second);
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -249,8 +368,15 @@ public static class Please
         {
             return func(first, second, third);
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }
@@ -281,8 +407,15 @@ public static class Please
         {
             return func(first, second, third, fourth);
         }
-        catch (Exception ex) when (ex.IsBenign())
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
         {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
             return ex;
         }
     }

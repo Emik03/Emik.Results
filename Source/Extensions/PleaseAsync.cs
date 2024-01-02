@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MPL-2.0
 #if !NETFRAMEWORK
-#pragma warning disable ASYNC0001, VSTHRD002, VSTHRD003, VSTHRD200
+#pragma warning disable ASYNC0001, S5034, VSTHRD002, VSTHRD003, VSTHRD200
 namespace Emik.Results.Extensions;
 
 /// <summary>Methods to wrap try-catch into a <see cref="Result{TOk, TErr}"/>.</summary>
@@ -17,7 +17,7 @@ public static class PleaseAsync
             await func();
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -39,7 +39,7 @@ public static class PleaseAsync
             await func(first);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -64,7 +64,7 @@ public static class PleaseAsync
             await func(first, second);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -92,7 +92,7 @@ public static class PleaseAsync
             await func(first, second, third);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -123,7 +123,7 @@ public static class PleaseAsync
             await func(first, second, third, fourth);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -143,7 +143,7 @@ public static class PleaseAsync
         {
             return await func();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -166,7 +166,7 @@ public static class PleaseAsync
         {
             return await func(first);
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -192,7 +192,7 @@ public static class PleaseAsync
         {
             return await func(first, second);
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -221,7 +221,7 @@ public static class PleaseAsync
         {
             return await func(first, second, third);
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -253,7 +253,7 @@ public static class PleaseAsync
         {
             return await func(first, second, third, fourth);
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -270,7 +270,7 @@ public static class PleaseAsync
             await task;
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -288,13 +288,13 @@ public static class PleaseAsync
         {
             return await task;
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
     }
 
-#if !NETSTANDARD2_0
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP
     /// <summary>Attempts to invoke a <see cref="Delegate"/>.</summary>
     /// <param name="func">The <see cref="Delegate"/> to invoke.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
@@ -306,7 +306,7 @@ public static class PleaseAsync
             await func();
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -328,7 +328,7 @@ public static class PleaseAsync
             await func(first);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -353,7 +353,7 @@ public static class PleaseAsync
             await func(first, second);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -381,7 +381,7 @@ public static class PleaseAsync
             await func(first, second, third);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -412,7 +412,7 @@ public static class PleaseAsync
             await func(first, second, third, fourth);
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -432,7 +432,7 @@ public static class PleaseAsync
         {
             return await func();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -455,7 +455,7 @@ public static class PleaseAsync
         {
             return await func(first);
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -481,7 +481,7 @@ public static class PleaseAsync
         {
             return await func(first, second);
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -510,7 +510,7 @@ public static class PleaseAsync
         {
             return await func(first, second, third);
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -542,7 +542,7 @@ public static class PleaseAsync
         {
             return await func(first, second, third, fourth);
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -559,7 +559,7 @@ public static class PleaseAsync
             await task;
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -577,7 +577,7 @@ public static class PleaseAsync
         {
             return await task;
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -593,7 +593,7 @@ public static class PleaseAsync
         {
             return task.GetAwaiter();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -610,7 +610,7 @@ public static class PleaseAsync
         {
             return task.GetAwaiter();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -626,7 +626,7 @@ public static class PleaseAsync
         {
             return task.GetAwaiter();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -643,7 +643,7 @@ public static class PleaseAsync
         {
             return task.GetAwaiter();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -660,7 +660,7 @@ public static class PleaseAsync
             task.GetAwaiter().GetResult();
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -678,7 +678,7 @@ public static class PleaseAsync
         {
             return task.GetAwaiter().GetResult();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -695,7 +695,7 @@ public static class PleaseAsync
             task.GetResult();
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -713,7 +713,7 @@ public static class PleaseAsync
         {
             return task.GetResult();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -730,7 +730,7 @@ public static class PleaseAsync
             task.GetAwaiter().GetResult();
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -748,7 +748,7 @@ public static class PleaseAsync
         {
             return task.GetAwaiter().GetResult();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -765,7 +765,7 @@ public static class PleaseAsync
             task.GetResult();
             return Ok<Exception>();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
@@ -783,7 +783,7 @@ public static class PleaseAsync
         {
             return task.GetResult();
         }
-        catch (Exception ex) when (ex.IsBenign())
+        catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
             return ex;
         }
