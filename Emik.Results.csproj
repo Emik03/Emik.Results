@@ -6,8 +6,8 @@
         <RepositoryUrl>https://github.com/Emik03/Emik.Results</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Emik03/Emik.Results</PackageProjectUrl>
         <Description>Contains the Result type; A type representing either a success value or failure value.</Description>
+        <TargetFrameworks>net7.0;net5.0;netstandard2.1;netstandard2.0;netstandard1.0;net40;net35;net20</TargetFrameworks>
         <PackageTags>Catch Either Err Exception Extension Functional Fluent Linq Monad Monadic Monoid Ok Struct Try</PackageTags>
-        <TargetFrameworks>net7.0;net5.0;netcoreapp1.0;netstandard2.1;netstandard2.0;netstandard1.0;net40;net35;net20</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <Compile Remove="$(Morsels)/Compile/Source/References/*/**/*.cs"/>
