@@ -11,6 +11,10 @@ public static class Please
 
 Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.Object 'System.Object') &#129106; Please
 
+| Properties | |
+| :--- | :--- |
+| [CatchFatalExceptions](Please.CatchFatalExceptions.md 'Emik.Results.Please.CatchFatalExceptions') | Gets or sets a value indicating whether exception filters should be<br/>according to [IsFatal(this Exception)](Fatalities.IsFatal(Exception).md 'Emik.Results.Extensions.Fatalities.IsFatal(this System.Exception)'), or have no filter at all. |
+
 | Methods | |
 | :--- | :--- |
 | [Try(Action)](Please.Try(Action).md 'Emik.Results.Please.Try(System.Action)') | Attempts to invoke a [System.Delegate](https://docs.microsoft.com/en-us/dotnet/api/System.Delegate 'System.Delegate'). |

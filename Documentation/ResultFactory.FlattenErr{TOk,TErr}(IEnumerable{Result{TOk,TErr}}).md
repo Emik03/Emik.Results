@@ -7,7 +7,7 @@ Returns all [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') v
 or the first-found [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok') if any exist.
 
 ```csharp
-public static Emik.Results.Result<TOk,System.Collections.Generic.IEnumerable<TErr>> FlattenErr<TOk,TErr>(this System.Collections.Generic.IEnumerable<Emik.Results.Result<TOk,TErr>> enumerable)
+public static Emik.Results.Result<TOk,System.Collections.Generic.IList<TErr>> FlattenErr<TOk,TErr>(this System.Collections.Generic.IEnumerable<Emik.Results.Result<TOk,TErr>> enumerable)
     where TOk : notnull
     where TErr : notnull;
 ```
@@ -33,7 +33,7 @@ The error type.
 The iterable of results.
 
 #### Returns
-[Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TOk](ResultFactory.FlattenErr{TOk,TErr}(IEnumerable{Result{TOk,TErr}}).md#Emik.Results.Extensions.ResultFactory.FlattenErr_TOk,TErr_(thisSystem.Collections.Generic.IEnumerable_Emik.Results.Result_TOk,TErr__).TOk 'Emik.Results.Extensions.ResultFactory.FlattenErr<TOk,TErr>(this System.Collections.Generic.IEnumerable<Emik.Results.Result<TOk,TErr>>).TOk')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TErr](ResultFactory.FlattenErr{TOk,TErr}(IEnumerable{Result{TOk,TErr}}).md#Emik.Results.Extensions.ResultFactory.FlattenErr_TOk,TErr_(thisSystem.Collections.Generic.IEnumerable_Emik.Results.Result_TOk,TErr__).TErr 'Emik.Results.Extensions.ResultFactory.FlattenErr<TOk,TErr>(this System.Collections.Generic.IEnumerable<Emik.Results.Result<TOk,TErr>>).TErr')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')  
+[Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[TOk](ResultFactory.FlattenErr{TOk,TErr}(IEnumerable{Result{TOk,TErr}}).md#Emik.Results.Extensions.ResultFactory.FlattenErr_TOk,TErr_(thisSystem.Collections.Generic.IEnumerable_Emik.Results.Result_TOk,TErr__).TOk 'Emik.Results.Extensions.ResultFactory.FlattenErr<TOk,TErr>(this System.Collections.Generic.IEnumerable<Emik.Results.Result<TOk,TErr>>).TOk')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[System.Collections.Generic.IList&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IList-1 'System.Collections.Generic.IList`1')[TErr](ResultFactory.FlattenErr{TOk,TErr}(IEnumerable{Result{TOk,TErr}}).md#Emik.Results.Extensions.ResultFactory.FlattenErr_TOk,TErr_(thisSystem.Collections.Generic.IEnumerable_Emik.Results.Result_TOk,TErr__).TErr 'Emik.Results.Extensions.ResultFactory.FlattenErr<TOk,TErr>(this System.Collections.Generic.IEnumerable<Emik.Results.Result<TOk,TErr>>).TErr')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IList-1 'System.Collections.Generic.IList`1')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')  
 All [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') values, or the first [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok').
 
 ### Remarks
