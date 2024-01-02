@@ -34,6 +34,9 @@ public readonly struct Result<TOk, TErr> :
 #if NET40 || NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
     IStructuralComparable,
 #endif
+#if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
+    ICloneable,
+#endif
     IBoxedResult,
     IComparable,
     IComparable<object>,
@@ -45,7 +48,6 @@ public readonly struct Result<TOk, TErr> :
     IComparer<Result<TOk, TErr>>,
     IEqualityComparer,
     ICollection,
-    ICloneable,
     IEquatable<object>,
     IEquatable<IBoxedResult>,
     IEquatable<Result<TOk, TErr>>,
@@ -151,6 +153,28 @@ public readonly struct Result<TOk, TErr> :
     TOk IReadOnlyList<TOk>.this[int _]
     {
         [CollectionAccess(Read), MustUseReturnValue] get => Expect();
+    }
+
+    static
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
+        Comparer
+#else
+        Comparer<object?>
+#endif
+#pragma warning disable SCA1007
+        FallbackComparer
+#pragma warning restore SCA1007
+    {
+        [Pure]
+        get
+        {
+            return
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
+                Comparer.Default;
+#else
+                Comparer<object?>.Default;
+#endif
+        }
     }
 
     /// <summary>
@@ -350,7 +374,7 @@ public readonly struct Result<TOk, TErr> :
     }
 
     /// <summary>
-    /// Destructures the <see cref="Result{TOk, TErr}"/> into 2 optional values, <see cref="Ok"/> and <see cref="Err"/>.
+    /// Deconstructs the <see cref="Result{TOk, TErr}"/> into 2 optional values, <see cref="Ok"/> and <see cref="Err"/>.
     /// </summary>
     /// <param name="ok">The success value.</param>
     /// <param name="err">The error value.</param>
@@ -461,11 +485,15 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc cref="ISet{T}.IsProperSupersetOf" />
     [CollectionAccess(Read), Pure]
-    public bool IsProperSupersetOf([InstantHandle] IEnumerable<TOk> other) =>
+    public bool IsProperSupersetOf([InstantHandle] IEnumerable<TOk> other)
 #if NET20 || NET30
-        !other.GetEnumerator().MoveNext();
+    {
+        using var e = other.GetEnumerator();
+        return !e.MoveNext();
+    }
 #else
-        !other.Any();
+        =>
+            !other.Any();
 #endif
 
     /// <inheritdoc cref="ISet{T}.IsSubsetOf" />
@@ -478,7 +506,7 @@ public readonly struct Result<TOk, TErr> :
         other.ToCollectionLazily() is { Count: <= 1 } c && Overlaps(c);
 
     /// <summary>
-    /// Destructures the <see cref="Result{TOk, TErr}"/> into 2 optional values, <see cref="Ok"/> and <see cref="Err"/>.
+    /// Deconstructs the <see cref="Result{TOk, TErr}"/> into 2 optional values, <see cref="Ok"/> and <see cref="Err"/>.
     /// </summary>
     /// <param name="ok">The success value.</param>
     /// <param name="err">The error value.</param>
@@ -522,11 +550,15 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc cref="ISet{T}.SetEquals" />
     [CollectionAccess(Read), Pure]
-    public bool SetEquals([InstantHandle] IEnumerable<TOk> other) =>
+    public bool SetEquals([InstantHandle] IEnumerable<TOk> other)
 #if NET20 || NET30
-        other.GetEnumerator() is var e && e.MoveNext() && e.Current is { } current ? Contains(current) : IsErr;
+    {
+        using var e = other.GetEnumerator();
+        return e.MoveNext() && e.Current is { } current ? Contains(current) : IsErr;
+    }
 #else
-        other.SequenceEqual(this);
+        =>
+            other.SequenceEqual(this);
 #endif
 
     /// <inheritdoc />
@@ -572,7 +604,15 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
     public int CompareTo(object? other, IComparer? comparer) =>
-        other is IBoxedResult result ? CompareTo(result) : (comparer ?? Comparer.Default).Compare(this, other);
+        other is IBoxedResult result
+            ? CompareTo(result)
+            : (comparer ??
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
+                Comparer.Default
+#else
+                Comparer<object>.Default
+#endif
+            ).Compare(this, other);
 #endif
 
     /// <inheritdoc />
@@ -605,7 +645,7 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
-    int IComparer<object>.Compare(object? x, object? y) => Comparer.Default.Compare(x, y);
+    int IComparer<object>.Compare(object? x, object? y) => FallbackComparer.Compare(x, y);
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
@@ -641,7 +681,8 @@ public readonly struct Result<TOk, TErr> :
         IsOk ? Ok is IFormattable fOk ? $"Ok({fOk.ToString(format, formatProvider)})" : ToString() :
         Err is IFormattable fErr ? $"Err({fErr.ToString(format, formatProvider)})" : ToString();
 
-    /// <inheritdoc/>
+    /// <summary>Copies this instance.</summary>
+    /// <returns>The boxed copy of this instance.</returns>
     [CollectionAccess(None), Pure]
     public object Clone() => this;
 

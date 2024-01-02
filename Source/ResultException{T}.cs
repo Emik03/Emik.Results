@@ -7,9 +7,12 @@ namespace Emik.Results;
 /// disallowed to catch this type, as it strongly indicates an unsalvageable program state.
 /// </para></remarks>
 /// <typeparam name="T">The error value.</typeparam>
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
 [Serializable]
+#endif
 public sealed class ResultException<T> : Exception, IFatal
 {
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
     const BindingFlags Bindings = BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy;
 
     const string
@@ -19,26 +22,25 @@ public sealed class ResultException<T> : Exception, IFatal
     static readonly Converter<T, string?>? s_toStr = MakeCast<string>();
 
     static readonly Converter<T, Exception?>? s_toEx = MakeCast<Exception>();
-
+#endif // ReSharper disable once UnusedMember.Local
     ResultException()
-        : this(null, null) { }
+        : this(null) { }
 
-#pragma warning disable IDE0051
     ResultException(string? message) // ReSharper disable once IntroduceOptionalParameters.Local
-#pragma warning restore IDE0051
         : this(message, null) { }
 
     ResultException(string? message, Exception? innerException)
-        : base(message, innerException) =>
-        _ = Value ?? throw Unreachable;
+        : base(message, innerException) => // ReSharper disable once NullableWarningSuppressionIsUsed
+        Value = default!;
 
     ResultException(string? message, T value)
         : base(message, value as Exception) =>
         Value = value;
-
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
     ResultException(SerializationInfo info, StreamingContext context)
-        : base(info, context) =>
-        Value = info.GetValue(nameof(Value), typeof(T)) is T t ? t : throw Unreachable;
+        : base(info, context) => // ReSharper disable once NullableWarningSuppressionIsUsed
+        Value = info.GetValue(nameof(Value), typeof(T)) is T t ? t : default!;
+#endif
 
     /// <summary>Gets the value.</summary>
     [Pure]
@@ -69,7 +71,11 @@ public sealed class ResultException<T> : Exception, IFatal
     /// <returns>This method does not return.</returns>
     [DoesNotReturn]
     internal static object CoerceThenThrow(string? message, T value) =>
+#if !NETSTANDARD2_0_OR_GREATER && NETSTANDARD
+        throw (value as Exception ?? new ResultException<T>(value as string ?? message ?? $"{value}", value));
+#else
         throw (s_toEx?.Invoke(value) ?? new ResultException<T>(s_toStr?.Invoke(value) ?? message ?? $"{value}", value));
+#endif
 
     /// <summary>Throws a <see cref="ResultException{T}"/>, format depending on <paramref name="message"/>.</summary>
     /// <param name="message">
@@ -83,7 +89,7 @@ public sealed class ResultException<T> : Exception, IFatal
     [DoesNotReturn]
     internal static object SmartThrow(string? message, T value, string defaultMessage) =>
         message is null ? CoerceThenThrow(defaultMessage, value) : Throw(message, value);
-
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
     [MustUseReturnValue]
     static Converter<T, TOther?>? MakeCast<TOther>() =>
         Get<T, TOther>() is { } method && Create<TOther>(method) is { } converter ? converter : null;
@@ -93,21 +99,14 @@ public sealed class ResultException<T> : Exception, IFatal
         (Converter<T, TOther?>?)Delegate.CreateDelegate((Type)typeof(Converter<T, TOther>), method, false);
 
     [MustUseReturnValue] // ReSharper disable once SuggestBaseTypeForParameter
-    static MethodInfo? Get<TFrom, TTo>()
-    {
-        var from = typeof(TFrom).GetMethods(Bindings);
-        var to = typeof(TTo).GetMethods(Bindings);
-        var both = new MethodInfo[from.Length + to.Length];
-
-        Array.Copy(from, both, from.Length);
-        Array.Copy(to, 0, both, from.Length, to.Length);
-
-        return Array.Find(both, HasCast<TFrom, TTo>);
-    }
+    static MethodInfo? Get<TFrom, TTo>() =>
+        Array.Find(typeof(TFrom).GetMethods(Bindings), HasCast<TFrom, TTo>) ??
+        Array.Find(typeof(TTo).GetMethods(Bindings), HasCast<TFrom, TTo>);
 
     static bool HasCast<TFrom, TTo>(MethodInfo x) =>
         x.Name is Implicit or Explicit &&
+        x.ReturnType != typeof(TTo) &&
         x.GetParameters() is { Length: 1 } arr &&
-        arr[0].ParameterType == typeof(TFrom) &&
-        x.ReturnType != typeof(TTo);
+        arr[0].ParameterType == typeof(TFrom);
+#endif
 }
