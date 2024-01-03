@@ -12,6 +12,8 @@
     <ItemGroup>
         <PackageReference Remove="FastGenericNew.SourceGenerator"/>
         <Compile Remove="$(Morsels)/Compile/Source/References/*/**/*.cs"/>
+        <Compile Include="$(Morsels)/Compile/Source/References/System/Index.cs" Link="Source/References/System/Index.cs"/>
+        <Compile Include="$(Morsels)/Compile/Source/References/System/Delegates.cs" Link="Source/References/System/Delegates.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/Emik/Linq/Collected.cs" Link="Source/References/Emik/Linq/Collected.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/Emik/MethodGroupings.cs" Link="Source/References/Emik/MethodGroupings.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/Emik/Linq/TryAccessCount.cs" Link="Source/References/Emik/Linq/TryAccessCount.cs"/>
