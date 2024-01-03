@@ -487,7 +487,7 @@ public readonly struct Result<TOk, TErr> :
     public bool IsOkAnd(Predicate<TOk> predicate) => IsOk && predicate(Ok);
 
     /// <inheritdoc cref="ISet{T}.IsProperSubsetOf" />
-    [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
+    [CollectionAccess(Read), MemberNotNullWhen(false, nameof(Ok)), Pure]
     public bool IsProperSubsetOf([InstantHandle] IEnumerable<TOk> other) =>
         other.ToCollectionLazily() is { Count: > 1 } c && Overlaps(c);
 
@@ -505,11 +505,11 @@ public readonly struct Result<TOk, TErr> :
 #endif
 
     /// <inheritdoc cref="ISet{T}.IsSubsetOf" />
-    [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
+    [CollectionAccess(Read), MemberNotNullWhen(false, nameof(Ok)), Pure]
     public bool IsSubsetOf([InstantHandle] IEnumerable<TOk> other) => Overlaps(other);
 
     /// <inheritdoc cref="ISet{T}.IsSupersetOf" />
-    [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
+    [CollectionAccess(Read), MemberNotNullWhen(false, nameof(Ok)), Pure]
     public bool IsSupersetOf([InstantHandle] IEnumerable<TOk> other) =>
         other.ToCollectionLazily() is { Count: <= 1 } c && Overlaps(c);
 
@@ -547,9 +547,9 @@ public readonly struct Result<TOk, TErr> :
     }
 
     /// <inheritdoc cref="ISet{T}.Overlaps" />
-    [CollectionAccess(Read), MemberNotNullWhen(true, nameof(Ok)), Pure]
+    [CollectionAccess(Read), MemberNotNullWhen(false, nameof(Ok)), Pure]
     public bool Overlaps([InstantHandle] IEnumerable<TOk> other) =>
-        IsOk &&
+        !IsOk ||
         other
 #if NET20 || NET30
            .ToCollectionLazily()
@@ -562,7 +562,7 @@ public readonly struct Result<TOk, TErr> :
 #if NET20 || NET30
     {
         using var e = other.GetEnumerator();
-        return e.MoveNext() && e.Current is { } current ? Contains(current) : IsErr;
+        return e.MoveNext() && e.Current is { } current ? Contains(current) && !e.MoveNext() : IsErr;
     }
 #else
         =>
