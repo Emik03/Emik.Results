@@ -4,12 +4,10 @@
 namespace Emik.Results
 {
     /// <summary>Contains the Result type; A type representing either a success value or failure value.</summary>
-    [UsedImplicitly]
-    struct AssemblyDoc;
+    public struct AssemblyDoc;
 
     /// <summary>Contains the core types, including <see cref="Result{TOk, TErr}"/>.</summary>
-    [UsedImplicitly]
-    struct NamespaceDoc;
+    public struct NamespaceDoc;
 }
 
 namespace Emik.Results.Extensions
@@ -18,7 +16,6 @@ namespace Emik.Results.Extensions
     /// Contains extensions for creating <see cref="Result{TOk, TErr}"/> from other types,
     /// or operations requiring constrained generics within <see cref="Result{TOk, TErr}"/>.
     /// </summary>
-    [UsedImplicitly]
-    struct NamespaceDoc;
+    public struct NamespaceDoc;
 }
 #endif
