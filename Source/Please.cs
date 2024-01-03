@@ -1,17 +1,19 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 namespace Emik.Results;
-#pragma warning disable RCS1236
+#pragma warning disable RCS1236, RCS1249
 /// <summary>Methods to wrap try-catch into a <see cref="Result{TOk, TErr}"/>.</summary>
 public static class Please
 {
 #if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
+    const char R = '\u211b';
+
     static readonly
 #if NET20
         Dictionary<Assembly, bool>
 #else
         HashSet<Assembly?>
-#endif
-        s_scared = [];
+#endif // ReSharper disable once NullableWarningSuppressionIsUsed RedundantSuppressNullableWarningExpression
+        s_scared = new(Equating<Assembly?>(Equals, HashCode)!);
 #else
     const string No = $"{nameof(Please)}.{nameof(CatchFatalExceptions)} is not supported on .NET Standard 1.0 - 1.6.";
 #endif
@@ -46,9 +48,8 @@ public static class Please
         get
         {
             for (var i = 2;; i++) // ReSharper disable once PossibleUnintendedReferenceComparison
-                if (new StackFrame(i).GetMethod()?.DeclaringType?.Assembly is var assembly &&
-                    assembly != typeof(Please).Assembly)
-                    return assembly;
+                if (new StackFrame(i).GetMethod()?.DeclaringType?.Assembly is var a && a != typeof(Please).Assembly)
+                    return a;
         }
     }
 #endif
@@ -446,5 +447,25 @@ public static class Please
             return ex;
         }
     }
+#endif
+#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
+    [Pure]
+    static bool Equals(Assembly? x, Assembly? y) =>
+        x switch
+        {
+            null => y is null,
+            _ when y is null => false,
+            { FullName: [R, ..] } => y is { FullName: [R, ..] },
+            _ => EqualityComparer<Assembly>.Default.Equals(x, y),
+        };
+
+    [Pure]
+    static int HashCode(Assembly? x) =>
+        x switch
+        {
+            null => 0,
+            { FullName: [R, ..] } => ~0,
+            _ => EqualityComparer<Assembly>.Default.GetHashCode(x),
+        };
 #endif
 }
