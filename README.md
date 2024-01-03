@@ -9,13 +9,13 @@ This project has a dependency to [Emik.Morsels](https://github.com/Emik03/Emik.M
 
 ---
 
-- [Example](#example)
+- [Example](#examples)
 - [Contribute](#contribute)
 - [License](#license)
 
 ---
 
-## Example
+## Examples
 
 ```csharp
 using System;
