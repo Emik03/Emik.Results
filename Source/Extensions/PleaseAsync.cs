@@ -19,7 +19,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -41,7 +41,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -66,7 +66,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -94,7 +94,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -125,7 +125,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -272,7 +272,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -308,7 +308,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -330,7 +330,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -355,7 +355,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -383,7 +383,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -414,7 +414,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -561,7 +561,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -662,7 +662,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -697,7 +697,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -732,7 +732,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 
@@ -767,7 +767,7 @@ public static class PleaseAsync
         }
         catch (Exception ex) when (ex.IsBenign() || Please.CatchFatalExceptions)
         {
-            return ex;
+            return new(ex);
         }
     }
 

@@ -23,7 +23,7 @@ public static class Result
     [Pure]
     public static Result<T, object> Err<T>()
         where T : notnull =>
-        None;
+        new(None);
 
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Ok"/> value.</summary>
     /// <typeparam name="T">The type of <see cref="Result{TOk, TErr}.Err"/>.</typeparam>
@@ -31,7 +31,7 @@ public static class Result
     [Pure]
     public static Result<object, T> Ok<T>()
         where T : notnull =>
-        None;
+        new(None);
 
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Err"/> value.</summary>
     /// <typeparam name="T">The type of <see cref="Result{TOk, TErr}.Err"/>.</typeparam>
@@ -40,7 +40,7 @@ public static class Result
     [Pure]
     public static Result<object, T> Err<T>(T err)
         where T : notnull =>
-        err;
+        new(err);
 
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Ok"/> value.</summary>
     /// <typeparam name="T">The type of <see cref="Result{TOk, TErr}.Ok"/>.</typeparam>
@@ -49,7 +49,7 @@ public static class Result
     [Pure]
     public static Result<T, object> Ok<T>(T ok)
         where T : notnull =>
-        ok;
+        new(ok);
 
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Err"/> value.</summary>
     /// <typeparam name="TOk">The type of <see cref="Result{TOk, TErr}.Ok"/>.</typeparam>

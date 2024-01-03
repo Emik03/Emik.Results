@@ -98,7 +98,7 @@ public static class Please
             if (ex.IsFatal() && !CatchFatalExceptions)
                 throw;
 #endif
-            return ex;
+            return new(ex);
         }
     }
 #endif
@@ -125,7 +125,7 @@ public static class Please
             if (ex.IsFatal() && !CatchFatalExceptions)
                 throw;
 #endif
-            return ex;
+            return new(ex);
         }
     }
 #if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
@@ -184,7 +184,7 @@ public static class Please
             if (ex.IsFatal() && !CatchFatalExceptions)
                 throw;
 #endif
-            return ex;
+            return new(ex);
         }
     }
 
@@ -219,7 +219,7 @@ public static class Please
             if (ex.IsFatal() && !CatchFatalExceptions)
                 throw;
 #endif
-            return ex;
+            return new(ex);
         }
     }
 
@@ -257,7 +257,7 @@ public static class Please
             if (ex.IsFatal() && !CatchFatalExceptions)
                 throw;
 #endif
-            return ex;
+            return new(ex);
         }
     }
 
