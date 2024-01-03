@@ -9,7 +9,7 @@ This project has a dependency to [Emik.Morsels](https://github.com/Emik03/Emik.M
 
 ---
 
-- [Example](#examples)
+- [Examples](#examples)
 - [Contribute](#contribute)
 - [License](#license)
 
