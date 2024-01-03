@@ -4,6 +4,23 @@ namespace Emik.Results.Extensions;
 /// <summary>Additional methods for <see cref="ResultException{T}"/> that are type- or generic-sensitive.</summary>
 public static class ResultFactory
 {
+    /// <summary>Deconstructs the <see cref="IBoxedResult"/>.</summary>
+    /// <param name="result">The <see cref="IBoxedResult"/> to deconstruct.</param>
+    /// <param name="isOk">The parameter <paramref name="result"/>'s <see cref="IBoxedResult.IsOk"/>.</param>
+    /// <param name="value">The parameter <paramref name="result"/>'s <see cref="IBoxedResult.Value"/>.</param>
+    public static void Deconstruct(this IBoxedResult? result, out bool isOk, out object value)
+    {
+        if (result is null)
+        {
+            isOk = false;
+            value = None;
+            return;
+        }
+
+        isOk = result.IsOk;
+        value = result.Value;
+    }
+
     /// <summary>Creates a result from a boolean expression.</summary>
     /// <remarks><para>All parameters are eagerly evaluated.</para></remarks>
     /// <typeparam name="TOk">The success type.</typeparam>

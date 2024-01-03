@@ -21,5 +21,5 @@ public interface IBoxedResult
     /// Gets <c>Ok</c> if this <see cref="IBoxedResult"/> has a success value and <c>Err</c> otherwise.
     /// </summary>
     /// <remarks><para>This process requires boxing for returns that are value-types.</para></remarks>
-    public object? Value { get; }
+    public object Value { get; }
 }

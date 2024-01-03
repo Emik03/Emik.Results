@@ -166,15 +166,12 @@ public readonly struct Result<TOk, TErr> :
 #pragma warning restore SCA1007
     {
         [Pure]
-        get
-        {
-            return
+        get =>
 #if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
-                Comparer.Default;
+            Comparer.Default;
 #else
-                Comparer<object?>.Default;
+            Comparer<object?>.Default;
 #endif
-        }
     }
 
     /// <summary>
@@ -454,8 +451,7 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
     public bool Equals([NotNullWhen(true)] IBoxedResult? other) =>
-        other is not null &&
-        (other.IsOk ? other.Value is TOk ok && Contains(ok) : other.Value is TErr err && ContainsErr(err));
+        other is var (isOk, value) && (isOk ? value is TOk ok && Contains(ok) : value is TErr err && ContainsErr(err));
 
     /// <inheritdoc/>
     [CollectionAccess(Read), Pure]
@@ -588,7 +584,7 @@ public readonly struct Result<TOk, TErr> :
         x switch
         {
             Result<TOk, TErr> xResult when y is Result<TOk, TErr> yResult => xResult.Equals(yResult),
-            not null when y is not null => x.IsOk == y.IsOk && IsEqual(x.Value, y.Value),
+            var (xIsOk, xValue) when y is var (yIsOk, yValue) => xIsOk == yIsOk && IsEqual(xValue, yValue),
             _ => y is null,
         };
 
@@ -612,15 +608,7 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
     public int CompareTo(object? other, IComparer? comparer) =>
-        other is IBoxedResult result
-            ? CompareTo(result)
-            : (comparer ??
-#if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD
-                Comparer.Default
-#else
-                Comparer<object>.Default
-#endif
-            ).Compare(this, other);
+        other is IBoxedResult result ? CompareTo(result) : (comparer ?? FallbackComparer).Compare(this, other);
 #endif
 
     /// <inheritdoc />
@@ -629,10 +617,9 @@ public readonly struct Result<TOk, TErr> :
         other switch
         {
             Result<TOk, TErr> result => CompareTo(result),
-            { Value: var value } => IsOk ?
-                other.IsOk ? value is TOk ok ? DoCompare(Ok, ok) : DoCompare(Ok, value) : -1 :
-                other.IsOk ? 1 :
-                    value is TErr err ? DoCompare(Err, err) : DoCompare(Err, value),
+            var (isOk, value) => IsOk ? isOk ? value is TOk ok ? DoCompare(Ok, ok) : DoCompare(Ok, value) : -1 :
+                isOk ? 1 :
+                value is TErr err ? DoCompare(Err, err) : DoCompare(Err, value),
             _ => 1,
         };
 
@@ -1050,11 +1037,8 @@ public readonly struct Result<TOk, TErr> :
         if (x is Result<TOk, TErr> xResult && y is Result<TOk, TErr> yResult)
             return xResult.CompareTo(yResult);
 
-        var isXOk = x.IsOk;
-        var xValue = x.Value;
-
-        var isYOk = y.IsOk;
-        var yValue = y.Value;
+        var (isXOk, xValue) = x;
+        var (isYOk, yValue) = y;
 
         return isXOk != isYOk
             ? isXOk ? -1 : 1
