@@ -3,6 +3,7 @@
     <PropertyGroup>
         <FileVersion>3.0</FileVersion>
         <RepositoryType>git</RepositoryType>
+        <CopyrightSince>2023</CopyrightSince>
         <RepositoryUrl>https://github.com/Emik03/Emik.Results</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Emik03/Emik.Results</PackageProjectUrl>
         <Description>Contains the Result type; A type representing either a success value or failure value.</Description>
