@@ -2,6 +2,8 @@
 
 ## Emik.Results Namespace
 
+Contains the core types, including [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>').
+
 | Classes | |
 | :--- | :--- |
 | [Please](Please.md 'Emik.Results.Please') | Methods to wrap try-catch into a [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>'). |

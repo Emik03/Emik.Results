@@ -2,6 +2,9 @@
 
 ## Emik.Results.Extensions Namespace
 
+Contains extensions for creating [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>') from other types,  
+or operations requiring constrained generics within [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>').
+
 | Classes | |
 | :--- | :--- |
 | [Fatalities](Fatalities.md 'Emik.Results.Extensions.Fatalities') | Methods to determine the severity of an [System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception'). |
