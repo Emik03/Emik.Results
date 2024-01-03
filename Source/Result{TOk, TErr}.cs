@@ -1078,7 +1078,11 @@ public readonly struct Result<TOk, TErr> :
 #if !(NET20 || NET30)
     [Pure]
     static string Join(IEnumerable<object> enumerable) =>
+#if NET35
+        $"[{string.Join(", ", enumerable.Select(x => x is IEnumerable<object> o ? Join(o) : $"{x}").ToArray())}]";
+#else
         $"[{string.Join(", ", enumerable.Select(x => x is IEnumerable<object> o ? Join(o) : x))}]";
+#endif
 #endif
 
     /// <summary>Represents an enumeration that is either empty or returns a value once.</summary>
