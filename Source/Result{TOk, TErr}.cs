@@ -679,9 +679,21 @@ public readonly struct Result<TOk, TErr> :
     [CollectionAccess(Read), Pure, ValueRange(-1, 0)]
     int IList<TOk>.IndexOf(TOk? item) => Contains(item) ? 0 : -1;
 
-    /// <inheritdoc/>
+    /// <summary>Returns the <see cref="string"/> representation of this <see cref="object"/>.</summary>
+    /// <returns>The <see cref="string"/> representation of this <see cref="object"/>.</returns>
     [CollectionAccess(Read), Pure]
     public override string ToString() => IsOk ? $"Ok({Ok})" : $"Err({Err})";
+#if !(NET20 || NET30)
+    /// <summary>
+    /// Enumerates over <see cref="Ok"/> or <see cref="Err"/> to create
+    /// the deconstructed <see cref="string"/> representation.
+    /// </summary>
+    /// <returns>The deconstructed <see cref="string"/> representation of this <see cref="object"/>.</returns>
+    [CollectionAccess(Read), Pure]
+    public string EnumerateToString() =>
+        IsOk ? Ok is IEnumerable<object> eOk ? $"Ok({Join(eOk)})" : ToString() :
+        Err is IEnumerable<object> eErr ? $"Err({Join(eErr)})" : ToString();
+#endif
 
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
@@ -1063,6 +1075,11 @@ public readonly struct Result<TOk, TErr> :
             _ when y is null => 1,
             _ => Comparer<T>.Default.Compare(x, y),
         };
+#if !(NET20 || NET30)
+    [Pure]
+    static string Join(IEnumerable<object> enumerable) =>
+        $"[{string.Join(", ", enumerable.Select(x => x is IEnumerable<object> o ? Join(o) : x))}]";
+#endif
 
     /// <summary>Represents an enumeration that is either empty or returns a value once.</summary>
     [StructLayout(LayoutKind.Auto)]
