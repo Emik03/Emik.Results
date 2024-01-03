@@ -1079,7 +1079,9 @@ public readonly struct Result<TOk, TErr> :
     [Pure]
     static string Join(IEnumerable<object> enumerable) =>
 #if NET35
+#pragma warning disable CI0003
         $"[{string.Join(", ", enumerable.Select(x => x is IEnumerable<object> o ? Join(o) : $"{x}").ToArray())}]";
+#pragma warning restore CI0003
 #else
         $"[{string.Join(", ", enumerable.Select(x => x is IEnumerable<object> o ? Join(o) : x))}]";
 #endif
