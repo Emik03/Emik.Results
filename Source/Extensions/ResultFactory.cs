@@ -65,39 +65,36 @@ public static class ResultFactory
         where TOk : notnull
         where TErr : notnull
     {
-        return enumerable is ICollection<Result<TOk, TErr>> collection
-            ? Collection(collection)
-            : Enumerable(enumerable);
+        return enumerable.TryCount() is { } count ? Array(enumerable, count) : List(enumerable);
 
         [Pure]
-        static Result<IList<TOk>, TErr> Collection([InstantHandle] ICollection<Result<TOk, TErr>> collection)
+        static Result<IList<TOk>, TErr> Array(
+            [InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable,
+            [NonNegativeValue] int count
+        )
         {
-            var output = new TOk[collection.Count];
+            var output = new TOk[count];
             var i = 0;
 
-            foreach (var item in collection)
-            {
+            foreach (var item in enumerable)
                 if (item.IsErr)
                     return item.Err;
-
-                output[checked(i++)] = item.Ok;
-            }
+                else
+                    output[i++] = item.Ok;
 
             return output;
         }
 
         [Pure]
-        static Result<IList<TOk>, TErr> Enumerable([InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable)
+        static Result<IList<TOk>, TErr> List([InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable)
         {
             List<TOk> output = [];
 
             foreach (var item in enumerable)
-            {
                 if (item.IsErr)
                     return item.Err;
-
-                output.Add(item.Ok);
-            }
+                else
+                    output.Add(item.Ok);
 
             return output;
         }
@@ -121,39 +118,36 @@ public static class ResultFactory
         where TOk : notnull
         where TErr : notnull
     {
-        return enumerable is ICollection<Result<TOk, TErr>> collection
-            ? Collection(collection)
-            : Enumerable(enumerable);
+        return enumerable.TryCount() is { } count ? Array(enumerable, count) : List(enumerable);
 
         [Pure]
-        static Result<TOk, IList<TErr>> Collection([InstantHandle] ICollection<Result<TOk, TErr>> collection)
+        static Result<TOk, IList<TErr>> Array(
+            [InstantHandle] IEnumerable<Result<TOk, TErr>> collection,
+            [NonNegativeValue] int count
+        )
         {
-            var output = new TErr[collection.Count];
+            var output = new TErr[count];
             var i = 0;
 
             foreach (var item in collection)
-            {
                 if (item.IsOk)
                     return item.Ok;
-
-                output[checked(i++)] = item.Err;
-            }
+                else
+                    output[i++] = item.Err;
 
             return output;
         }
 
         [Pure]
-        static Result<TOk, IList<TErr>> Enumerable([InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable)
+        static Result<TOk, IList<TErr>> List([InstantHandle] IEnumerable<Result<TOk, TErr>> enumerable)
         {
             List<TErr> output = [];
 
             foreach (var item in enumerable)
-            {
                 if (item.IsOk)
                     return item.Ok;
-
-                output.Add(item.Err);
-            }
+                else
+                    output.Add(item.Err);
 
             return output;
         }
@@ -205,7 +199,7 @@ public static class ResultFactory
     [Pure]
     public static Result<object, T> IntoErr<T>(this T? err)
         where T : class =>
-        err ?? None;
+        err is null ? Ok<T>() : new(err);
 
     /// <summary>Maps <typeparamref name="T"/> into a <see cref="Result{TOk, TErr}"/>.</summary>
     /// <typeparam name="T">The error type.</typeparam>
@@ -217,7 +211,7 @@ public static class ResultFactory
     [Pure]
     public static Result<object, T> IntoErr<T>(this T? err)
         where T : struct =>
-        err ?? None;
+        err is null ? Ok<T>() : new(err);
 
     /// <summary>Maps <typeparamref name="TErr"/> into a <see cref="Result{TOk, TErr}"/>.</summary>
     /// <typeparam name="TOk">The success type.</typeparam>
@@ -259,7 +253,7 @@ public static class ResultFactory
     [Pure]
     public static Result<T, object> IntoOk<T>(this T? ok)
         where T : struct =>
-        ok ?? None;
+        ok is null ? Err<T>() : new(ok);
 
     /// <summary>Maps <typeparamref name="T"/> into a <see cref="Result{TOk, TErr}"/>.</summary>
     /// <typeparam name="T">The success type.</typeparam>
@@ -271,7 +265,7 @@ public static class ResultFactory
     [Pure]
     public static Result<T, object> IntoOk<T>(this T? ok)
         where T : class =>
-        ok ?? None;
+        ok is null ? Err<T>() : new(ok);
 
     /// <summary>Maps <typeparamref name="TOk"/> into a <see cref="Result{TOk, TErr}"/>.</summary>
     /// <typeparam name="TOk">The success type.</typeparam>
