@@ -421,4 +421,30 @@ public static class Please
         }
     }
 #endif
+
+#if NET40_OR_GREATER || !NETFRAMEWORK
+    /// <summary>Attempts to invoke a <see cref="Lazy{T}"/>.</summary>
+    /// <typeparam name="T">The type of the result of <paramref name="lazy"/>.</typeparam>
+    /// <param name="lazy">The <see cref="Lazy{T}"/> to invoke.</param>
+    /// <returns>The result of <paramref name="lazy"/>, or the <see cref="Exception"/> thrown.</returns>
+    public static Result<T, Exception> Try<T>(this Lazy<T> lazy)
+        where T : notnull
+    {
+        try
+        {
+            return lazy.Value;
+        }
+#if NET40_OR_GREATER || !NETFRAMEWORK
+        catch (Exception ex) when (ex.IsBenign() || CatchFatalExceptions)
+        {
+#else
+        catch (Exception ex)
+        {
+            if (ex.IsFatal() && !CatchFatalExceptions)
+                throw;
+#endif
+            return ex;
+        }
+    }
+#endif
 }
