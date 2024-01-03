@@ -16,6 +16,7 @@
         <Compile Include="$(Morsels)/Compile/Source/References/Emik/MethodGroupings.cs" Link="Source/References/Emik/MethodGroupings.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/Emik/Linq/TryAccessCount.cs" Link="Source/References/Emik/Linq/TryAccessCount.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/System/Diagnostics/Attributes.cs" Link="Source/References/System/Diagnostics/Attributes.cs"/>
+        <Compile Include="$(Morsels)/Compile/Source/References/System/Diagnostics/MethodImplOptions.cs" Link="Source/References/System/Diagnostics/MethodImplOptions.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/System/Collections/Generics/IReadOnly.cs" Link="Source/References/System/Collections/Generics/IReadOnly.cs"/>
         <Compile Include="$(Morsels)/Compile/Source/References/System/Linq/EnumerableTryGetNonEnumeratedCount.cs" Link="Source/References/System/Linq/EnumerableTryGetNonEnumeratedCount.cs"/>
     </ItemGroup>
