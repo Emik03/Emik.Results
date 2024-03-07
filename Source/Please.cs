@@ -1,6 +1,6 @@
 ﻿// SPDX-License-Identifier: MPL-2.0
 namespace Emik.Results;
-#pragma warning disable RCS1236, RCS1249
+#pragma warning disable RCS1236, RCS1249, S1994
 /// <summary>Methods to wrap try-catch into a <see cref="Result{TOk, TErr}"/>.</summary>
 public static class Please
 {
