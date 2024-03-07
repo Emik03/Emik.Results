@@ -43,7 +43,9 @@ var thisIsTrue = Result.Ok(2).IsSupersetOf([2]);
 
 ```csharp
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Emik.Results;
 using Emik.Results.Extensions;
 using static Emik.Results.Result;
 
@@ -54,10 +56,10 @@ Result<int, Exception> success = await Task<int>.FromResult(10).Try();
 Result<int, Exception> failure = new Lazy<int>(() => throw new()).Try();
 
 // Convert nullable value types into Result.
-Result<int, object> none = default(int?).IntoOk();
+Result<int, Unit> none = default(int?).IntoOk();
 
 // Convert nullable reference types into Result.
-Result<string, object> some = "".IntoOk();
+Result<string, Unit> some = "".IntoOk();
 
 // Filter and map.
 var thisIsAlsoTrue = Err(2).MapErr(x => new List<int>(x)).IsErrAnd(x => x is { Capacity: 2, Count: 0 });
