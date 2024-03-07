@@ -4,41 +4,38 @@ namespace Emik.Results;
 /// <summary>Methods to create result types from singular values.</summary>
 public static class Result
 {
-    /// <summary>Gets the nothing value, used when the inner value is unspecified.</summary>
-    public static object None { get; } = new();
-
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Err"/> value.</summary>
     /// <returns>A <see cref="Result{TOk, TErr}"/> marked with <see cref="Result{TOk, TErr}.Err"/>.</returns>
     [Pure]
-    public static Result<object, object> Err() => new(err: None);
+    public static Result<Unit, Unit> Err() => new(err: default);
 
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Ok"/> value.</summary>
     /// <returns>A <see cref="Result{TOk, TErr}"/> marked with <see cref="Result{TOk, TErr}.Ok"/>.</returns>
     [Pure]
-    public static Result<object, object> Ok() => new(ok: None);
+    public static Result<Unit, Unit> Ok() => new(ok: default);
 
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Err"/> value.</summary>
     /// <typeparam name="T">The type of <see cref="Result{TOk, TErr}.Ok"/>.</typeparam>
     /// <returns>A <see cref="Result{TOk, TErr}"/> marked with <see cref="Result{TOk, TErr}.Err"/>.</returns>
     [Pure]
-    public static Result<T, object> Err<T>()
+    public static Result<T, Unit> Err<T>()
         where T : notnull =>
-        new(None);
+        new(Unit.Value);
 
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Ok"/> value.</summary>
     /// <typeparam name="T">The type of <see cref="Result{TOk, TErr}.Err"/>.</typeparam>
     /// <returns>A <see cref="Result{TOk, TErr}"/> marked with <see cref="Result{TOk, TErr}.Ok"/>.</returns>
     [Pure]
-    public static Result<object, T> Ok<T>()
+    public static Result<Unit, T> Ok<T>()
         where T : notnull =>
-        new(None);
+        new(Unit.Value);
 
     /// <summary>Creates an <see cref="Result{TOk, TErr}.Err"/> value.</summary>
     /// <typeparam name="T">The type of <see cref="Result{TOk, TErr}.Err"/>.</typeparam>
     /// <param name="err">The value to pass into the <see cref="Result"/>.</param>
     /// <returns>A <see cref="Result{TOk, TErr}"/> with <paramref name="err"/> passed in.</returns>
     [Pure]
-    public static Result<object, T> Err<T>(T err)
+    public static Result<Unit, T> Err<T>(T err)
         where T : notnull =>
         new(err);
 
@@ -47,7 +44,7 @@ public static class Result
     /// <param name="ok">The value to pass into the <see cref="Result"/>.</param>
     /// <returns>A <see cref="Result{TOk, TErr}"/> with <paramref name="ok"/> passed in.</returns>
     [Pure]
-    public static Result<T, object> Ok<T>(T ok)
+    public static Result<T, Unit> Ok<T>(T ok)
         where T : notnull =>
         new(ok);
 

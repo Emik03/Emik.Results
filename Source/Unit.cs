@@ -60,7 +60,10 @@ public readonly struct Unit :
 
     /// <summary>Gets the boxed value of <see cref="Unit"/>.</summary>
     // ReSharper disable once ReplaceAutoPropertyWithComputedProperty
-    public static object Boxed { [CollectionAccess(None), Pure] get; } = default(Unit);
+    public static object Boxed { [CollectionAccess(None), Pure] get; } = Value;
+
+    /// <summary>Gets the value of <see cref="Unit"/>.</summary>
+    public static Unit Value => default;
 
     static
 #if NETSTANDARD2_0_OR_GREATER || !NETSTANDARD

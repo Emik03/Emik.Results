@@ -885,7 +885,7 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Ok"/>, otherwise <see cref="Err"/>.
     /// </returns>
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
-    public Result<Result<object, Exception>, TErr> Try([InstantHandle] Action<TOk> action) =>
+    public Result<Result<Unit, Exception>, TErr> Try([InstantHandle] Action<TOk> action) =>
         IsOk ? Please.Try(action, Ok) : Err;
 #if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>
@@ -912,7 +912,7 @@ public readonly struct Result<TOk, TErr> :
     /// if this <see cref="Result{TOk, TErr}"/> is <see cref="Err"/>, otherwise <see cref="Ok"/>.
     /// </returns>
     [CollectionAccess(Read), MustUseReturnValue]
-    public Result<TOk, Result<object, Exception>> TryErr([InstantHandle] Action<TErr> action) =>
+    public Result<TOk, Result<Unit, Exception>> TryErr([InstantHandle] Action<TErr> action) =>
         IsErr ? Please.Try(action, Err) : Ok;
 #if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     /// <summary>
@@ -937,7 +937,7 @@ public readonly struct Result<TOk, TErr> :
     /// The result of <paramref name="onOk"/> if <see cref="Ok"/>, otherwise the result of <paramref name="onErr"/>.
     /// </returns>
     [CollectionAccess(Read | ModifyExistingContent), MustUseReturnValue]
-    public Result<object, Exception> TryMatch(
+    public Result<Unit, Exception> TryMatch(
         [InstantHandle] Action<TOk> onOk,
         [InstantHandle] Action<TErr> onErr
     ) =>

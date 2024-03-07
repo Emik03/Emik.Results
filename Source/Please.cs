@@ -83,7 +83,7 @@ public static class Please
     /// <param name="action">The <see cref="Delegate"/> to invoke.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> Try([InstantHandle] Action action)
+    public static Result<Unit, Exception> Try([InstantHandle] Action action)
     {
         try
         {
@@ -110,7 +110,7 @@ public static class Please
     /// <param name="first">The first parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> Try<T>([InstantHandle] Action<T> action, T first)
+    public static Result<Unit, Exception> Try<T>([InstantHandle] Action<T> action, T first)
     {
         try
         {
@@ -169,7 +169,7 @@ public static class Please
     /// <param name="second">The second parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> Try<T1, T2>([InstantHandle] Action<T1, T2> action, T1 first, T2 second)
+    public static Result<Unit, Exception> Try<T1, T2>([InstantHandle] Action<T1, T2> action, T1 first, T2 second)
     {
         try
         {
@@ -199,7 +199,7 @@ public static class Please
     /// <param name="third">The third parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> Try<T1, T2, T3>(
+    public static Result<Unit, Exception> Try<T1, T2, T3>(
         [InstantHandle] Action<T1, T2, T3> action,
         T1 first,
         T2 second,
@@ -236,7 +236,7 @@ public static class Please
     /// <param name="fourth">The fourth parameter to invoke <paramref name="action"/> with.</param>
     /// <returns>The result of <paramref name="action"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> Try<T1, T2, T3, T4>(
+    public static Result<Unit, Exception> Try<T1, T2, T3, T4>(
         [InstantHandle] Action<T1, T2, T3, T4> action,
         T1 first,
         T2 second,

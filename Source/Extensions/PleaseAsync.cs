@@ -10,7 +10,7 @@ public static class PleaseAsync
     /// <param name="func">The <see cref="Delegate"/> to invoke.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async Task<Result<object, Exception>> Try([InstantHandle] Func<Task> func)
+    public static async Task<Result<Unit, Exception>> Try([InstantHandle] Func<Task> func)
     {
         try
         {
@@ -29,7 +29,7 @@ public static class PleaseAsync
     /// <param name="first">The first parameter to invoke <paramref name="func"/> with.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async Task<Result<object, Exception>> Try<T>(
+    public static async Task<Result<Unit, Exception>> Try<T>(
         [InstantHandle, RequireStaticDelegate] Func<T, Task> func,
         T first
     )
@@ -53,7 +53,7 @@ public static class PleaseAsync
     /// <param name="second">The second parameter to invoke <paramref name="func"/> with.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async Task<Result<object, Exception>> Try<T1, T2>(
+    public static async Task<Result<Unit, Exception>> Try<T1, T2>(
         [InstantHandle, RequireStaticDelegate] Func<T1, T2, Task> func,
         T1 first,
         T2 second
@@ -80,7 +80,7 @@ public static class PleaseAsync
     /// <param name="third">The third parameter to invoke <paramref name="func"/> with.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async Task<Result<object, Exception>> Try<T1, T2, T3>(
+    public static async Task<Result<Unit, Exception>> Try<T1, T2, T3>(
         [InstantHandle, RequireStaticDelegate] Func<T1, T2, T3, Task> func,
         T1 first,
         T2 second,
@@ -110,7 +110,7 @@ public static class PleaseAsync
     /// <param name="fourth">The fourth parameter to invoke <paramref name="func"/> with.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async Task<Result<object, Exception>> Try<T1, T2, T3, T4>(
+    public static async Task<Result<Unit, Exception>> Try<T1, T2, T3, T4>(
         [InstantHandle, RequireStaticDelegate] Func<T1, T2, T3, T4, Task> func,
         T1 first,
         T2 second,
@@ -263,7 +263,7 @@ public static class PleaseAsync
     /// <param name="task">The <see cref="Task"/> to invoke.</param>
     /// <returns>The result of <paramref name="task"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async Task<Result<object, Exception>> Try([InstantHandle] this Task task)
+    public static async Task<Result<Unit, Exception>> Try([InstantHandle] this Task task)
     {
         try
         {
@@ -299,7 +299,7 @@ public static class PleaseAsync
     /// <param name="func">The <see cref="Delegate"/> to invoke.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async ValueTask<Result<object, Exception>> Try([InstantHandle] Func<ValueTask> func)
+    public static async ValueTask<Result<Unit, Exception>> Try([InstantHandle] Func<ValueTask> func)
     {
         try
         {
@@ -318,7 +318,7 @@ public static class PleaseAsync
     /// <param name="first">The first parameter to invoke <paramref name="func"/> with.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async ValueTask<Result<object, Exception>> Try<T>(
+    public static async ValueTask<Result<Unit, Exception>> Try<T>(
         [InstantHandle, RequireStaticDelegate] Func<T, ValueTask> func,
         T first
     )
@@ -342,7 +342,7 @@ public static class PleaseAsync
     /// <param name="second">The second parameter to invoke <paramref name="func"/> with.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async ValueTask<Result<object, Exception>> Try<T1, T2>(
+    public static async ValueTask<Result<Unit, Exception>> Try<T1, T2>(
         [InstantHandle, RequireStaticDelegate] Func<T1, T2, ValueTask> func,
         T1 first,
         T2 second
@@ -369,7 +369,7 @@ public static class PleaseAsync
     /// <param name="third">The third parameter to invoke <paramref name="func"/> with.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async ValueTask<Result<object, Exception>> Try<T1, T2, T3>(
+    public static async ValueTask<Result<Unit, Exception>> Try<T1, T2, T3>(
         [InstantHandle, RequireStaticDelegate] Func<T1, T2, T3, ValueTask> func,
         T1 first,
         T2 second,
@@ -399,7 +399,7 @@ public static class PleaseAsync
     /// <param name="fourth">The fourth parameter to invoke <paramref name="func"/> with.</param>
     /// <returns>The result of <paramref name="func"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async ValueTask<Result<object, Exception>> Try<T1, T2, T3, T4>(
+    public static async ValueTask<Result<Unit, Exception>> Try<T1, T2, T3, T4>(
         [InstantHandle, RequireStaticDelegate] Func<T1, T2, T3, T4, ValueTask> func,
         T1 first,
         T2 second,
@@ -552,7 +552,7 @@ public static class PleaseAsync
     /// <param name="task">The <see cref="Task"/> to invoke.</param>
     /// <returns>The result of <paramref name="task"/>, or the <see cref="Exception"/> thrown.</returns>
     [Pure]
-    public static async ValueTask<Result<object, Exception>> Try([InstantHandle] this ValueTask task)
+    public static async ValueTask<Result<Unit, Exception>> Try([InstantHandle] this ValueTask task)
     {
         try
         {
@@ -653,7 +653,7 @@ public static class PleaseAsync
     /// <param name="task">The <see cref="Task"/> to invoke.</param>
     /// <returns>The result of <paramref name="task"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> TryResult(this Task task)
+    public static Result<Unit, Exception> TryResult(this Task task)
     {
         try
         {
@@ -688,7 +688,7 @@ public static class PleaseAsync
     /// <param name="task">The <see cref="Task"/> to invoke.</param>
     /// <returns>The result of <paramref name="task"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> TryResult(this TaskAwaiter task)
+    public static Result<Unit, Exception> TryResult(this TaskAwaiter task)
     {
         try
         {
@@ -723,7 +723,7 @@ public static class PleaseAsync
     /// <param name="task">The <see cref="Task"/> to invoke.</param>
     /// <returns>The result of <paramref name="task"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> TryResult(this ValueTask task)
+    public static Result<Unit, Exception> TryResult(this ValueTask task)
     {
         try
         {
@@ -758,7 +758,7 @@ public static class PleaseAsync
     /// <param name="task">The <see cref="Task"/> to invoke.</param>
     /// <returns>The result of <paramref name="task"/>, or the <see cref="Exception"/> thrown.</returns>
     [MustUseReturnValue]
-    public static Result<object, Exception> TryResult(this ValueTaskAwaiter task)
+    public static Result<Unit, Exception> TryResult(this ValueTaskAwaiter task)
     {
         try
         {

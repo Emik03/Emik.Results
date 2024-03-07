@@ -214,7 +214,7 @@ public static class ResultFactory
     /// or else <see langword="null"/>.
     /// </returns>
     [Pure]
-    public static Result<object, T> IntoErr<T>(this T? err)
+    public static Result<Unit, T> IntoErr<T>(this T? err)
         where T : class =>
         err is null ? Ok<T>() : new(err);
 
@@ -226,7 +226,7 @@ public static class ResultFactory
     /// or else <see langword="null"/>.
     /// </returns>
     [Pure]
-    public static Result<object, T> IntoErr<T>(this T? err)
+    public static Result<Unit, T> IntoErr<T>(this T? err)
         where T : struct =>
         err is null ? Ok<T>() : new(err);
 
@@ -268,7 +268,7 @@ public static class ResultFactory
     /// or else <see langword="null"/>.
     /// </returns>
     [Pure]
-    public static Result<T, object> IntoOk<T>(this T? ok)
+    public static Result<T, Unit> IntoOk<T>(this T? ok)
         where T : struct =>
         ok is null ? Err<T>() : new(ok);
 
@@ -280,7 +280,7 @@ public static class ResultFactory
     /// or else <see langword="null"/>.
     /// </returns>
     [Pure]
-    public static Result<T, object> IntoOk<T>(this T? ok)
+    public static Result<T, Unit> IntoOk<T>(this T? ok)
         where T : class =>
         ok is null ? Err<T>() : new(ok);
 
