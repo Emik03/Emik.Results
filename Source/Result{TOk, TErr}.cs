@@ -456,8 +456,8 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
     public bool Equals(object? other, IEqualityComparer? comparer) =>
-        comparer?.Equals(this, other) ??
-        (other is IBoxedResult result ? Equals(result) : EqualityComparer<object>.Default.Equals(this, other));
+        comparer?.Equals(this, other) ?? // ReSharper disable once NullableWarningSuppressionIsUsed
+        (other is IBoxedResult result ? Equals(result) : EqualityComparer<object>.Default.Equals(this, other!));
 #endif
 
     /// <inheritdoc />

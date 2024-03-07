@@ -96,7 +96,7 @@ public sealed class ResultException<T> : Exception, IFatal
 
     [MustUseReturnValue]
     static Converter<T, TOther?>? Create<TOther>(MethodInfo method) => // ReSharper disable once RedundantCast
-        (Converter<T, TOther?>?)Delegate.CreateDelegate((Type)typeof(Converter<T, TOther>), method, false);
+        (Converter<T, TOther?>?)Delegate.CreateDelegate(typeof(Converter<T, TOther>), method, false);
 
     [MustUseReturnValue] // ReSharper disable once SuggestBaseTypeForParameter
     static MethodInfo? Get<TFrom, TTo>() =>
