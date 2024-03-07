@@ -124,7 +124,7 @@ public readonly struct Result<TOk, TErr> :
             1 => Err, // ReSharper disable once UnreachableSwitchArmDueToIntegerAnalysis
             _ => (object?)null,
         } ??
-        Result.None;
+        Unit.Value;
 #endif
 
     /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
@@ -137,7 +137,7 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc cref="IBoxedResult.Value"/>
     [CollectionAccess(Read), Pure]
-    public object Value => (IsOk ? (object)Ok : Err) ?? Result.None;
+    public object Value => (IsOk ? (object)Ok : Err) ?? Unit.Value;
 
     /// <summary>Gets the error value. This value may not be set and is therefore optional.</summary>
     [CollectionAccess(None), Pure]

@@ -210,8 +210,7 @@ public readonly struct Unit :
     public static bool SequenceEqual<T>([InstantHandle, NotNullWhen(false)] IEnumerable<T>? enumerable)
 #if NET20 || NET30
     {
-        if (typeof(T) == typeof(char) && enumerable is "" ||
-            enumerable is null or ICollection { Count: 0 } or ICollection<T> { Count: 0 })
+        if (enumerable is null || enumerable.TryCount() is 0)
             return true;
 
         using var e = enumerable.GetEnumerator();

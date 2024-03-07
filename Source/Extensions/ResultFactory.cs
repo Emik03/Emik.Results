@@ -13,7 +13,7 @@ public static class ResultFactory
         if (result is null)
         {
             isOk = false;
-            value = None;
+            value = Unit.Value;
             return;
         }
 
@@ -228,7 +228,7 @@ public static class ResultFactory
     [Pure]
     public static Result<Unit, T> IntoErr<T>(this T? err)
         where T : struct =>
-        err is null ? Ok<T>() : new(err);
+        err is { } e ? new(e) : Ok<T>();
 
     /// <summary>Maps <typeparamref name="TErr"/> into a <see cref="Result{TOk, TErr}"/>.</summary>
     /// <typeparam name="TOk">The success type.</typeparam>
@@ -270,7 +270,7 @@ public static class ResultFactory
     [Pure]
     public static Result<T, Unit> IntoOk<T>(this T? ok)
         where T : struct =>
-        ok is null ? Err<T>() : new(ok);
+        ok is { } o ? new(o) : Err<T>();
 
     /// <summary>Maps <typeparamref name="T"/> into a <see cref="Result{TOk, TErr}"/>.</summary>
     /// <typeparam name="T">The success type.</typeparam>
