@@ -33,6 +33,7 @@ public readonly struct Result<TOk, TErr> :
 #endif
 #if NET40 || NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
     IStructuralComparable,
+    IStructuralEquatable,
 #endif
 #if NETFRAMEWORK || NETSTANDARD2_0_OR_GREATER || NETCOREAPP2_0_OR_GREATER
     ICloneable,
@@ -447,6 +448,13 @@ public readonly struct Result<TOk, TErr> :
     /// </returns>
     [CollectionAccess(None), MemberNotNullWhen(true, nameof(Err)), Pure]
     public bool ContainsErr([NotNullWhen(true)] TErr? item) => IsErr && IsEqual(Err, item);
+#if NET40 || NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
+    /// <inheritdoc />
+    [CollectionAccess(Read), Pure]
+    public bool Equals(object? other, IEqualityComparer? comparer) =>
+        comparer?.Equals(this, other) ??
+        (other is IBoxedResult result ? Equals(result) : EqualityComparer<object>.Default.Equals(this, other));
+#endif
 
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
@@ -608,7 +616,8 @@ public readonly struct Result<TOk, TErr> :
     /// <inheritdoc />
     [CollectionAccess(Read), Pure]
     public int CompareTo(object? other, IComparer? comparer) =>
-        other is IBoxedResult result ? CompareTo(result) : (comparer ?? FallbackComparer).Compare(this, other);
+        comparer?.Compare(this, other) ??
+        (other is IBoxedResult result ? CompareTo(result) : FallbackComparer.Compare(this, other));
 #endif
 
     /// <inheritdoc />
@@ -640,11 +649,19 @@ public readonly struct Result<TOk, TErr> :
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
-    int IComparer<object>.Compare(object? x, object? y) => FallbackComparer.Compare(x, y);
+    int IComparer<object>.Compare(object? x, object? y) =>
+        x is IBoxedResult xResult && y is IBoxedResult yResult
+            ? DoCompare(xResult, yResult)
+            : FallbackComparer.Compare(x, y);
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
     int IComparer<Result<TOk, TErr>>.Compare(Result<TOk, TErr> x, Result<TOk, TErr> y) => x.CompareTo(y);
+#if NET40 || NETSTANDARD1_0_OR_GREATER || NETCOREAPP1_0_OR_GREATER
+    /// <inheritdoc />
+    [CollectionAccess(Read), Pure]
+    public int GetHashCode(IEqualityComparer? comparer) => comparer?.GetHashCode(this) ?? GetHashCode();
+#endif
 
     /// <inheritdoc />
     [CollectionAccess(None), Pure]
