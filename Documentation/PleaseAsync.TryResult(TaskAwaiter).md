@@ -6,7 +6,7 @@
 Wraps a [System.Runtime.CompilerServices.TaskAwaiter](https://docs.microsoft.com/en-us/dotnet/api/System.Runtime.CompilerServices.TaskAwaiter 'System.Runtime.CompilerServices.TaskAwaiter') within a try-catch.
 
 ```csharp
-public static Emik.Results.Result<object,System.Exception> TryResult(this System.Runtime.CompilerServices.TaskAwaiter task);
+public static Emik.Results.Result<Emik.Results.Unit,System.Exception> TryResult(this System.Runtime.CompilerServices.TaskAwaiter task);
 ```
 #### Parameters
 
@@ -17,5 +17,5 @@ public static Emik.Results.Result<object,System.Exception> TryResult(this System
 The [System.Threading.Tasks.Task](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task 'System.Threading.Tasks.Task') to invoke.
 
 #### Returns
-[Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.Object 'System.Object')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')  
+[Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[Unit](Unit.md 'Emik.Results.Unit')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')  
 The result of [task](PleaseAsync.TryResult(TaskAwaiter).md#Emik.Results.Extensions.PleaseAsync.TryResult(thisSystem.Runtime.CompilerServices.TaskAwaiter).task 'Emik.Results.Extensions.PleaseAsync.TryResult(this System.Runtime.CompilerServices.TaskAwaiter).task'), or the [System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception') thrown.

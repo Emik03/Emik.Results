@@ -14,6 +14,7 @@ Contains the core types, including [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 
 | :--- | :--- |
 | [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>') | [Result&lt;TOk,TErr&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>') is the type used for returning and propagating errors.<br/>            It is either [Ok](Result{TOk,TErr}.Ok.md 'Emik.Results.Result<TOk,TErr>.Ok'), representing success and containing a value, or [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err'),<br/>            representing error and containing an error value. |
 | [Result&lt;TOk,TErr&gt;.Enumerator](Result{TOk,TErr}.Enumerator{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>.Enumerator') | Represents an enumeration that is either empty or returns a value once. |
+| [Unit](Unit.md 'Emik.Results.Unit') | [Unit](Unit.md 'Emik.Results.Unit') is the type used when there is no other meaningful value that can be returned. |
 
 | Interfaces | |
 | :--- | :--- |

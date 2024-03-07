@@ -11,10 +11,6 @@ public static class Result
 
 Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.Object 'System.Object') &#129106; Result
 
-| Properties | |
-| :--- | :--- |
-| [None](Result.None.md 'Emik.Results.Result.None') | Gets the nothing value, used when the inner value is unspecified. |
-
 | Methods | |
 | :--- | :--- |
 | [Err()](Result.Err.md 'Emik.Results.Result.Err()') | Creates an [Err](Result{TOk,TErr}.Err.md 'Emik.Results.Result<TOk,TErr>.Err') value. |

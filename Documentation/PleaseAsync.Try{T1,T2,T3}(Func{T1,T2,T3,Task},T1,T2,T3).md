@@ -6,7 +6,7 @@
 Attempts to invoke a [System.Delegate](https://docs.microsoft.com/en-us/dotnet/api/System.Delegate 'System.Delegate').
 
 ```csharp
-public static System.Threading.Tasks.Task<Emik.Results.Result<object,System.Exception>> Try<T1,T2,T3>(System.Func<T1,T2,T3,System.Threading.Tasks.Task> func, T1 first, T2 second, T3 third);
+public static System.Threading.Tasks.Task<Emik.Results.Result<Emik.Results.Unit,System.Exception>> Try<T1,T2,T3>(System.Func<T1,T2,T3,System.Threading.Tasks.Task> func, T1 first, T2 second, T3 third);
 ```
 #### Type parameters
 
@@ -54,5 +54,5 @@ The second parameter to invoke [func](PleaseAsync.Try{T1,T2,T3}(Func{T1,T2,T3,Ta
 The third parameter to invoke [func](PleaseAsync.Try{T1,T2,T3}(Func{T1,T2,T3,Task},T1,T2,T3).md#Emik.Results.Extensions.PleaseAsync.Try_T1,T2,T3_(System.Func_T1,T2,T3,System.Threading.Tasks.Task_,T1,T2,T3).func 'Emik.Results.Extensions.PleaseAsync.Try<T1,T2,T3>(System.Func<T1,T2,T3,System.Threading.Tasks.Task>, T1, T2, T3).func') with.
 
 #### Returns
-[System.Threading.Tasks.Task&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task-1 'System.Threading.Tasks.Task`1')[Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.Object 'System.Object')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task-1 'System.Threading.Tasks.Task`1')  
+[System.Threading.Tasks.Task&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task-1 'System.Threading.Tasks.Task`1')[Emik.Results.Result&lt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[Unit](Unit.md 'Emik.Results.Unit')[,](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception')[&gt;](Result{TOk,TErr}.md 'Emik.Results.Result<TOk,TErr>')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task-1 'System.Threading.Tasks.Task`1')  
 The result of [func](PleaseAsync.Try{T1,T2,T3}(Func{T1,T2,T3,Task},T1,T2,T3).md#Emik.Results.Extensions.PleaseAsync.Try_T1,T2,T3_(System.Func_T1,T2,T3,System.Threading.Tasks.Task_,T1,T2,T3).func 'Emik.Results.Extensions.PleaseAsync.Try<T1,T2,T3>(System.Func<T1,T2,T3,System.Threading.Tasks.Task>, T1, T2, T3).func'), or the [System.Exception](https://docs.microsoft.com/en-us/dotnet/api/System.Exception 'System.Exception') thrown.
